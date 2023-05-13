@@ -17,7 +17,7 @@ export default async function handler(
 
   const post = await prisma.post.findUnique({
     where: {
-      id: parseInt(postId),
+      id: postId,
     },
   });
 
@@ -27,7 +27,7 @@ export default async function handler(
 
   const upvotedPost = await prisma.post.update({
     where: {
-      id: parseInt(postId),
+      id: postId,
     },
     data: {
       upvotes: post.upvotes - 1,

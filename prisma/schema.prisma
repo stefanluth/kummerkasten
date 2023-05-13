@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @unique @default(uuid())
   title     String
   content   String
   upvotes   Int      @default(0)

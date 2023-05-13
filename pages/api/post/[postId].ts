@@ -14,7 +14,7 @@ export default async function handler(
 
   const post = await prisma.post.findUnique({
     where: {
-      id: parseInt(postId),
+      id: postId,
     },
   });
 
@@ -29,7 +29,7 @@ export default async function handler(
   if (method === "DELETE") {
     const deletedPost = await prisma.post.delete({
       where: {
-        id: parseInt(postId),
+        id: postId,
       },
     });
 
