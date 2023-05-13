@@ -38,7 +38,7 @@ export default function SinglePost(props: { post: Post }) {
       </div>
       <div
         id={post.id.toString()}
-        className="flex flex-col w-full gap-1 justify-between"
+        className="flex flex-col w-11/12 gap-1 justify-between"
       >
         <div className="flex gap-2 items-end">
           <div>
@@ -51,7 +51,7 @@ export default function SinglePost(props: { post: Post }) {
             #{post.id.toString().slice(0, 8)}
           </a>
         </div>
-        <p className="text-lg">{post.content}</p>
+        <p className="text-lg overflow-wrap">{post.content}</p>
       </div>
     </div>
   );

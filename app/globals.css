@@ -18,3 +18,7 @@
   @apply focus:ring-2;
   @apply focus:ring-zinc-500;
 }
+
+.overflow-wrap {
+  overflow-wrap: break-word;
+}
