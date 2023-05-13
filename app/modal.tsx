@@ -11,6 +11,7 @@ export function Modal(props: PropsWithChildren<ModalProps>) {
     <div
       className={`fixed left-0 top-0 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none`}
       tabIndex={-1}
+      onClick={props.close}
     >
       <div className="relative w-auto min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
         <div className="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
@@ -27,13 +28,13 @@ export function Modal(props: PropsWithChildren<ModalProps>) {
   );
 }
 
-function CloseButton({ close }: { close: () => void }) {
+function CloseButton(props: { close: () => void }) {
   return (
     <button
       type="button"
       className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
       aria-label="Close"
-      onClick={() => close()}
+      onClick={props.close}
     >
       <XCircleIcon className="w-6 h-6 text-neutral-500 dark:text-neutral-400" />
     </button>

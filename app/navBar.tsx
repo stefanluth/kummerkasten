@@ -1,6 +1,6 @@
 "use client";
 
-import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { Modal } from "./modal";
 
@@ -29,7 +29,7 @@ export function NavBar(props: any) {
       <div className="flex w-full h-14 bg-zinc-800 justify-center">
         <div className="flex w-2/3 justify-between">
           <button onClick={() => setShowModal(true)}>
-            <QuestionMarkCircleIcon className="w-6 h-6 m-4 text-zinc-100" />
+            <InformationCircleIcon className="w-6 h-6 m-4 text-zinc-100" />
           </button>
         </div>
       </div>
