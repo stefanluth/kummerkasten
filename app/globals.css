@@ -8,7 +8,6 @@
 }
 
 .text-input {
-  @apply w-fit;
   @apply rounded-md;
   @apply p-2;
   @apply bg-zinc-700;

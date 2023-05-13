@@ -8,14 +8,16 @@ export default async function Home() {
   const posts = await prisma.post.findMany();
 
   return (
-    <div className="flex flex-col h-full w-2/3 items-center">
-      <div className="flex flex-col h-[32rem] gap-2 overflow-y-auto divide-y divide-zinc-700">
-        {posts.map((post) => (
-          <DisplayPost key={post.id} post={post} />
-        ))}
-      </div>
-      <div className="flex">
+    <div className="overflow-y-auto">
+      <div className="flex flex-col min-w-[30rem] max-w-6xl mx-auto">
         <CreatePost />
+        <div className="flex flex-col gap-2 divide-y divide-zinc-700">
+          {posts
+            .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+            .map((post) => (
+              <DisplayPost key={post.id} post={post} />
+            ))}
+        </div>
       </div>
     </div>
   );

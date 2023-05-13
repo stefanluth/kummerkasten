@@ -1,8 +1,7 @@
 "use client";
 
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Post } from "@prisma/client";
-import { ChevronUp } from "@/public/assets/chevron-up";
-import { ChevronDown } from "@/public/assets/chevron-down";
 import { useState } from "react";
 
 export default function DisplayPost(props: { post: Post }) {
@@ -20,7 +19,7 @@ export default function DisplayPost(props: { post: Post }) {
             setPost(await upvotedPost.json());
           }}
         >
-          <ChevronUp className="w-5" />
+          <ChevronUpIcon className="w-5" />
         </button>
         <p className="text-center">{post.upvotes}</p>
         <button
@@ -32,17 +31,22 @@ export default function DisplayPost(props: { post: Post }) {
             setPost(await downvotedPost.json());
           }}
         >
-          <ChevronDown className="w-5" />
+          <ChevronDownIcon className="w-5" />
         </button>
       </div>
       <div
         id={post.id.toString()}
         className="flex flex-col w-full gap-1 justify-between"
       >
-        <div className="flex gap-2 items-center">
-          <h2 className="text-2xl font-bold">{post.title}</h2>
-          <a href={`#${post.id}`} className="text-xs text-zinc-500">
-            {post.id}
+        <div className="flex gap-2 items-end">
+          <div>
+            <a href={`#${post.id}`} className="text-xs text-zinc-500">
+              {post.createdAt.toLocaleDateString()}
+            </a>
+            <h2 className="text-2xl -mt-2 font-bold">{post.title}</h2>
+          </div>
+          <a href={`#${post.id}`} className="text-sm pb-1 text-zinc-500">
+            #{post.id.toString().slice(0, 8)}
           </a>
         </div>
         <p className="text-lg">{post.content}</p>

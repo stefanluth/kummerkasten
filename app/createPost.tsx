@@ -28,7 +28,7 @@ export default function CreatePost(): JSX.Element {
   };
 
   return (
-    <div className="flex flex-col gap-2 p-2">
+    <div className="flex flex-col gap-2 p-2 w-full">
       <div className="flex flex-col gap-1 justify-between w-full">
         <label htmlFor="title">Titel</label>
         <input
@@ -44,7 +44,7 @@ export default function CreatePost(): JSX.Element {
           spellCheck
         />
       </div>
-      <div className="flex flex-col gap-1 justify-between w-full">
+      <div className="flex flex-col gap-1 justify-between">
         <label htmlFor="content">Nachricht</label>
         <textarea
           className="text-input focus-outline resize-none"
