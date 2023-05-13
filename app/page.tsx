@@ -1,25 +1,22 @@
 import React from "react";
-import { Post } from "@prisma/client";
-import { prisma } from "@/utils/prisma";
-import CreatePost from "./createPost";
-import Image from "next/image";
 
-import chatBubble from "@/public/assets/chat-bubble.svg";
+import { prisma } from "@/utils/prisma";
+import DisplayPost from "./displayPost";
+import CreatePost from "./createPost";
 
 export default async function Home() {
-  const posts: Post[] = await prisma.post.findMany();
+  const posts = await prisma.post.findMany();
 
   return (
-    <div className="flex">
-      <Image src={chatBubble} alt="Chat Bubble" />
-      <CreatePost />
-      <ul>
+    <div className="flex flex-col h-full w-2/3 items-center">
+      <div className="flex flex-col h-[32rem] gap-2 overflow-y-auto divide-y divide-zinc-700">
         {posts.map((post) => (
-          <li key={post.id}>
-            {post.title}: {post.content}
-          </li>
+          <DisplayPost key={post.id} post={post} />
         ))}
-      </ul>
+      </div>
+      <div className="flex">
+        <CreatePost />
+      </div>
     </div>
   );
 }

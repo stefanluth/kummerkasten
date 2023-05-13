@@ -8,12 +8,12 @@ export default function CreatePost(): JSX.Element {
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
 
-  const create = () => {
+  const createPost = async () => {
     if (!titleRef.current?.value || !contentRef.current?.value) {
       throw new Error("Missing title or content");
     }
 
-    fetch("/api/post", {
+    await fetch("/api/post/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,41 +30,40 @@ export default function CreatePost(): JSX.Element {
   return (
     <div className="flex flex-col gap-2 p-2">
       <div className="flex flex-col gap-1 justify-between w-full">
-        <label htmlFor="title">Title</label>
+        <label htmlFor="title">Titel</label>
         <input
           className="h-8 text-input focus-outline"
-          type="text"
+          id="title"
           name="title"
+          type="text"
           ref={titleRef}
           maxLength={64}
           autoComplete="on"
           autoCorrect="on"
-          autoCapitalize="on"
           required
           spellCheck
         />
       </div>
       <div className="flex flex-col gap-1 justify-between w-full">
-        <label htmlFor="content">Content</label>
+        <label htmlFor="content">Nachricht</label>
         <textarea
           className="text-input focus-outline resize-none"
+          id="content"
           name="content"
           ref={contentRef}
           rows={5}
           maxLength={512}
-          placeholder="Was liegt dir auf dem Herzen?"
           autoComplete="on"
           autoCorrect="on"
-          autoCapitalize="on"
           required
           spellCheck
         />
       </div>
       <button
-        className="rounded-md w-fit bg-zinc-700 px-2 focus:outline-2 focus:ring-1 focus:ring-zinc-700"
-        onClick={() => create()}
+        className="rounded-md w-fit ml-auto bg-zinc-700 px-2 focus:outline-2 focus:ring-1 focus:ring-zinc-700"
+        onClick={async () => await createPost()}
       >
-        Add Post
+        Absenden
       </button>
     </div>
   );
