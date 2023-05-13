@@ -4,7 +4,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Post } from "@prisma/client";
 import { useState } from "react";
 
-export default function DisplayPost(props: { post: Post }) {
+export default function SinglePost(props: { post: Post }) {
   const [post, setPost] = useState<Post>(props.post);
 
   return (

@@ -4,8 +4,8 @@ import React, { useState } from "react";
 
 import { Post } from "@prisma/client";
 
-import DisplayPost from "./displayPost";
-import CreatePost from "./createPost";
+import SinglePost from "./singlePost";
+import AddPost from "./addPost";
 
 enum SortBy {
   Date,
@@ -15,13 +15,13 @@ enum SortBy {
 const sortByDate = (a: Post, b: Post) => (a.createdAt < b.createdAt ? 1 : -1);
 const sortByUpvotes = (a: Post, b: Post) => (a.upvotes < b.upvotes ? 1 : -1);
 
-export default function DisplayPosts(props: { posts: Post[] }) {
+export default function AllPosts(props: { posts: Post[] }) {
   const [sort, setSort] = useState<SortBy>(SortBy.Date);
 
   return (
-    <div className="overflow-y-auto">
+    <div className="overflow-y-auto pb-4">
       <div className="flex flex-col min-w-[30rem] max-w-6xl mx-auto">
-        <CreatePost />
+        <AddPost />
         <div className="flex gap-2">
           <button
             className={`${
@@ -44,7 +44,7 @@ export default function DisplayPosts(props: { posts: Post[] }) {
           {props.posts
             .sort(sort === SortBy.Date ? sortByDate : sortByUpvotes)
             .map((post) => (
-              <DisplayPost key={post.id} post={post} />
+              <SinglePost key={post.id} post={post} />
             ))}
         </div>
       </div>
