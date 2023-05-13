@@ -35,6 +35,10 @@ export default function AddPost(): JSX.Element {
     });
 
     router.refresh();
+
+    setError(null);
+    setTitle("");
+    setContent("");
   };
 
   return (
@@ -44,6 +48,7 @@ export default function AddPost(): JSX.Element {
         <input
           className="h-8 text-input focus-outline"
           onChange={(e) => setTitle(e.target.value)}
+          value={title}
           id="title"
           name="title"
           type="text"
@@ -60,6 +65,7 @@ export default function AddPost(): JSX.Element {
         <textarea
           className="text-input focus-outline resize-none"
           onChange={(e) => setContent(e.target.value)}
+          value={content}
           id="content"
           name="content"
           rows={5}
@@ -76,7 +82,7 @@ export default function AddPost(): JSX.Element {
           {content.length}/{MAX_CONTENT_LENGTH} (min. {MIN_CONTENT_LENGTH})
         </p>
         <div className="flex gap-4 ml-auto items-center">
-          <p className="text-sm text-red-800">{error ? error : " "}</p>
+          <p className="text-sm text-red-800">{error}</p>
           <button
             className="rounded-md w-fit bg-zinc-700 px-2 focus:outline-2 focus:ring-1 focus:ring-zinc-700"
             onClick={async () => await createPost()}
