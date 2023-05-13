@@ -9,6 +9,7 @@ const MIN_CONTENT_LENGTH = 32;
 const MAX_CONTENT_LENGTH = 1028;
 
 export default function AddPost(): JSX.Element {
+  const [error, setError] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const router = useRouter();
@@ -18,7 +19,8 @@ export default function AddPost(): JSX.Element {
       title.length < MIN_TITLE_LENGTH ||
       content.length < MIN_CONTENT_LENGTH
     ) {
-      throw new Error("Missing title or content");
+      setError("Title or content too short");
+      return;
     }
 
     await fetch("/api/post/create", {
@@ -73,12 +75,15 @@ export default function AddPost(): JSX.Element {
         <p className="text-xs ml-1">
           {content.length}/{MAX_CONTENT_LENGTH} (min. {MIN_CONTENT_LENGTH})
         </p>
-        <button
-          className="rounded-md w-fit ml-auto bg-zinc-700 px-2 focus:outline-2 focus:ring-1 focus:ring-zinc-700"
-          onClick={async () => await createPost()}
-        >
-          Absenden
-        </button>
+        <div className="flex gap-4 ml-auto items-center">
+          <p className="text-sm text-red-800">{error ? error : " "}</p>
+          <button
+            className="rounded-md w-fit bg-zinc-700 px-2 focus:outline-2 focus:ring-1 focus:ring-zinc-700"
+            onClick={async () => await createPost()}
+          >
+            Absenden
+          </button>
+        </div>
       </div>
     </div>
   );
