@@ -16,7 +16,8 @@ export default function DisplayPost(props: { post: Post }) {
             const upvotedPost = await fetch(`/api/post/upvote/${post.id}`, {
               method: "PUT",
             });
-            setPost(await upvotedPost.json());
+            const newPost = await upvotedPost.json();
+            setPost({ ...post, upvotes: newPost.upvotes });
           }}
         >
           <ChevronUpIcon className="w-5" />
@@ -28,7 +29,8 @@ export default function DisplayPost(props: { post: Post }) {
             const downvotedPost = await fetch(`/api/post/downvote/${post.id}`, {
               method: "PUT",
             });
-            setPost(await downvotedPost.json());
+            const newPost = await downvotedPost.json();
+            setPost({ ...post, upvotes: newPost.upvotes });
           }}
         >
           <ChevronDownIcon className="w-5" />
@@ -41,7 +43,7 @@ export default function DisplayPost(props: { post: Post }) {
         <div className="flex gap-2 items-end">
           <div>
             <a href={`#${post.id}`} className="text-xs text-zinc-500">
-              {post.createdAt.toLocaleDateString()}
+              {post.createdAt.toDateString()}
             </a>
             <h2 className="text-2xl -mt-2 font-bold">{post.title}</h2>
           </div>
