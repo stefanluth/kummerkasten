@@ -12,11 +12,11 @@ export function Voting(props: { post: Post }) {
       <button
         className="flex flex-col items-center gap-1"
         onClick={async () => {
-          const upvotedPost = await fetch(`/api/post/upvote/${post.id}`, {
+          const upvoteResponse = await fetch(`/api/post/upvote/${post.id}`, {
             method: "PUT",
           });
-          const newPost = await upvotedPost.json();
-          setPost({ ...post, upvotes: newPost.upvotes });
+          const upvotedPost = await upvoteResponse.json();
+          setPost({ ...post, upvotes: upvotedPost.upvotes });
         }}
       >
         <ChevronUpIcon className="w-5" />
@@ -25,11 +25,11 @@ export function Voting(props: { post: Post }) {
       <button
         className="flex flex-col items-center gap-1"
         onClick={async () => {
-          const downvotedPost = await fetch(`/api/post/downvote/${post.id}`, {
+          const downvoteRespone = await fetch(`/api/post/downvote/${post.id}`, {
             method: "PUT",
           });
-          const newPost = await downvotedPost.json();
-          setPost({ ...post, upvotes: newPost.upvotes });
+          const downvotedPost = await downvoteRespone.json();
+          setPost({ ...post, upvotes: downvotedPost.upvotes });
         }}
       >
         <ChevronDownIcon className="w-5" />
