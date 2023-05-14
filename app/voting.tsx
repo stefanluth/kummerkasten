@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Post } from "@prisma/client";
 import { useState } from "react";

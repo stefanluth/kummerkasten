@@ -1,10 +1,10 @@
 "use client";
 
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { Modal } from "./modal";
 
-export function NavBar(props: any) {
+export function NavBar() {
   const [showModal, setShowModal] = useState(false);
 
   return (
