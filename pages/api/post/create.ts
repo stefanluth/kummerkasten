@@ -30,5 +30,5 @@ export default async function handler(
     },
   });
 
-  return res.status(200).json({ ...createdPost });
+  return res.status(201).json({ ...createdPost });
 }
