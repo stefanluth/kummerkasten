@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { HomeIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
 import { Modal } from "./modal";
 
 export function NavBar() {
@@ -28,6 +29,9 @@ export function NavBar() {
       )}
       <div className="flex w-full h-14 bg-zinc-800 justify-center">
         <div className="flex w-2/3 justify-between">
+          <Link href="/">
+            <HomeIcon className="w-6 h-6 m-4 text-zinc-100" />
+          </Link>
           <button onClick={() => setShowModal(true)}>
             <InformationCircleIcon className="w-6 h-6 m-4 text-zinc-100" />
           </button>
