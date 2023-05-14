@@ -7,13 +7,19 @@
   color: #cecece;
 }
 
-.text-input {
+input,
+select,
+textarea {
   @apply rounded-md;
   @apply p-2;
   @apply bg-zinc-700;
 }
 
-.focus-outline {
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
   @apply focus:outline-none;
   @apply focus:ring-2;
   @apply focus:ring-zinc-500;

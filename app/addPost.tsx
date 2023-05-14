@@ -51,7 +51,7 @@ export default function AddPost(): JSX.Element {
       <div className="flex flex-col gap-1 justify-between w-full">
         <label htmlFor="title">Titel</label>
         <input
-          className="h-8 text-input focus-outline"
+          className="h-8"
           onChange={(e) => setTitle(e.target.value)}
           value={title}
           id="title"
@@ -68,7 +68,7 @@ export default function AddPost(): JSX.Element {
       <div className="flex flex-col gap-1 justify-between">
         <label htmlFor="content">Nachricht</label>
         <textarea
-          className="text-input focus-outline resize-none"
+          className="resize-none"
           onChange={(e) => setContent(e.target.value)}
           value={content}
           id="content"
