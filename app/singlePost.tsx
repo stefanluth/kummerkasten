@@ -1,41 +1,12 @@
-"use client";
-
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Post } from "@prisma/client";
-import { useState } from "react";
+import { Voting } from "./voting";
 
 export default function SinglePost(props: { post: Post }) {
-  const [post, setPost] = useState<Post>(props.post);
+  const { post } = props;
 
   return (
     <div className="flex p-2 gap-4">
-      <div className="flex flex-col justify-center">
-        <button
-          className="flex flex-col items-center gap-1"
-          onClick={async () => {
-            const upvotedPost = await fetch(`/api/post/upvote/${post.id}`, {
-              method: "PUT",
-            });
-            const newPost = await upvotedPost.json();
-            setPost({ ...post, upvotes: newPost.upvotes });
-          }}
-        >
-          <ChevronUpIcon className="w-5" />
-        </button>
-        <p className="text-center">{post.upvotes}</p>
-        <button
-          className="flex flex-col items-center gap-1"
-          onClick={async () => {
-            const downvotedPost = await fetch(`/api/post/downvote/${post.id}`, {
-              method: "PUT",
-            });
-            const newPost = await downvotedPost.json();
-            setPost({ ...post, upvotes: newPost.upvotes });
-          }}
-        >
-          <ChevronDownIcon className="w-5" />
-        </button>
-      </div>
+      <Voting post={post} />
       <div
         id={post.id.toString()}
         className="flex flex-col w-11/12 gap-1 justify-between"
