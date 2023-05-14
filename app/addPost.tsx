@@ -23,7 +23,7 @@ export default function AddPost(): JSX.Element {
       return;
     }
 
-    await fetch("/api/post/create", {
+    const createResponse = await fetch("/api/post/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,6 +33,11 @@ export default function AddPost(): JSX.Element {
         content,
       }),
     });
+
+    if (createResponse.status !== 201) {
+      setError("Something went wrong");
+      return;
+    }
 
     router.refresh();
 
