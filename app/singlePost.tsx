@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Post } from "@prisma/client";
 import { Voting } from "./voting";
 
@@ -18,9 +19,9 @@ export default function SinglePost(props: { post: Post }) {
             </a>
             <h2 className="text-2xl -mt-2 font-bold">{post.title}</h2>
           </div>
-          <a href={`#${post.id}`} className="text-sm pb-1 text-zinc-500">
+          <Link href={`${post.id}`} className="text-sm pb-1 text-zinc-500">
             #{post.id.toString().slice(0, 8)}
-          </a>
+          </Link>
         </div>
         <p className="text-lg overflow-wrap">{post.content}</p>
       </div>
