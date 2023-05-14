@@ -28,10 +28,13 @@ export function NavBar() {
         </Modal>
       )}
       <div className="flex w-full h-14 bg-zinc-800 justify-center">
-        <div className="flex w-2/3 justify-between">
+        <div className="flex w-2/3 justify-between items-center">
           <Link href="/">
             <HomeIcon className="w-6 h-6 m-4 text-zinc-100" />
           </Link>
+          <h1 className="text-2xl font-bold text-zinc-100 select-none">
+            Kummerkasten
+          </h1>
           <button onClick={() => setShowModal(true)}>
             <InformationCircleIcon className="w-6 h-6 m-4 text-zinc-100" />
           </button>
