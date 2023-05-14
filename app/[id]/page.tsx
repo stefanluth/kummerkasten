@@ -15,7 +15,7 @@ export default async function SinglePostPage(props: SinglePostPageProps) {
   });
 
   return (
-    <div className="flex justify-center align-middle">
+    <div className="flex w-2/3 self-center justify-center">
       <div>{post && <SinglePost post={post} />}</div>
     </div>
   );
