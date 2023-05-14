@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { Post } from "@prisma/client";
 
@@ -18,10 +18,15 @@ const sortByUpvotes = (a: Post, b: Post) => (a.upvotes < b.upvotes ? 1 : -1);
 
 export default function AllPosts(props: { posts: Post[] }) {
   const [sort, setSort] = useState<SortBy>(SortBy.Date);
-  const scrollElement = useRef<HTMLDivElement>(null);
+  const scrollDivRef = useRef<HTMLDivElement>(null);
+  const [element, setElement] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setElement(scrollDivRef?.current);
+  }, [scrollDivRef]);
 
   return (
-    <div className="overflow-y-auto pb-4" ref={scrollElement}>
+    <div className="overflow-y-auto pb-4" ref={scrollDivRef}>
       <div className="flex flex-col min-w-[30rem] max-w-6xl mx-auto">
         <AddPost />
         <div className="flex gap-2">
@@ -50,7 +55,7 @@ export default function AllPosts(props: { posts: Post[] }) {
             ))}
         </div>
       </div>
-      <ScrollToTop element={scrollElement.current} />
+      <ScrollToTop element={element} />
     </div>
   );
 }
