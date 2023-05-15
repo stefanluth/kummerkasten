@@ -1,7 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { vote } from "../_actions/vote";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { getFingerprintFromCookie } from "@/utils";
 
 type VotingProps = {
   postId: string;
@@ -10,30 +12,16 @@ type VotingProps = {
   disabled: boolean;
 };
 
-async function vote(postId: string, fingerprint: string, upvote: boolean) {
-  await fetch("/api/vote", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ postId, fingerprint, upvote }),
-  });
-}
-
-export function Voting(props: VotingProps) {
-  const router = useRouter();
-  const { postId, upvotes, disabled } = props;
+export function Voting({ postId, upvotes, disabled }: VotingProps) {
+  const [isPending, startTransition] = useTransition();
+  const fingerprint = getFingerprintFromCookie(document.cookie);
 
   return (
     <div className="flex flex-col justify-center">
       <button
         className="flex flex-col items-center gap-1"
         disabled={disabled}
-        onClick={async () => {
-          await vote(postId, props.fingerprint, true);
-          // TODO: is this a hacky way? flickers in dev mode, but looks good after build
-          router.refresh();
-        }}
+        onClick={() => startTransition(() => vote({ postId, upvote: true, fingerprint }))}
       >
         <ChevronUpIcon className={`w-5 ${disabled ? "text-zinc-600 cursor-not-allowed" : null}`} />
       </button>
@@ -41,10 +29,7 @@ export function Voting(props: VotingProps) {
       <button
         className="flex flex-col items-center gap-1"
         disabled={disabled}
-        onClick={async () => {
-          await vote(postId, props.fingerprint, false);
-          router.refresh();
-        }}
+        onClick={() => startTransition(() => vote({ postId, upvote: false, fingerprint }))}
       >
         <ChevronDownIcon className={`w-5 ${disabled ? "text-zinc-600 cursor-not-allowed" : null}`} />
       </button>
