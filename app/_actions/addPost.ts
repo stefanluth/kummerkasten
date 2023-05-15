@@ -32,6 +32,5 @@ export async function addPost(formData: FormData) {
     },
   });
 
-  revalidatePath(`/${post.id}`);
   revalidatePath("/");
 }
