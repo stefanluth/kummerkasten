@@ -1,9 +1,9 @@
 import React from "react";
 
 import { prisma } from "@/utils/prisma";
-import { AddPost } from "./components/addPost";
-import { SinglePost } from "./components/singlePost";
-import { SortByComponent } from "./components/sortBy";
+import { AddPost } from "./_components/addPost";
+import { SinglePost } from "./_components/singlePost";
+import { SortByComponent } from "./_components/sortBy";
 
 export default async function Home() {
   const posts = await prisma.post.findMany({
