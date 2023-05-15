@@ -8,22 +8,19 @@ const MAX_TITLE_LENGTH = 128;
 const MIN_CONTENT_LENGTH = 32;
 const MAX_CONTENT_LENGTH = 1028;
 
-export default function AddPost(): JSX.Element {
+export function AddPost(): JSX.Element {
   const [error, setError] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const router = useRouter();
 
   const createPost = async () => {
-    if (
-      title.length < MIN_TITLE_LENGTH ||
-      content.length < MIN_CONTENT_LENGTH
-    ) {
+    if (title.length < MIN_TITLE_LENGTH || content.length < MIN_CONTENT_LENGTH) {
       setError("Title or content too short");
       return;
     }
 
-    const createResponse = await fetch("/api/post/create", {
+    const createResponse = await fetch("/api/post", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

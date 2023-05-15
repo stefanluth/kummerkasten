@@ -14,3 +14,9 @@ model Post {
   upvotes   Int      @default(0)
   createdAt DateTime @default(now())
 }
+
+model Vote {
+  id          String @id @unique @default(uuid())
+  fingerprint String
+  postId      String
+}

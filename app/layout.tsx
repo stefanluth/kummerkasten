@@ -1,20 +1,17 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { NavBar } from "./navBar";
+import { NavBar } from "./components/navBar";
+import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Kummerkasten",
   description:
-    "Anonymes Post Board um Fragen zu stellen, Meinungen zu äußern und Feedback zu geben, ohne sich zu outen.",
+    "Anonymes Nachrichten Brett um Fragen zu stellen, Meinungen zu äußern und Feedback zu geben, ohne sich zu outen.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
