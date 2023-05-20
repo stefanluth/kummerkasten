@@ -2,7 +2,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
-import { prisma } from "@/utils/prisma";
+import prisma from "@/utils/prisma";
 
 type VotingProps = {
   postId: string;
