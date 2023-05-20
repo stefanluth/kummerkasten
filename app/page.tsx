@@ -1,16 +1,40 @@
-import React from "react";
+'use client'
 
-import { prisma } from "@/utils/prisma";
+import React, { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+
 import { AddPost } from "./_components/addPost";
 import { SinglePost } from "./_components/singlePost";
 import { SortByComponent } from "./_components/sortBy";
+import { Post } from "@prisma/client";
 
 export default async function Home() {
-  const posts = await prisma.post.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const [posts, setPosts] = React.useState<Post[]>([]);
+  const [sortBy, setSortBy] = React.useState("createdAt");
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const sort = searchParams.get("sortBy") ?? "createdAt";
+    setSortBy(sort);
+  }, [searchParams]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await fetch(`http://localhost:3000/api/posts?sortBy=${sortBy}`, {
+        next: {
+          revalidate: 0,
+        },
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setPosts(await res.json());
+    }
+
+    fetchPosts();
+  }, [sortBy]);
 
   return (
     <div className="overflow-y-auto pb-4">

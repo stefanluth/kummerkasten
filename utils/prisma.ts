@@ -1,13 +1,24 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
-const globalForPrisma = global as unknown as {
-  prisma: PrismaClient | undefined;
-};
+declare const global: Global & { prisma?: PrismaClient };
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: ["query"],
-  });
+export let prisma: PrismaClient;
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+if (typeof window === 'undefined') {
+  if (process.env['NODE_ENV'] === 'production') {
+    prisma = new PrismaClient({
+      log: ['query'],
+    });
+  } else {
+    if (!global.prisma) {
+      global.prisma = new PrismaClient({
+        log: ['query'],
+      });
+    }
+    prisma = global.prisma;
+  }
+}
+
+
+// @ts-ignore https://github.com/prisma/prisma/issues/6219#issuecomment-840676092
+export default prisma;

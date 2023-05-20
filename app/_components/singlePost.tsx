@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Voting } from "./voting";
-import { prisma } from "@/utils/prisma";
+import prisma from "@/utils/prisma";
 import { cookies } from "next/headers";
 
 export async function SinglePost(props: { postId: string }) {

@@ -15,13 +15,19 @@ export function SortByComponent() {
   return (
     <div className="flex gap-2">
       <Link
-        href={"?" + new URLSearchParams({ sortBy: SortBy.Date }).toString()}
+        href={{
+          pathname: "/",
+          query: { sortBy: SortBy.Date },
+        }}
         className={`${sort === SortBy.Date ? "underline" : ""} px-2 py-1 rounded-md`}
       >
         Date
       </Link>
       <Link
-        href={"?" + new URLSearchParams({ sortBy: SortBy.Upvotes }).toString()}
+        href={{
+          pathname: "/",
+          query: { sortBy: SortBy.Upvotes },
+        }}
         className={`${sort === SortBy.Upvotes ? "underline" : ""} px-2 py-1 rounded-md`}
       >
         Upvotes
