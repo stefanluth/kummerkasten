@@ -27,34 +27,6 @@ export function AddPost(): JSX.Element {
       }
     };
   }
-  const createPost = async () => {
-    if (title.length < MIN_TITLE_LENGTH || content.length < MIN_CONTENT_LENGTH) {
-      setError("Title or content too short");
-      return;
-    }
-
-    const createResponse = await fetch("/api/posts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title,
-        content,
-      }),
-    });
-
-    if (createResponse.status !== 201) {
-      setError("Something went wrong");
-      return;
-    }
-
-    router.refresh();
-
-    setError(null);
-    setTitle("");
-    setContent("");
-  };
 
   return (
     <form action={addPost} className="flex flex-col gap-2 p-2 w-full">
