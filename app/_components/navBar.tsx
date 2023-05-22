@@ -1,48 +1,44 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { HomeIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
-
-import { createFingerprint } from "@/utils";
-import { Modal } from "./modal";
+import { HomeIcon, InformationCircleIcon, LockClosedIcon } from "@heroicons/react/24/outline";
+import { SetFingerprint } from "./setFingerprint";
 
 export function NavBar() {
-  const [showModal, setShowModal] = useState(false);
-
-  useEffect(() => {
-    const fingerprint = createFingerprint(window);
-    document.cookie = `fingerprint=${fingerprint}; path=/;`;
-  }, []);
-
   return (
-    <>
-      {showModal && (
-        <Modal title="About" close={() => setShowModal(false)}>
-          <div className="flex flex-col gap-2">
-            <p>
-              Obwohl wir eine offene Kommunikationskultur fördern, gibt es manchmal Fragen oder Meinungen, die
-              man vielleicht nicht persönlich äußern möchte, aus Angst vor Konsequenzen oder einem möglichen
-              Unbehagen bei der Diskussion von sensiblen Themen.
-            </p>
-            <p>
-              Der Kummerkasten bietet einen sicheren und vertraulichen Raum, in dem Mitarbeiter:innen ihre
-              Gedanken und Meinungen frei teilen können.
-            </p>
-          </div>
-        </Modal>
-      )}
-      <div className="flex w-full h-14 bg-zinc-800 justify-center">
-        <div className="flex w-2/3 justify-between items-center">
-          <Link href="/">
-            <HomeIcon className="w-6 h-6 m-4 text-zinc-100" />
+    <div className="flex w-full bg-zinc-800 justify-center">
+      <div className="flex w-2/3 h-14 gap-4 justify-between items-center">
+        <SetFingerprint />
+        <div className="flex gap-2 w-full">
+          <Link href="/" title="Home" className="w-6 h-6 mr-4 rounded-md">
+            <HomeIcon className="w-6 h-6 text-zinc-100" />
           </Link>
-          <h1 className="text-2xl font-bold text-zinc-100 select-none">Kummerkasten</h1>
-          <button onClick={() => setShowModal(true)}>
-            <InformationCircleIcon className="w-6 h-6 m-4 text-zinc-100" />
-          </button>
+          <Link href="/top/day" title="24h" className="h-6 px-2 rounded-md">
+            <p className="text-zinc-100">24h</p>
+          </Link>
+          <Link href="/top/week" title="7d" className="h-6 px-2 rounded-md">
+            <p className="text-zinc-100">7d</p>
+          </Link>
+          <Link href="/top/month" title="30d" className="h-6 px-2 rounded-md">
+            <p className="text-zinc-100">30d</p>
+          </Link>
+          <Link href="/top/year" title="1y" className="h-6 px-2 rounded-md">
+            <p className="text-zinc-100">1y</p>
+          </Link>
+          <Link href="/top/all" title="All" className="h-6 px-2 rounded-md">
+            <p className="text-zinc-100">All</p>
+          </Link>
+        </div>
+        <h1 className="text-2xl font-bold mx-8 text-zinc-100 select-none">Kummerkasten</h1>
+        <div className="flex w-full gap-4 justify-end">
+          <Link href="/unlock" title="Unlock" className="flex h-6 gap-2 rounded-md">
+            <LockClosedIcon className="w-6 h-6 text-zinc-100" />
+            Unlock
+          </Link>
+          <Link href="/faq" title="FAQ" className="flex h-6 gap-2 rounded-md">
+            <InformationCircleIcon className="w-6 h-6 text-zinc-100" />
+            FAQ
+          </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
