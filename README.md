@@ -15,5 +15,7 @@ npx prisma generate
 ## App in Development Modus starten
 
 ```shell
-npm run dev
+UNLOCK_PASSWORD=password123 npm run dev
 ```
+
+Auf der `/unlock` Seite dann das gewählte Passwort eingeben.
