@@ -29,11 +29,11 @@ export function NavBar() {
         </div>
         <h1 className="text-2xl font-bold mx-8 text-zinc-100 select-none">Kummerkasten</h1>
         <div className="flex w-full gap-4 justify-end">
-          <Link href="/unlock" title="Unlock" className="flex h-6 gap-2 rounded-md">
+          <Link href="/unlock" title="Unlock" className="flex h-6 gap-2 px-2 rounded-md">
             <LockClosedIcon className="w-6 h-6 text-zinc-100" />
             Unlock
           </Link>
-          <Link href="/faq" title="FAQ" className="flex h-6 gap-2 rounded-md">
+          <Link href="/faq" title="FAQ" className="flex h-6 gap-2 px-2 rounded-md">
             <InformationCircleIcon className="w-6 h-6 text-zinc-100" />
             FAQ
           </Link>

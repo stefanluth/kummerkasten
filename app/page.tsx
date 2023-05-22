@@ -1,9 +1,10 @@
 import React from "react";
 
+import { cookies } from "next/headers";
+
 import { prisma } from "@/utils/prisma";
 import { AddPost } from "@/app/_components/addPost";
 import { SinglePost } from "@/app/_components/singlePost";
-import { cookies } from "next/headers";
 
 export default async function Home() {
   const password = cookies().get("password")?.value;

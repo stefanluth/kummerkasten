@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
 
 const SCROLL_TO_TOP_THRESHOLD = 300;
 export function ScrollToTop(props: { element: HTMLElement | null }) {

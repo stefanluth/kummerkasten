@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Voting } from "./voting";
-import { prisma } from "@/utils/prisma";
 import { cookies } from "next/headers";
+
+import { prisma } from "@/utils/prisma";
+import { Voting } from "./voting";
 
 export async function SinglePost(props: { postId: string }) {
   const postPromise = prisma.post.findUnique({

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import FaqItem from "@/app/_components/faqItem";
 
 export default function About() {
@@ -22,9 +23,9 @@ export default function About() {
         <p>
           Die Nachrichten werden nicht moderiert, aber wir behalten uns das Recht vor, Nachrichten zu entfernen,
           die gegen die{" "}
-          <a href="/code-of-conduct" className="text-slate-300 underline">
+          <Link href="/code-of-conduct" className="text-slate-300 underline">
             Verhaltensregeln
-          </a>{" "}
+          </Link>{" "}
           verstoßen.
         </p>
       </FaqItem>
@@ -37,10 +38,10 @@ export default function About() {
       <FaqItem title="Ich sehe keine Nachrichten auf der Startseite.">
         <p>Du benötigst das Passwort, das täglich erneuert wird.</p>
         <p>
-          Das Passwort musst du auf der
-          <a href="/unlock" className="text-slate-300 underline">
+          Das Passwort musst du auf der{" "}
+          <Link href="/unlock" className="text-slate-300 underline">
             Unlock-Seite
-          </a>{" "}
+          </Link>{" "}
           eingeben, um die Nachrichten frei zu schalten.
         </p>
       </FaqItem>
@@ -54,9 +55,9 @@ export default function About() {
         <p>
           Wenn du eine Nachricht melden möchtest, kannst du den Link <b>Melden</b> über der Nachricht verwenden.
           Wir werden die Nachricht überprüfen und sie entfernen, wenn sie gegen unsere{" "}
-          <a href="/code-of-conduct" className="text-slate-300 underline">
+          <Link href="/code-of-conduct" className="text-slate-300 underline">
             Verhaltensregeln
-          </a>{" "}
+          </Link>{" "}
           verstößt.
         </p>
       </FaqItem>
@@ -64,9 +65,9 @@ export default function About() {
         <p>
           Nachrichten können nicht gelöscht werden. Wenn du eine Nachricht löschen möchtest, kannst du sie
           melden und wir werden sie entfernen, wenn sie gegen unsere{" "}
-          <a href="/code-of-conduct" className="text-slate-300 underline">
+          <Link href="/code-of-conduct" className="text-slate-300 underline">
             Verhaltensregeln
-          </a>{" "}
+          </Link>{" "}
           verstößt.
         </p>
       </FaqItem>
@@ -107,9 +108,9 @@ export default function About() {
       <FaqItem title="Wo kann ich den Source Code finden?">
         <p>
           Der Source Code ist auf{" "}
-          <a href="https://github.com/stefanluth/kummerkasten" className="text-slate-300 underline">
+          <Link href="https://github.com/stefanluth/kummerkasten" className="text-slate-300 underline">
             GitHub
-          </a>{" "}
+          </Link>{" "}
           verfügbar.
         </p>
       </FaqItem>
@@ -124,9 +125,9 @@ export default function About() {
       <FaqItem title="Wie kann ich den Kummerkasten kontaktieren?">
         <p>
           Du kannst uns eine Nachricht im Kummerkasten hinterlassen oder eine{" "}
-          <a href="mailto:dummy@email.com" className="text-slate-300 underline">
+          <Link href="mailto:dummy@email.com" className="text-slate-300 underline">
             Email schreiben
-          </a>
+          </Link>
           .
         </p>
       </FaqItem>

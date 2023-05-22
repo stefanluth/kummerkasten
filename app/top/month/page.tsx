@@ -1,6 +1,6 @@
+import { cookies } from "next/headers";
 import { prisma } from "@/utils/prisma";
 import Posts from "@/app/_components/posts";
-import { cookies } from "next/headers";
 
 export default async function TopMonth() {
   const password = cookies().get("password")?.value;
