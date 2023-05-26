@@ -20,3 +20,9 @@ model Vote {
   fingerprint String
   postId      String
 }
+
+model Report {
+  id          String @id @unique @default(uuid())
+  fingerprint String
+  postId      String
+}
