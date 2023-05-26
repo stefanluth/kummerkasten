@@ -16,9 +16,9 @@ export default function CodeOfConduct() {
         <li>Verantwortungsvoller Umgang: Manipuliere keine Diskussionen und verwende keine Bots.</li>
       </ol>
       <p className="font-bold">
-        Denke daran, dass der Zweck eines anonymen Message Boards darin besteht, offene Diskussionen und den
-        Austausch von Ideen zu ermöglichen. Durch die Befolgung dieses Verhaltenskodex können wir eine
-        einladende und integrative Gemeinschaft für alle Beteiligten fördern.
+        Denke daran, dass der Zweck eines anonymen Message Boards darin besteht, offene Diskussionen und den Austausch
+        von Ideen zu ermöglichen. Durch die Befolgung dieses Verhaltenskodex können wir eine einladende und integrative
+        Gemeinschaft für alle Beteiligten fördern.
       </p>
     </div>
   );

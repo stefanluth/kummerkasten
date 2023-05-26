@@ -20,9 +20,9 @@ button:focus,
 input:focus,
 select:focus,
 textarea:focus {
-  @apply focus:outline-none;
-  @apply focus:ring-2;
-  @apply focus:ring-zinc-500;
+  @apply focus: outline-none;
+  @apply focus: ring-2;
+  @apply focus: ring-zinc-500;
 }
 
 .overflow-wrap {

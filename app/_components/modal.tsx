@@ -1,5 +1,5 @@
-import { PropsWithChildren } from "react";
-import { XCircleIcon } from "@heroicons/react/24/outline";
+import { PropsWithChildren } from 'react';
+import { XCircleIcon } from '@heroicons/react/24/outline';
 
 type ModalProps = {
   title: string;
@@ -16,9 +16,7 @@ export function Modal(props: PropsWithChildren<ModalProps>) {
       <div className="relative w-auto min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
         <div className="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
           <div className="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
-            <h5 className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200">
-              {props.title}
-            </h5>
+            <h5 className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200">{props.title}</h5>
             <CloseButton close={props.close} />
           </div>
           <div className="relative flex-auto p-4">{props.children}</div>

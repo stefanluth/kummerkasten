@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { cookies } from "next/headers";
+import Link from 'next/link';
+import { cookies } from 'next/headers';
 
-import { prisma } from "@/utils/prisma";
-import { Voting } from "./voting";
+import { prisma } from '@/utils/prisma';
+import { Voting } from './voting';
 
 export async function SinglePost(props: { postId: string }) {
   const postPromise = prisma.post.findUnique({
@@ -11,7 +11,7 @@ export async function SinglePost(props: { postId: string }) {
     },
   });
 
-  const fingerprint = cookies().get("fingerprint")?.value;
+  const fingerprint = cookies().get('fingerprint')?.value;
   if (!fingerprint) {
     return <p>Something went wrong. Try refreshing the page.</p>;
   }

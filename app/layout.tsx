@@ -1,15 +1,15 @@
-import "./globals.css";
-import { Metadata } from "next";
-import { Inter } from "next/font/google";
+import './globals.css';
+import { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 
-import { NavBar } from "@/app/_components/navBar";
+import { NavBar } from '@/app/_components/navBar';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Kummerkasten",
+  title: 'Kummerkasten',
   description:
-    "Anonymes Nachrichten Brett um Fragen zu stellen, Meinungen zu äußern und Feedback zu geben, ohne sich zu outen.",
+    'Anonymes Nachrichten Brett um Fragen zu stellen, Meinungen zu äußern und Feedback zu geben, ohne sich zu outen.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

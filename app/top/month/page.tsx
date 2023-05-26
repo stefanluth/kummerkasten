@@ -1,9 +1,9 @@
-import { cookies } from "next/headers";
-import { prisma } from "@/utils/prisma";
-import Posts from "@/app/_components/posts";
+import { cookies } from 'next/headers';
+import { prisma } from '@/utils/prisma';
+import Posts from '@/app/_components/posts';
 
 export default async function TopMonth() {
-  const password = cookies().get("password")?.value;
+  const password = cookies().get('password')?.value;
   if (password !== process.env.UNLOCK_PASSWORD) return;
 
   const posts = await prisma.post.findMany({
@@ -13,7 +13,7 @@ export default async function TopMonth() {
       },
     },
     orderBy: {
-      upvotes: "desc",
+      upvotes: 'desc',
     },
   });
 

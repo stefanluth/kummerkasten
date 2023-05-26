@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useRef } from "react";
+import React, { useRef } from 'react';
 
 export default function Unlock() {
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -14,6 +14,7 @@ export default function Unlock() {
           const password = passwordRef.current?.value;
           if (!password) return;
           document.cookie = `password=${password}; path=/; max-age=86400; secure; samesite=strict;`;
+          window.location.href = '/';
         }}
       >
         Unlock

@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { HomeIcon, InformationCircleIcon, LockClosedIcon } from "@heroicons/react/24/outline";
-import { SetFingerprint } from "./setFingerprint";
+import Link from 'next/link';
+import { HomeIcon, InformationCircleIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import { SetFingerprint } from './setFingerprint';
 
 export function NavBar() {
   return (

@@ -1,4 +1,4 @@
-import { SinglePost } from "@/app/_components/singlePost";
+import { SinglePost } from '@/app/_components/singlePost';
 
 type SinglePostPageProps = {
   params: {

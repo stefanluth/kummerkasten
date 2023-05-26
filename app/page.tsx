@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers';
 
-import { prisma } from "@/utils/prisma";
-import { AddPost } from "@/app/_components/addPost";
-import { SinglePost } from "@/app/_components/singlePost";
+import { prisma } from '@/utils/prisma';
+import { AddPost } from '@/app/_components/addPost';
+import { SinglePost } from '@/app/_components/singlePost';
 
 export default async function Home() {
-  const password = cookies().get("password")?.value;
+  const password = cookies().get('password')?.value;
   if (password !== process.env.UNLOCK_PASSWORD) return;
 
   const posts = await prisma.post.findMany({
     orderBy: {
-      createdAt: "desc",
+      createdAt: 'desc',
     },
   });
 

@@ -1,10 +1,10 @@
-import { createHash } from "crypto";
+import { createHash } from 'crypto';
 
 export function createFingerprint(w: Window) {
-  if (w.navigator.webdriver) return "webdriver";
-  if (w.navigator.languages === undefined) return "noLanguages";
+  if (w.navigator.webdriver) return 'webdriver';
+  if (w.navigator.languages === undefined) return 'noLanguages';
 
-  return createHash("sha256")
+  return createHash('sha256')
     .update(
       new Date().getTimezoneOffset() +
         w.navigator.userAgent +
@@ -20,17 +20,17 @@ export function createFingerprint(w: Window) {
         w.navigator.language +
         w.navigator.maxTouchPoints +
         w.navigator.pdfViewerEnabled +
-        getRenderer()
+        getRenderer(),
     )
-    .digest("hex");
+    .digest('hex');
 }
 
 function getRenderer() {
-  const gl = document.createElement("canvas").getContext("webgl");
-  if (!gl) return "noWebGL";
+  const gl = document.createElement('canvas').getContext('webgl');
+  if (!gl) return 'noWebGL';
 
-  const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-  if (!debugInfo) return "noDebugInfo";
+  const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+  if (!debugInfo) return 'noDebugInfo';
 
   const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
   return renderer;

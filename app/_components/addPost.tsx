@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, MIN_CONTENT_LENGTH, MAX_CONTENT_LENGTH } from "@/utils/constants";
-import { addPost } from "../_actions";
+import { MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, MIN_CONTENT_LENGTH, MAX_CONTENT_LENGTH } from '@/utils/constants';
+import { addPost } from '../_actions';
 
 export function AddPost(): JSX.Element {
   return (
