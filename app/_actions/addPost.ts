@@ -9,7 +9,7 @@ import { MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, MIN_CONTENT_LENGTH, MAX_CONTENT_LEN
 
 export async function addPost(formData: FormData) {
   const password = cookies().get('password')?.value;
-  if (password !== process.env.UNLOCK_PASSWORD) return;
+  if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const title = formData.get('title') as string;
   const content = formData.get('content') as string;

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 import { prisma } from '@/utils/prisma';
 import { AddPost } from '@/app/_components/addPost';
@@ -8,7 +9,7 @@ import { SinglePost } from '@/app/_components/singlePost';
 
 export default async function Home() {
   const password = cookies().get('password')?.value;
-  if (password !== process.env.UNLOCK_PASSWORD) return;
+  if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
     orderBy: {
