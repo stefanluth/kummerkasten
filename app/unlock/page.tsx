@@ -6,7 +6,7 @@ export default function Unlock() {
   const passwordRef = useRef<HTMLInputElement>(null);
   return (
     <div className="flex flex-col max-w-lg p-4 gap-2 mx-auto">
-      <h1>Enter Password</h1>
+      <h1>Passwort eingeben</h1>
       <input type="password" name="password" id="password" ref={passwordRef} placeholder="Password" />
       <button
         className="w-fit h-8 px-2 rounded-md bg-zinc-600"
@@ -17,7 +17,7 @@ export default function Unlock() {
           window.location.href = '/';
         }}
       >
-        Unlock
+        Absenden
       </button>
     </div>
   );

@@ -34,7 +34,7 @@ um die Nachrichten frei zu schalten.
 
 ## Woher kriege ich das Passwort?
 
-Das Password sollte dir von deinem Teamleiter:in oder einer anderen Person,
+Das Passwort sollte dir von deinem Teamleiter:in oder einer anderen Person,
 die Zugang zum Kummerkasten hat, mitgeteilt werden.
 
 ## Wie kann ich eine Nachricht melden?

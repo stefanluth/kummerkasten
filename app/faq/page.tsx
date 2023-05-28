@@ -47,7 +47,7 @@ export default function About() {
       </FaqItem>
       <FaqItem title="Woher kriege ich das Passwort?">
         <p>
-          Das Password sollte dir von deinem Teamleiter:in oder einer anderen Person, die Zugang zum Kummerkasten hat,
+          Das Passwort sollte dir von deinem Teamleiter:in oder einer anderen Person, die Zugang zum Kummerkasten hat,
           mitgeteilt werden.
         </p>
       </FaqItem>
