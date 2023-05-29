@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import { prisma } from '@/utils/prisma';
 import { Voting } from './voting';
 import { reportPost } from '../_actions';
+import NotFound from '../not-found';
 
 export async function SinglePost(props: { postId: string }) {
   const fingerprint = cookies().get('fingerprint')?.value;
@@ -35,7 +36,7 @@ export async function SinglePost(props: { postId: string }) {
   const [post, voted, reported] = await Promise.all([postPromise, votedPromise, reportedPromise]);
 
   if (!post) {
-    return <p>Post not found.</p>;
+    return <NotFound />;
   }
 
   const votingDisabled = !!voted;
