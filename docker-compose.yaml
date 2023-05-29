@@ -1,8 +1,25 @@
 version: '3.6'
 services:
   app:
+    depends_on:
+      - db
     build: .
     ports:
       - '3000:3000'
     environment:
       - UNLOCK_PASSWORD=${UNLOCK_PASSWORD}
+
+  db:
+    image: postgres:14
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=kummerkasten
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres-data:

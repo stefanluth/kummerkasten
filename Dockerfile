@@ -3,7 +3,6 @@ WORKDIR /app
 COPY . .
 RUN npm install
 RUN npm run build
-RUN npx prisma migrate deploy
 RUN npx prisma generate
-CMD ["npm", "run", "start"]
 EXPOSE 3000
+CMD ["npm", "run", "start:prod"]
