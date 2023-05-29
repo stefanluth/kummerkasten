@@ -19,9 +19,6 @@ export default async function TopWeek() {
     },
   });
 
-  if (posts.length === 0)
-    return <div className="flex p-4 justify-center">Keine Posts in diesem Zeitraum gefunden.</div>;
-
   return (
     <>
       {/* @ts-expect-error Server Component */}
