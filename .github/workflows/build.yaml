@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker Image for AMD64
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64
+          load: true
+          tags: kummerkasten:amd64
+
+      - name: Show Docker Images
+        run: docker images
+
+      - name: Save Docker Image to tar File
+        run: docker save kummerkasten:amd64 > kummerkasten.tar
+
+      - name: Stash Build Result
+        uses: actions/upload-artifact@v3
+        with:
+          name: docker_build_results
+          path: kummerkasten.tar
+          retention-days: 1
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: kummerkasten.tar
