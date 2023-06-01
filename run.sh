@@ -1,12 +1,14 @@
 #!/bin/bash
 
-WORDS=4
-export UNLOCK_PASSWORD=$(python3 utils/generate-passphrase.py $WORDS)
+UNLOCK_WORDS=3
+
+export UNLOCK_PASSWORD=$(python3 utils/generate-passphrase.py $UNLOCK_WORDS)
+
 
 echo "===================================="
-echo "Password is:"
+echo "Unlock password is:"
 echo "===================================="
 echo $UNLOCK_PASSWORD
 echo "===================================="
 
-docker-compose up
+npm start
