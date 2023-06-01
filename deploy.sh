@@ -1,9 +1,7 @@
 #!/bin/bash
 
 WORDS=4
-export UNLOCK_PASSWORD=$(curl -sSf "https://makemeapassword.ligos.net/api/v1/passphrase/plain?pc=1&wc=${WORDS}&maxCh=64" \
-  | sed 's/ /-/g' | tr -d '\r')
-
+export UNLOCK_PASSWORD=$(python3 utils/generate-passphrase.py $WORDS)
 
 echo "===================================="
 echo "Password is:"
