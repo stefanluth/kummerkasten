@@ -11,4 +11,5 @@ echo "===================================="
 echo $UNLOCK_PASSWORD
 echo "===================================="
 
+npm run prepare:db
 npm start
