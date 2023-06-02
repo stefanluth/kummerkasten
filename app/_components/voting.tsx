@@ -43,39 +43,43 @@ export function Voting({ postId, upvotes, voted }: VotingProps) {
     const increaseVote = isUpvote ? post.upvotes + 1 : post.upvotes - 1;
     const undoAndIncreaseVote = isUpvote ? post.upvotes + 2 : post.upvotes - 2;
 
-    if (sameVote) {
-      await prisma.post.update({
-        where: {
-          id: postId,
-        },
-        data: {
-          upvotes: undoVote,
-        },
-      });
+    switch (true) {
+      case sameVote:
+        await prisma.post.update({
+          where: {
+            id: postId,
+          },
+          data: {
+            upvotes: undoVote,
+          },
+        });
+        await prisma.vote.delete({
+          where: {
+            id: vote?.id
+          }
+        });
+        break;
 
-      await prisma.vote.delete({
-        where: {
-          id: vote?.id
-        }
-      })
-    } else if (firstVote) {
-      await prisma.post.update({
-        where: {
-          id: postId,
-        },
-        data: {
-          upvotes: increaseVote,
-        },
-      });
-    } else {
-      await prisma.post.update({
-        where: {
-          id: postId,
-        },
-        data: {
-          upvotes: undoAndIncreaseVote,
-        },
-      });
+      case firstVote:
+        await prisma.post.update({
+          where: {
+            id: postId,
+          },
+          data: {
+            upvotes: increaseVote,
+          },
+        });
+        break;
+
+      default:
+        await prisma.post.update({
+          where: {
+            id: postId,
+          },
+          data: {
+            upvotes: undoAndIncreaseVote,
+          },
+        });
     }
 
     vote = await prisma.vote.findFirst({
