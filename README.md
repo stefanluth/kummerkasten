@@ -114,5 +114,11 @@ Auf der `/unlock` Seite dann das gewählte Passwort eingeben.
 ### Production
 
 ```shell
-bash ./deploy.sh
+docker-compose up
+```
+
+oder ohne das Repo zu klonen:
+
+```shell
+docker run -p 3000:3000 ghcr.io/stefanluth/kummerkasten:main
 ```
