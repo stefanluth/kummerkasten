@@ -24,6 +24,9 @@ export function NavBar() {
           <Link href="/top/all" title="All" className="h-6 px-2 rounded-md">
             <p className="text-zinc-100">All</p>
           </Link>
+          <Link href="/nsfw" title="NSFW" className="h-6 px-2 rounded-md">
+            <p className="text-zinc-100">NSFW</p>
+          </Link>
         </div>
         <h1 className="text-2xl font-bold mx-8 text-zinc-100 select-none">Kummerkasten</h1>
         <div className="flex w-full gap-4 justify-end">
