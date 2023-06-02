@@ -120,9 +120,9 @@ export default function About() {
       <FaqItem title="Wie kann ich den Kummerkasten kontaktieren?">
         <p>
           Du kannst uns eine Nachricht im Kummerkasten hinterlassen oder eine{' '}
-          <Link href="mailto:dummy@email.com" className="text-slate-300 underline">
+          <a href="mailto:dummy@email.com" className="text-slate-300 underline">
             Email schreiben
-          </Link>
+          </a>
           .
         </p>
       </FaqItem>
