@@ -39,12 +39,11 @@ export async function SinglePost(props: { postId: string }) {
     return <NotFound />;
   }
 
-  const votingDisabled = !!voted;
   const reportingDisabled = !!reported;
 
   return (
     <div className="flex p-2 gap-4">
-      <Voting postId={post.id} upvotes={post.upvotes} disabled={votingDisabled} fingerprint={fingerprint} />
+      <Voting postId={post.id} upvotes={post.upvotes} voted={!!voted} fingerprint={fingerprint} />
       <div id={post.id.toString()} className="flex flex-col w-11/12 gap-1 justify-between">
         <div className="flex flex-col">
           <div className="flex gap-2 items-baseline justify-between">
