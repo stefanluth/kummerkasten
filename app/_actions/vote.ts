@@ -33,44 +33,36 @@ export async function vote(formData: FormData) {
   const increaseVote = isUpvote ? post.upvotes + 1 : post.upvotes - 1;
   const undoAndIncreaseVote = isUpvote ? post.upvotes + 2 : post.upvotes - 2;
 
+  let newUpvotes;
+
   switch (true) {
     case sameVote:
-      await prisma.post.update({
-        where: {
-          id: postId,
-        },
-        data: {
-          upvotes: undoVote,
-        },
-      });
+      newUpvotes = undoVote;
+
       await prisma.vote.delete({
         where: {
           id: vote?.id
         }
       });
+
       break;
 
     case firstVote:
-      await prisma.post.update({
-        where: {
-          id: postId,
-        },
-        data: {
-          upvotes: increaseVote,
-        },
-      });
+      newUpvotes = increaseVote;
       break;
 
     default:
-      await prisma.post.update({
-        where: {
-          id: postId,
-        },
-        data: {
-          upvotes: undoAndIncreaseVote,
-        },
-      });
+      newUpvotes = undoAndIncreaseVote;
   }
+
+  await prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      upvotes: newUpvotes,
+    },
+  });
 
   vote = await prisma.vote.findFirst({
     where: {
