@@ -1,6 +1,7 @@
 import { prisma } from "@/utils/prisma";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { VoteValuesEnum } from "@/utils";
 
 export async function vote(formData: FormData) {
   'use server';
@@ -26,8 +27,8 @@ export async function vote(formData: FormData) {
     },
   });
 
-  const sameVote = vote?.isUpvote === isUpvote;
-  const firstVote = vote?.isUpvote === undefined;
+  const sameVote = (isUpvote && vote?.value === VoteValuesEnum.Upvote) || (!isUpvote && vote?.value === VoteValuesEnum.Downvote);
+  const firstVote = vote?.value === VoteValuesEnum.VoteRemoved || vote?.value === undefined;
 
   const undoVote = isUpvote ? post.upvotes - 1 : post.upvotes + 1;
   const increaseVote = isUpvote ? post.upvotes + 1 : post.upvotes - 1;
@@ -37,21 +38,7 @@ export async function vote(formData: FormData) {
 
   switch (true) {
     case sameVote:
-      await prisma.post.update({
-        where: {
-          id: postId,
-        },
-        data: {
-          upvotes: undoVote,
-        },
-      });
-
-      await prisma.vote.delete({
-        where: {
-          id: vote?.id
-        }
-      });
-
+      newUpvotes = undoVote;
       break;
 
     case firstVote:
@@ -77,7 +64,7 @@ export async function vote(formData: FormData) {
       fingerprint,
     },
   });
-
+  
   if (vote) {
     await prisma.vote.update({
       where: {
@@ -86,15 +73,19 @@ export async function vote(formData: FormData) {
       data: {
         postId,
         fingerprint,
-        isUpvote
+        value: sameVote === true ? VoteValuesEnum.VoteRemoved
+        : isUpvote === true ? VoteValuesEnum.Upvote
+        : VoteValuesEnum.Downvote
       },
     });
-  } else if (!sameVote) {
+  } else {
     await prisma.vote.create({
       data: {
         postId,
         fingerprint,
-        isUpvote
+        value: isUpvote === true
+        ? VoteValuesEnum.Upvote
+        : VoteValuesEnum.Downvote
       },
     });
   }
