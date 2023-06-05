@@ -10,6 +10,7 @@ UNLOCK_WORDS=3
 
 export UNLOCK_PASSWORD=$(python3 utils/generate-passphrase.py $UNLOCK_WORDS)
 
+echo $UNLOCK_PASSWORD > unlock-password
 
 echo "===================================="
 echo "Unlock password is:"

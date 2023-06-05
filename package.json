@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "UNLOCK_PASSWORD=$(cat ./unlock-password) next start",
     "lint": "next lint",
     "tests": "npx playwright test",
     "prepare:db": "prisma migrate deploy && prisma db push && prisma generate"
