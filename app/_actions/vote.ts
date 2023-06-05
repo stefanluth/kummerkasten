@@ -64,7 +64,7 @@ export async function vote(formData: FormData) {
       fingerprint,
     },
   });
-  
+
   if (vote) {
     await prisma.vote.update({
       where: {
