@@ -30,19 +30,16 @@ export async function reportPost(formData: FormData) {
     },
   });
 
-  const reports = await prisma.report.count({
+  await prisma.post.update({
     where: {
-      postId,
+      id: postId,
+    },
+    data: {
+      reports: {
+        increment: 1,
+      },
     },
   });
-
-  if (reports >= config.reportsToDeletePost) {
-    await prisma.post.delete({
-      where: {
-        id: postId,
-      },
-    });
-  }
 
   revalidatePath('/');
   redirect('/');

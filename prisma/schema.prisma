@@ -12,6 +12,7 @@ model Post {
   title     String
   content   String
   upvotes   Int      @default(0)
+  reports   Int      @default(0)
   createdAt DateTime @default(now())
 }
 

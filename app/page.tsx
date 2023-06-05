@@ -6,12 +6,18 @@ import { redirect } from 'next/navigation';
 import { prisma } from '@/utils/prisma';
 import { AddPost } from '@/app/_components/addPost';
 import Posts from '@/app/_components/posts';
+import { REPORTS_TO_HIDE_POST } from '@/utils';
 
 export default async function Home() {
   const password = cookies().get('password')?.value;
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
+    where: {
+      reports: {
+        lt: REPORTS_TO_HIDE_POST,
+      },
+    },
     orderBy: {
       createdAt: 'desc',
     },
