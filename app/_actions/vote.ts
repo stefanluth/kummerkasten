@@ -37,7 +37,14 @@ export async function vote(formData: FormData) {
 
   switch (true) {
     case sameVote:
-      newUpvotes = undoVote;
+      await prisma.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          upvotes: undoVote,
+        },
+      });
 
       await prisma.vote.delete({
         where: {
