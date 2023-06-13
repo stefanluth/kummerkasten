@@ -1,0 +1,47 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  UNLOCK_PASSWORD: test
+
+jobs:
+  test:
+    name: Test Project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Install Playwright
+        run: |
+          npx playwright install --with-deps
+          npx playwright install-deps
+
+      - name: Create Unlock File
+        run: echo $UNLOCK_PASSWORD > unlock-password
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Prepare Database
+        run: npm run prepare:db
+
+      - name: Run Server
+        run: npm start &
+
+      - name: Wait for Server
+        run: sleep 10
+
+      - name: Run Tests
+        run: npm run tests
+
+      - name: Stop Server
+        run: kill -9 $(lsof -t -i:3000)

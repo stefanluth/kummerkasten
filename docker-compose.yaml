@@ -1,8 +1,7 @@
 version: '3.6'
 services:
   app:
+    container_name: kummerkasten
     build: .
     ports:
       - '3000:3000'
-    environment:
-      - UNLOCK_PASSWORD=${UNLOCK_PASSWORD}

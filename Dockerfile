@@ -10,12 +10,16 @@ COPY tailwind.config.js .
 COPY tsconfig.json .
 COPY run.sh .
 
-COPY app ./app
 COPY prisma ./prisma
 COPY utils ./utils
+COPY app ./app
 
 RUN npm install
 RUN npm run build
 
 EXPOSE 3000
+HEALTHCHECK --interval=15s --timeout=5s \
+    CMD curl -L -f http://localhost:3000/ || exit 1
+
+
 CMD ["sh", "/kummerkasten/run.sh"]

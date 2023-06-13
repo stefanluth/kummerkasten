@@ -37,3 +37,11 @@ next-env.d.ts
 # prisma
 prisma/migrations/
 *.db
+
+# playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# project
+unlock-password
