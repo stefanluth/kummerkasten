@@ -1,0 +1,154 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: ghcr.io
+  REPOSITORY: kummerkasten
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [amd64, arm64]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          load: true
+          platforms: linux/${{ matrix.arch }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.arch }}
+
+      - name: Show Docker Image
+        run: docker images
+
+      - name: Save Docker Image to tar File
+        run: docker save ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.arch }} -o ${{ env.REPOSITORY }}-${{ matrix.arch }}.tar
+
+      - name: Stash Build Result
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.REPOSITORY }}-${{ matrix.arch }}-build
+          path: ${{ env.REPOSITORY }}-${{ matrix.arch }}.tar
+          retention-days: 1
+
+  test:
+    name: Test Docker Image
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      matrix:
+        arch: [amd64]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Unstash Build Results
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.REPOSITORY }}-${{ matrix.arch }}-build
+          path: ./
+
+      - name: Load Docker Image
+        run: docker load < ${{ env.REPOSITORY }}-${{ matrix.arch }}.tar
+
+      - name: Show Docker Image
+        run: docker images
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run: |
+          npx playwright install --with-deps
+          npx playwright install-deps
+
+      - name: Run Container
+        run: docker run -d --name kummerkasten -p 3000:3000 --network "host" ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.arch }}
+
+      - name: Show Running Containers
+        run: docker ps -a
+
+      - name: Wait 10s for Container to Start
+        run: sleep 10
+
+      - name: Get Unlock Password
+        run: docker cp "kummerkasten:/kummerkasten/unlock-password" "./unlock-password"
+
+      - name: Run Tests
+        run: npm run tests
+
+      - name: Stop Container
+        run: docker stop $(docker ps -q)
+
+  push:
+    name: Push Docker Image
+    runs-on: ubuntu-latest
+    needs: test
+    strategy:
+      matrix:
+        arch: [amd64, arm64]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Unstash Build Results
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.REPOSITORY }}-${{ matrix.arch }}-build
+          path: ./
+
+      - name: Load Docker Image
+        run: docker load < ${{ env.REPOSITORY }}-${{ matrix.arch }}.tar
+
+      - name: Show Docker Image
+        run: docker images
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Docker image
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.arch }}
+
+  manifest:
+    name: Create Docker Manifest
+    runs-on: ubuntu-latest
+    needs: push
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Docker Manifest
+        run: |
+          docker manifest create \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:amd64 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:arm64
+          docker manifest push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
