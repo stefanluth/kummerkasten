@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "UNLOCK_PASSWORD=$(cat ./unlock-password) next start",
     "lint": "next lint",
-    "tests": "npx playwright test",
+    "tests": "UNLOCK_PASSWORD=$(cat ./unlock-password) npx playwright test",
     "prepare:db": "prisma migrate deploy && prisma db push && prisma generate"
   },
   "dependencies": {

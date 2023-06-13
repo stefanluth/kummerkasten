@@ -42,3 +42,6 @@ prisma/migrations/
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# project
+unlock-password
