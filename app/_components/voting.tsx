@@ -5,25 +5,25 @@ type VotingProps = {
   postId: string;
   upvotes: number;
   fingerprint: string;
-  disabled: boolean;
+  voted: boolean;
 };
 
-export function Voting({ postId, upvotes, disabled }: VotingProps) {
+export function Voting({ postId, upvotes, voted }: VotingProps) {
   return (
     <div className="flex flex-col justify-center">
       <form>
         <input type="hidden" name="postId" value={postId} />
         <input type="hidden" name="upvote" value="true" />
-        <button className="flex flex-col items-center gap-1" disabled={disabled} formAction={vote}>
-          <ChevronUpIcon className={`w-5 ${disabled ? 'text-zinc-600 cursor-not-allowed' : null}`} />
+        <button className="flex flex-col items-center gap-1" formAction={vote}>
+          <ChevronUpIcon className={`w-5 ${voted ? 'text-zinc-600' : null}`} />
         </button>
       </form>
       <p className="text-center">{upvotes}</p>
       <form>
         <input type="hidden" name="postId" value={postId} />
         <input type="hidden" name="upvote" value="false" />
-        <button className="flex flex-col items-center gap-1" disabled={disabled} formAction={vote}>
-          <ChevronDownIcon className={`w-5 ${disabled ? 'text-zinc-600 cursor-not-allowed' : null}`} />
+        <button className="flex flex-col items-center gap-1" formAction={vote}>
+          <ChevronDownIcon className={`w-5 ${voted ? 'text-zinc-600' : null}`} />
         </button>
       </form>
     </div>

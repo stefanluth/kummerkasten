@@ -19,6 +19,7 @@ model Vote {
   id          String @id @unique @default(uuid())
   fingerprint String
   postId      String
+  value       Int    @default(0)
 }
 
 model Report {
