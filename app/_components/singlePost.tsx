@@ -23,6 +23,10 @@ export async function SinglePost(props: { postId: string }) {
     where: {
       fingerprint,
       postId: props.postId,
+      OR: [
+        { value: 1 },
+        { value: 2 }
+      ],
     },
   });
 
