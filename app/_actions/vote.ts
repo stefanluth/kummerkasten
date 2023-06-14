@@ -1,7 +1,7 @@
 import { prisma } from "@/utils/prisma";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { VoteValuesEnum } from "@/utils";
+import { Vote } from "@/utils";
 
 export async function vote(formData: FormData) {
   'use server';
@@ -27,8 +27,8 @@ export async function vote(formData: FormData) {
     },
   });
 
-  const sameVote = (isUpvote && vote?.value === VoteValuesEnum.Upvote) || (!isUpvote && vote?.value === VoteValuesEnum.Downvote);
-  const firstVote = vote?.value === VoteValuesEnum.VoteRemoved || vote?.value === undefined;
+  const sameVote = (isUpvote && vote?.value === Vote.Up) || (!isUpvote && vote?.value === Vote.Down);
+  const firstVote = vote?.value === Vote.Remove || vote?.value === undefined;
 
   const undoVote = isUpvote ? post.upvotes - 1 : post.upvotes + 1;
   const increaseVote = isUpvote ? post.upvotes + 1 : post.upvotes - 1;
@@ -73,9 +73,9 @@ export async function vote(formData: FormData) {
       data: {
         postId,
         fingerprint,
-        value: sameVote === true ? VoteValuesEnum.VoteRemoved
-        : isUpvote === true ? VoteValuesEnum.Upvote
-        : VoteValuesEnum.Downvote
+        value: sameVote === true ? Vote.Remove
+        : isUpvote === true ? Vote.Up
+        : Vote.Down
       },
     });
   } else {
@@ -84,8 +84,8 @@ export async function vote(formData: FormData) {
         postId,
         fingerprint,
         value: isUpvote === true
-        ? VoteValuesEnum.Upvote
-        : VoteValuesEnum.Downvote
+        ? Vote.Up
+        : Vote.Down
       },
     });
   }
