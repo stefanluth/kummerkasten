@@ -59,6 +59,12 @@ export default function About() {
             Verhaltensregeln
           </Link>{' '}
           verstößt.
+          <br />
+          Bis dahin können gemeldete Nachrichten unter{' '}
+          <Link href="/reported" className="text-slate-300 underline">
+            /reported
+          </Link>{' '}
+          eingesehen werden.
         </p>
       </FaqItem>
       <FaqItem title="Wie kann ich eine Nachricht löschen?">
