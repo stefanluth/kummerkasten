@@ -11,7 +11,7 @@ export function Modal(props: PropsWithChildren<ModalProps>) {
     <div
       className={`fixed left-0 top-0 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none bg-neutral-900 bg-opacity-60`}
       tabIndex={-1}
-      onClick={props.close}
+      // onClick={props.close}
     >
       <div className="relative w-auto min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
         <div className="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">

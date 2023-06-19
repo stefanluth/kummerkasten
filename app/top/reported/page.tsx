@@ -11,12 +11,6 @@ const TopReported = async () => {
   const password = cookies().get('password')?.value;
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
-  const confirmation = cookies().get('confirmationSeeReported')?.value;
-
-  if (confirmation !== 'true') {
-    return <Confirmation />;
-  }
-
   const posts = await prisma.post.findMany({
     where: {
       reports: {
@@ -30,6 +24,7 @@ const TopReported = async () => {
 
   return (
     <>
+      <Confirmation />
       {/* @ts-expect-error Server Component */}
       <Posts posts={posts} />
     </>
