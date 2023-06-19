@@ -26,7 +26,7 @@ jobs:
           npx playwright install-deps
 
       - name: Create Unlock File
-        run: echo $UNLOCK_PASSWORD > unlock-password
+        run: echo ${{ env.UNLOCK_PASSWORD }} > unlock-password
 
       - name: Build Project
         run: npm run build
