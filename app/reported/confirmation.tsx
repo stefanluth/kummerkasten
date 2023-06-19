@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Modal } from '@/app/_components/modal';
 
-const Confirmation = () => {
+export default function Confirmation() {
   const [show, setShow] = useState(true);
 
   if (!show) return null;
@@ -45,6 +45,4 @@ const Confirmation = () => {
       </div>
     </Modal>
   );
-};
-
-export default Confirmation;
+}

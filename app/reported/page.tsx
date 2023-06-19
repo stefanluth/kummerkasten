@@ -7,7 +7,7 @@ import config from '@/config.json';
 import { prisma } from '@/utils/prisma';
 import Confirmation from './confirmation';
 
-const Reported = async () => {
+export default async function Reported() {
   const password = cookies().get('password')?.value;
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
@@ -29,6 +29,4 @@ const Reported = async () => {
       <Posts posts={posts} />
     </>
   );
-};
-
-export default Reported;
+}
