@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 import { prisma } from '@/utils/prisma';
 import { AddPost } from '@/app/_components/addPost';
-import { SinglePost } from '@/app/_components/singlePost';
+import Posts from '@/app/_components/posts';
 
 export default async function Home() {
   const password = cookies().get('password')?.value;
@@ -22,10 +22,8 @@ export default async function Home() {
       <div className="flex flex-col min-w-[30rem] max-w-6xl mx-auto">
         <AddPost />
         <div className="flex flex-col gap-2 divide-y divide-zinc-700">
-          {posts.map((post) => (
-            /* @ts-expect-error Server Component */
-            <SinglePost key={post.id} postId={post.id} />
-          ))}
+          {/* @ts-expect-error Server Component */}
+          <Posts posts={posts} />
         </div>
       </div>
     </div>

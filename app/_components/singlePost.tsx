@@ -1,44 +1,36 @@
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 
+import { Post } from '@prisma/client';
 import { prisma } from '@/utils/prisma';
-import { Voting } from './voting';
-import { reportPost } from '../_actions';
-import NotFound from '../not-found';
+import { reportPost } from '@/app/_actions';
+import { Voting } from '@/app/_components/voting';
 
-export async function SinglePost(props: { postId: string }) {
+type SinglePostProps = {
+  post: Post;
+};
+
+export async function SinglePost({ post }: SinglePostProps) {
   const fingerprint = cookies().get('fingerprint')?.value;
   if (!fingerprint) {
     return <p>Something went wrong. Try refreshing the page.</p>;
   }
 
-  // TODO: Remove redundant query
-  const postPromise = prisma.post.findUnique({
-    where: {
-      id: props.postId,
-    },
-  });
-
   const votedPromise = prisma.vote.findFirst({
     where: {
       fingerprint,
-      postId: props.postId,
+      postId: post.id,
     },
   });
 
   const reportedPromise = prisma.report.findFirst({
     where: {
       fingerprint,
-      postId: props.postId,
+      postId: post.id,
     },
   });
 
-  const [post, voted, reported] = await Promise.all([postPromise, votedPromise, reportedPromise]);
-
-  if (!post) {
-    return <NotFound />;
-  }
-
+  const [voted, reported] = await Promise.all([votedPromise, reportedPromise]);
   const votingDisabled = !!voted;
   const reportingDisabled = !!reported;
 

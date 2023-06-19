@@ -12,7 +12,7 @@ export default async function Posts({ posts }: { posts: Post[] }) {
     <div className="flex flex-col gap-2 divide-y divide-zinc-700">
       {posts.map((post) => (
         /* @ts-expect-error Server Component */
-        <SinglePost key={post.id} postId={post.id} />
+        <SinglePost key={post.id} post={post} />
       ))}
     </div>
   );
