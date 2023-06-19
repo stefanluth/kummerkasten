@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, MIN_CONTENT_LENGTH, MAX_CONTENT_LENGTH } from '@/utils/constants';
-import { addPost } from '../_actions';
+import config from '@/config.json';
+import { addPost } from '@/app/_actions';
 
 export function AddPost(): JSX.Element {
   return (
@@ -13,8 +13,8 @@ export function AddPost(): JSX.Element {
           id="title"
           name="title"
           type="text"
-          minLength={MIN_TITLE_LENGTH}
-          maxLength={MAX_TITLE_LENGTH}
+          minLength={config.minTitleLength}
+          maxLength={config.maxTitleLength}
           autoComplete="on"
           autoCorrect="on"
           required
@@ -28,8 +28,8 @@ export function AddPost(): JSX.Element {
           id="content"
           name="content"
           rows={5}
-          minLength={MIN_CONTENT_LENGTH}
-          maxLength={MAX_CONTENT_LENGTH}
+          minLength={config.minContentLength}
+          maxLength={config.maxContentLength}
           autoComplete="on"
           autoCorrect="on"
           required

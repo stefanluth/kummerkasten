@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/utils/prisma';
 
-import { MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, MIN_CONTENT_LENGTH, MAX_CONTENT_LENGTH } from '@/utils/constants';
+import config from '@/config.json';
 
 export async function addPost(formData: FormData) {
   const password = cookies().get('password')?.value;
@@ -14,19 +14,12 @@ export async function addPost(formData: FormData) {
   const title = formData.get('title') as string;
   const content = formData.get('content') as string;
 
-  if (title.length < MIN_TITLE_LENGTH) {
-    return;
-  }
+  const titleTooShort = title.length < config.minTitleLength;
+  const titleTooLong = title.length > config.maxTitleLength;
+  const contentTooShort = content.length < config.minContentLength;
+  const contentTooLong = content.length > config.maxContentLength;
 
-  if (title.length > MAX_TITLE_LENGTH) {
-    return;
-  }
-
-  if (content.length < MIN_CONTENT_LENGTH) {
-    return;
-  }
-
-  if (content.length > MAX_CONTENT_LENGTH) {
+  if (titleTooShort || titleTooLong || contentTooShort || contentTooLong) {
     return;
   }
 
