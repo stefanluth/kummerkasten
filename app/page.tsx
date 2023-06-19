@@ -15,7 +15,7 @@ export default async function Home() {
   const posts = await prisma.post.findMany({
     where: {
       reports: {
-        lt: config.reportsToDeletePost,
+        lt: config.reportsToHidePost,
       },
     },
     orderBy: {

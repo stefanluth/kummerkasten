@@ -14,7 +14,7 @@ const TopReported = async () => {
   const posts = await prisma.post.findMany({
     where: {
       reports: {
-        gte: config.reportsToDeletePost,
+        gte: config.reportsToHidePost,
       },
     },
     orderBy: {

@@ -15,7 +15,7 @@ export default async function TopMonth() {
         gte: new Date(new Date().setDate(new Date().getDate() - 30)),
       },
       reports: {
-        lt: config.reportsToDeletePost,
+        lt: config.reportsToHidePost,
       },
     },
     orderBy: {

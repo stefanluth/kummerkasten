@@ -15,7 +15,7 @@ export default async function TopYear() {
         gte: new Date(new Date().setDate(new Date().getDate() - 365)),
       },
       reports: {
-        lt: config.reportsToDeletePost,
+        lt: config.reportsToHidePost,
       },
     },
     orderBy: {
