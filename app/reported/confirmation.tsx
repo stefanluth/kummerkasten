@@ -11,7 +11,7 @@ const Confirmation = () => {
   const close = () => setShow(false);
 
   return (
-    <Modal title="Gemeldete Posts anzeigen" close={close}>
+    <Modal title="Gemeldete Nachrichten anzeigen" close={close}>
       <div className="flex flex-col max-w-lg p-4 gap-2 mx-auto">
         <form onSubmit={close}>
           <div className="bg-zinc-700 rounded-lg p-4 flex flex-col items-center">
