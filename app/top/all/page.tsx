@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 
 import { prisma } from '@/utils/prisma';
 import Posts from '@/app/_components/posts';
-import { REPORTS_TO_HIDE_POST } from '@/utils';
+import config from '@/config.json';
 
 export default async function TopDay() {
   const password = cookies().get('password')?.value;
@@ -12,7 +12,7 @@ export default async function TopDay() {
   const posts = await prisma.post.findMany({
     where: {
       reports: {
-        lt: REPORTS_TO_HIDE_POST,
+        lt: config.reportsToDeletePost,
       },
     },
     orderBy: {

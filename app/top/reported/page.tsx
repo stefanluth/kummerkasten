@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import Posts from '@/app/_components/posts';
-import { REPORTS_TO_HIDE_POST } from '@/utils';
+import config from '@/config.json';
 import { prisma } from '@/utils/prisma';
 import Confirmation from './confirmation';
 
@@ -20,7 +20,7 @@ const TopReported = async () => {
   const posts = await prisma.post.findMany({
     where: {
       reports: {
-        gte: REPORTS_TO_HIDE_POST,
+        gte: config.reportsToDeletePost,
       },
     },
     orderBy: {

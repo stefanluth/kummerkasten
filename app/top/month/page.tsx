@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 
 import { prisma } from '@/utils/prisma';
 import Posts from '@/app/_components/posts';
-import { REPORTS_TO_HIDE_POST } from '@/utils';
+import config from '@/config.json';
 
 export default async function TopMonth() {
   const password = cookies().get('password')?.value;
@@ -15,7 +15,7 @@ export default async function TopMonth() {
         gte: new Date(new Date().setDate(new Date().getDate() - 30)),
       },
       reports: {
-        lt: REPORTS_TO_HIDE_POST,
+        lt: config.reportsToDeletePost,
       },
     },
     orderBy: {
