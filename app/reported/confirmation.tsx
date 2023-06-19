@@ -31,8 +31,8 @@ const Confirmation = () => {
             </svg>
 
             <p className="text-white mb-2 text-center">
-              Durch das Bestätigen werden gemeldete Posts angezeigt, die möglicherweise als verstörend oder unangebracht
-              empfunden werden können.
+              Durch das Bestätigen werden gemeldete Nachrichten angezeigt, die möglicherweise als verstörend oder
+              unangebracht empfunden werden können.
             </p>
             <button
               type="submit"
