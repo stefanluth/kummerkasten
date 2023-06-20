@@ -30,7 +30,13 @@ export async function SinglePost({ post }: SinglePostProps) {
     },
   });
 
-  const [voted, reported] = await Promise.all([votedPromise, reportedPromise]);
+  const replyCountPromise = prisma.post.count({
+    where: {
+      replyTo: post.id,
+    },
+  });
+
+  const [voted, reported, replyCount] = await Promise.all([votedPromise, reportedPromise, replyCountPromise]);
   const votingDisabled = !!voted;
   const reportingDisabled = !!reported;
 
@@ -61,6 +67,9 @@ export async function SinglePost({ post }: SinglePostProps) {
           </div>
         </div>
         <p className="max-w-7xl text-lg overflow-wrap">{post.content}</p>
+        <Link href={post.id} className="underline">
+          {replyCount} Antwort{replyCount === 1 ? '' : 'en'}
+        </Link>
       </div>
     </div>
   );

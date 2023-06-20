@@ -12,6 +12,9 @@ export default async function Home() {
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
+    where: {
+      replyTo: null,
+    },
     orderBy: {
       createdAt: 'desc',
     },

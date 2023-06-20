@@ -13,6 +13,7 @@ model Post {
   content   String
   upvotes   Int      @default(0)
   createdAt DateTime @default(now())
+  replyTo   String?
 }
 
 model Vote {
