@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import { HomeIcon, InformationCircleIcon, LockClosedIcon } from '@heroicons/react/24/outline';
-import { SetFingerprint } from './setFingerprint';
 
 export function NavBar() {
   return (
     <div className="flex w-full bg-zinc-800 justify-center">
       <div className="flex w-2/3 h-14 gap-4 justify-between items-center">
-        <SetFingerprint />
         <div className="flex gap-2 w-full">
           <Link href="/" title="Home" className="w-6 h-6 mr-4 rounded-md">
             <HomeIcon className="w-6 h-6 text-zinc-100" />

@@ -1,4 +1,4 @@
 export * from './addPost';
 export * from './reportPost';
-export * from './setPasswordCookie';
+export * from './setSiteCookies';
 export * from './vote';
