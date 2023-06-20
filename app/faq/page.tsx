@@ -112,7 +112,8 @@ export default function About() {
       </FaqItem>
       <FaqItem title="Im Source Code steht etwas über einen 'Fingerprint'. Was ist das?">
         <p>
-          Der Fingerprint ist ein Hash, der aus deiner Browser- und Gerätekonfiguration generiert wird. Er ermöglicht es
+          Der Fingerprint ist ein Hash (eine Art von ID), der aus deiner Browser- und Gerätekonfiguration generiert
+          wird. Diese Informationen selbst werden nicht gespeichert, nur der daraus generierte Hash. Er ermöglicht es
           uns, die grobe Anzahl der Besucher:innen zu zählen, mehrfaches Abstimmen zu verhindern und Spam zu erkennen
           ohne IP-Adressen oder andere Daten zu speichern, die Rückschlüsse auf deine Identität zulassen.
         </p>
