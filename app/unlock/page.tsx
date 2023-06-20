@@ -7,6 +7,7 @@ export default function Unlock() {
   return (
     <div className="flex flex-col gap-4 pt-4 max-w-2xl mx-auto divide-y divide-zinc-700">
       <div className="flex flex-col gap-1">
+        <h1 className="text-2xl font-semibold">Seite entsperren</h1>
         <p>Mit dem Absenden des Passworts werden zwei Cookies gesetzt, die den Zugriff auf die Seite freischalten.</p>
         <p>Die Cookies laufen nach 24 Stunden ab.</p>
         <p>
