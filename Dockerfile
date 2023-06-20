@@ -9,6 +9,7 @@ COPY postcss.config.js .
 COPY tailwind.config.js .
 COPY tsconfig.json .
 COPY run.sh .
+COPY config.json .
 
 COPY prisma ./prisma
 COPY utils ./utils
