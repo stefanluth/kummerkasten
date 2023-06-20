@@ -9,6 +9,9 @@ export default async function TopDay() {
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
+    where: {
+      replyTo: null,
+    },
     orderBy: {
       upvotes: 'desc',
     },

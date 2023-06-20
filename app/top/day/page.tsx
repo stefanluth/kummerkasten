@@ -10,6 +10,7 @@ export default async function TopDay() {
 
   const posts = await prisma.post.findMany({
     where: {
+      replyTo: null,
       createdAt: {
         gte: new Date(new Date().setDate(new Date().getDate() - 1)),
       },
