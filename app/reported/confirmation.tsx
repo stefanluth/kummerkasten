@@ -12,10 +12,13 @@ export default function Confirmation() {
   const close = () => setShow(false);
 
   return (
-    <Modal title="Gemeldete Nachrichten anzeigen" close={close}>
+    <Modal
+      title="Gemeldete Nachrichten anzeigen"
+      titleIcon={<ExclamationTriangleIcon title="Warnung" className="w-8 h-8 text-yellow-500" />}
+      close={close}
+    >
       <form onSubmit={close}>
         <div className="flex flex-col items-center">
-          <ExclamationTriangleIcon title="Warnung" className="w-6 h-6 text-yellow-500 mb-2" />
           <p className="text-white mb-2 text-center">
             Durch das Bestätigen werden gemeldete Nachrichten angezeigt, die möglicherweise als verstörend oder
             unangebracht empfunden werden können.
