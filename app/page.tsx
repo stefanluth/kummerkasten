@@ -13,15 +13,15 @@ export default async function Home() {
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
-    where: {
-      reports: {
-        lt: config.reportsToHidePost,
-      },
+    include: {
+      reports: true,
     },
     orderBy: {
       createdAt: 'desc',
     },
   });
+
+  const filteredPosts = posts.filter((post) => post.reports.length < config.reportsToHidePost);
 
   return (
     <div className="overflow-y-auto pb-4">
@@ -29,7 +29,7 @@ export default async function Home() {
         <AddPost />
         <div className="flex flex-col gap-2 divide-y divide-zinc-700">
           {/* @ts-expect-error Server Component */}
-          <Posts posts={posts} />
+          <Posts posts={filteredPosts} />
         </div>
       </div>
     </div>

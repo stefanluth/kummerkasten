@@ -14,19 +14,21 @@ export default async function TopMonth() {
       createdAt: {
         gte: new Date(new Date().setDate(new Date().getDate() - 30)),
       },
-      reports: {
-        lt: config.reportsToHidePost,
-      },
+    },
+    include: {
+      reports: true,
     },
     orderBy: {
       upvotes: 'desc',
     },
   });
 
+  const filteredPosts = posts.filter((post) => post.reports.length < config.reportsToHidePost);
+
   return (
     <>
       {/* @ts-expect-error Server Component */}
-      <Posts posts={posts} />
+      <Posts posts={filteredPosts} />
     </>
   );
 }

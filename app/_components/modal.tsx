@@ -4,7 +4,7 @@ import { XCircleIcon } from '@heroicons/react/24/outline';
 type ModalProps = {
   title: string;
   titleIcon?: JSX.Element;
-  close: () => void;
+  onClose: () => void;
 };
 
 export function Modal(props: PropsWithChildren<ModalProps>) {
@@ -18,7 +18,7 @@ export function Modal(props: PropsWithChildren<ModalProps>) {
           <div className="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
             {props.titleIcon && props.titleIcon}
             <h5 className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200">{props.title}</h5>
-            <CloseButton close={props.close} />
+            <CloseButton onClose={props.onClose} />
           </div>
           <div className="relative flex-auto p-4">{props.children}</div>
         </div>
@@ -27,13 +27,13 @@ export function Modal(props: PropsWithChildren<ModalProps>) {
   );
 }
 
-function CloseButton(props: { close: () => void }) {
+function CloseButton(props: { onClose: () => void }) {
   return (
     <button
       type="button"
       className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
       aria-label="Close"
-      onClick={props.close}
+      onClick={props.onClose}
     >
       <XCircleIcon className="w-6 h-6 text-neutral-500 dark:text-neutral-400" />
     </button>

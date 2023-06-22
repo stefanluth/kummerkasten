@@ -10,20 +10,20 @@ export default async function TopDay() {
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
-    where: {
-      reports: {
-        lt: config.reportsToHidePost,
-      },
+    include: {
+      reports: true,
     },
     orderBy: {
       upvotes: 'desc',
     },
   });
 
+  const filteredPosts = posts.filter((post) => post.reports.length < config.reportsToHidePost);
+
   return (
     <>
       {/* @ts-expect-error Server Component */}
-      <Posts posts={posts} />
+      <Posts posts={filteredPosts} />
     </>
   );
 }

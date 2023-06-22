@@ -29,17 +29,6 @@ export async function reportPost(formData: FormData) {
     },
   });
 
-  await prisma.post.update({
-    where: {
-      id: postId,
-    },
-    data: {
-      reports: {
-        increment: 1,
-      },
-    },
-  });
-
   revalidatePath('/');
   redirect('/');
 }

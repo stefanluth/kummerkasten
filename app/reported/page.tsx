@@ -12,21 +12,21 @@ export default async function Reported() {
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
-    where: {
-      reports: {
-        gte: config.reportsToHidePost,
-      },
+    include: {
+      reports: true,
     },
     orderBy: {
       upvotes: 'desc',
     },
   });
 
+  const filteredPosts = posts.filter((post) => post.reports.length >= config.reportsToHidePost);
+
   return (
     <>
       <Confirmation />
       {/* @ts-expect-error Server Component */}
-      <Posts posts={posts} />
+      <Posts posts={filteredPosts} />
     </>
   );
 }
