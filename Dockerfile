@@ -16,6 +16,7 @@ COPY utils ./utils
 COPY app ./app
 
 RUN npm install
+RUN npm run prepare:db
 RUN npm run build
 
 EXPOSE 3000
