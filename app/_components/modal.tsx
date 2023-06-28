@@ -10,7 +10,7 @@ type ModalProps = {
 export function Modal(props: PropsWithChildren<ModalProps>) {
   return (
     <div
-      className={`fixed left-0 top-0 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none bg-neutral-900 bg-opacity-60`}
+      className={`fixed left-0 top-0 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none bg-neutral-900 bg-opacity-60 backdrop-blur`}
       tabIndex={-1}
     >
       <div className="relative w-auto min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
