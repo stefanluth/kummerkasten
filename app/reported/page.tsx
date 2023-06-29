@@ -1,20 +1,17 @@
+import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { prisma } from '@/utils/prisma';
 import Posts from '@/app/_components/posts';
 import config from '@/config.json';
+import { prisma } from '@/utils/prisma';
+import Confirmation from './confirmation';
 
-export default async function TopDay() {
+export default async function Reported() {
   const password = cookies().get('password')?.value;
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
-    where: {
-      createdAt: {
-        gte: new Date(new Date().setDate(new Date().getDate() - 1)),
-      },
-    },
     include: {
       reports: true,
     },
@@ -23,10 +20,11 @@ export default async function TopDay() {
     },
   });
 
-  const filteredPosts = posts.filter((post) => post.reports.length < config.reportsToHidePost);
+  const filteredPosts = posts.filter((post) => post.reports.length >= config.reportsToHidePost);
 
   return (
     <>
+      <Confirmation />
       {/* @ts-expect-error Server Component */}
       <Posts posts={filteredPosts} />
     </>

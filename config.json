@@ -3,5 +3,5 @@
   "maxTitleLength": 32,
   "minContentLength": 16,
   "maxContentLength": 1028,
-  "reportsToDeletePost": 10
+  "reportsToHidePost": 3
 }

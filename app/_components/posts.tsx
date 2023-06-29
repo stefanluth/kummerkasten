@@ -3,7 +3,11 @@ import React from 'react';
 import { Post } from '@prisma/client';
 import { SinglePost } from '@/app/_components/singlePost';
 
-export default async function Posts({ posts }: { posts: Post[] }) {
+export interface PostsProps {
+  posts: Post[];
+}
+
+export default async function Posts({ posts }: PostsProps) {
   if (posts.length === 0) {
     return <div className="flex p-4 justify-center">Keine Posts in diesem Zeitraum gefunden.</div>;
   }

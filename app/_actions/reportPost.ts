@@ -5,7 +5,6 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import { prisma } from '@/utils/prisma';
-import config from '@/config.json';
 
 export async function reportPost(formData: FormData) {
   const fingerprint = cookies().get('fingerprint')?.value;
@@ -29,20 +28,6 @@ export async function reportPost(formData: FormData) {
       fingerprint,
     },
   });
-
-  const reports = await prisma.report.count({
-    where: {
-      postId,
-    },
-  });
-
-  if (reports >= config.reportsToDeletePost) {
-    await prisma.post.delete({
-      where: {
-        id: postId,
-      },
-    });
-  }
 
   revalidatePath('/');
   redirect('/');
