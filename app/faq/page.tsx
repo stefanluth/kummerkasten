@@ -134,15 +134,6 @@ export default function About() {
           Nachrichten oder Bewertungen in Verbindung gebracht werden.
         </p>
       </FaqItem>
-      <FaqItem title="Wie kann ich den Kummerkasten kontaktieren?">
-        <p>
-          Du kannst uns eine Nachricht im Kummerkasten hinterlassen oder eine{' '}
-          <a href="mailto:dummy@email.com" className="text-slate-300 underline">
-            Email schreiben
-          </a>
-          .
-        </p>
-      </FaqItem>
     </div>
   );
 }
