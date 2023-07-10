@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import Posts from '@/app/_components/posts';
-import config from '@/config.json';
+import DEFAULTS from '@/utils/defaults';
 import { prisma } from '@/utils/prisma';
 import Confirmation from './confirmation';
 
@@ -20,7 +21,9 @@ export default async function Reported() {
     },
   });
 
-  const filteredPosts = posts.filter((post) => post.reports.length >= config.reportsToHidePost);
+  const filteredPosts = posts.filter(
+    (post) => post.reports.length >= Number(process.env.REPORTS_TO_HIDE_POST ?? DEFAULTS.REPORTS_TO_HIDE_POST)
+  );
 
   return (
     <>

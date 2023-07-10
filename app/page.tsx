@@ -3,10 +3,10 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import DEFAULTS from '@/utils/defaults';
 import { prisma } from '@/utils/prisma';
 import { AddPost } from '@/app/_components/addPost';
 import Posts from '@/app/_components/posts';
-import config from '@/config.json';
 
 export default async function Home() {
   const password = cookies().get('password')?.value;
@@ -21,7 +21,9 @@ export default async function Home() {
     },
   });
 
-  const filteredPosts = posts.filter((post) => post.reports.length < config.reportsToHidePost);
+  const filteredPosts = posts.filter(
+    (post) => post.reports.length < Number(process.env.REPORTS_TO_HIDE_POST ?? DEFAULTS.REPORTS_TO_HIDE_POST)
+  );
 
   return (
     <div className="overflow-y-auto pb-4">

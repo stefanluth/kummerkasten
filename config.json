@@ -1,7 +1,0 @@
-{
-  "minTitleLength": 4,
-  "maxTitleLength": 32,
-  "minContentLength": 16,
-  "maxContentLength": 1028,
-  "reportsToHidePost": 3
-}
