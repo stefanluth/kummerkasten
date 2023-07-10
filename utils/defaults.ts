@@ -4,6 +4,7 @@ const DEFAULTS = {
   MIN_CONTENT_LENGTH: 16,
   MIN_TITLE_LENGTH: 4,
   REPORTS_TO_HIDE_POST: 3,
+  DATE_LOCALE: 'de-DE',
 };
 
 export default DEFAULTS;
