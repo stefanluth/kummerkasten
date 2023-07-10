@@ -60,7 +60,7 @@ export default function About() {
           </Link>{' '}
           verstößt.
           <br />
-          Bis dahin können gemeldete Nachrichten uf der{' '}
+          Bis dahin können gemeldete Nachrichten auf der{' '}
           <Link href="/reported" className="text-slate-300 underline">
             Reported-Seite
           </Link>{' '}
