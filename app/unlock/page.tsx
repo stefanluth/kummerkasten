@@ -1,9 +1,14 @@
 import React from 'react';
+
 import Link from 'next/link';
+import { headers } from 'next/headers';
+
 import { setSiteCookies } from '@/app/_actions';
 import { Fingerprint } from '@/app/_components/fingerprint';
 
 export default function Unlock() {
+  const ipAddress = headers().get('x-real-ip') ?? headers().get('x-forwarded-for');
+
   return (
     <div className="flex flex-col gap-4 pt-4 max-w-2xl mx-auto divide-y divide-zinc-700">
       <div className="flex flex-col gap-1">
@@ -19,7 +24,7 @@ export default function Unlock() {
         </p>
       </div>
       <form action={setSiteCookies}>
-        <Fingerprint />
+        <Fingerprint ipAddress={ipAddress ?? 'unknown'} />
         <div className="flex flex-col py-4 gap-2">
           <h1>Passwort eingeben</h1>
           <input autoFocus type="password" name="password" id="password" placeholder="Passwort..." />

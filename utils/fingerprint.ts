@@ -1,26 +1,27 @@
 import { createHash } from 'crypto';
 
-export function createFingerprint(w: Window) {
-  if (w.navigator.webdriver) return 'webdriver';
-  if (w.navigator.languages === undefined) return 'noLanguages';
+export function createFingerprint(window: Window, ipAddress: string) {
+  if (window.navigator.webdriver) return 'webdriver';
+  if (window.navigator.languages === undefined) return 'noLanguages';
 
   return createHash('sha256')
     .update(
       new Date().getTimezoneOffset() +
-        w.navigator.userAgent +
-        w.screen.width +
-        w.screen.height +
-        w.screen.colorDepth +
-        w.screen.orientation +
-        w.screen.pixelDepth +
-        w.screen.availWidth +
-        w.screen.availHeight +
-        w.navigator.cookieEnabled +
-        w.navigator.hardwareConcurrency +
-        w.navigator.language +
-        w.navigator.maxTouchPoints +
-        w.navigator.pdfViewerEnabled +
-        getRenderer(),
+        window.navigator.userAgent +
+        window.screen.width +
+        window.screen.height +
+        window.screen.colorDepth +
+        window.screen.orientation +
+        window.screen.pixelDepth +
+        window.screen.availWidth +
+        window.screen.availHeight +
+        window.navigator.cookieEnabled +
+        window.navigator.hardwareConcurrency +
+        window.navigator.language +
+        window.navigator.maxTouchPoints +
+        window.navigator.pdfViewerEnabled +
+        ipAddress +
+        getRenderer()
     )
     .digest('hex');
 }

@@ -3,10 +3,10 @@
 import { createFingerprint } from '@/utils';
 import { useEffect, useState } from 'react';
 
-export function Fingerprint() {
+export function Fingerprint({ ipAddress }: { ipAddress: string }) {
   const [fingerprint, setFingerprint] = useState('' as string);
   useEffect(() => {
-    setFingerprint(createFingerprint(window));
+    setFingerprint(createFingerprint(window, ipAddress));
   }, []);
 
   return <input type="hidden" name="fingerprint" value={fingerprint} />;
