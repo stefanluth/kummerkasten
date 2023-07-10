@@ -14,7 +14,7 @@ type SinglePostProps = {
 export async function SinglePost({ post }: SinglePostProps) {
   const fingerprint = cookies().get('fingerprint')?.value;
   if (!fingerprint) {
-    return <p>Something went wrong. Try refreshing the page.</p>;
+    return <p>Etwas ist schiefgelaufen. Bitte lade die Seite neu.</p>;
   }
 
   const votedPromise = prisma.vote.findFirst({
