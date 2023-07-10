@@ -5,6 +5,7 @@ import { Post } from '@prisma/client';
 import { prisma } from '@/utils/prisma';
 import { reportPost } from '@/app/_actions';
 import { Voting } from '@/app/_components/voting';
+import DEFAULTS from '@/utils/defaults';
 
 type SinglePostProps = {
   post: Post;
@@ -41,7 +42,11 @@ export async function SinglePost({ post }: SinglePostProps) {
         <div className="flex flex-col">
           <div className="flex gap-2 items-baseline justify-between">
             <a href={`#${post.id}`} className="text-xs text-zinc-500">
-              {post.createdAt.toDateString()}
+              {post.createdAt.toLocaleDateString(process.env.DATE_LOCALE ?? DEFAULTS.DATE_LOCALE, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
             </a>
             {!reportingDisabled && (
               <form action={reportPost}>
