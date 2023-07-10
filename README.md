@@ -1,6 +1,6 @@
 # Was ist der Kummerkasten?
 
-Obwohl wir eine offene Kommunikationskultur fördern,
+Auch wenn eine offene Kommunikationskultur gefördert wird,
 gibt es manchmal Fragen oder Meinungen,
 die man vielleicht nicht persönlich äußern möchte,
 aus Angst vor Konsequenzen oder einem möglichen Unbehagen bei der Diskussion von sensiblen Themen.
