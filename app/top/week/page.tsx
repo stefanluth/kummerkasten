@@ -1,14 +1,8 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-
+import Posts from '@/app/_components/posts';
 import DEFAULTS from '@/utils/defaults';
 import { prisma } from '@/utils/prisma';
-import Posts from '@/app/_components/posts';
 
 export default async function TopWeek() {
-  const password = cookies().get('password')?.value;
-  if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
-
   const posts = await prisma.post.findMany({
     where: {
       createdAt: {
@@ -28,9 +22,7 @@ export default async function TopWeek() {
   );
 
   return (
-    <>
-      {/* @ts-expect-error Server Component */}
-      <Posts posts={filteredPosts} />
-    </>
+    /* @ts-expect-error Server Component */
+    <Posts posts={filteredPosts} />
   );
 }
