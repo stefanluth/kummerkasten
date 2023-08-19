@@ -6,6 +6,8 @@ export async function createFingerprint(window: Window, ipAddress: string): Prom
 
   const devices = (await navigator.mediaDevices.enumerateDevices()).map((device) => `${device.kind} ${device.label}`);
   const codecs = await getCodecs();
+  const audio = audioCodecs();
+  const video = videoCodecs();
   const canvasData = getCanvasData();
   const renderer = getRenderer();
 
@@ -28,6 +30,8 @@ export async function createFingerprint(window: Window, ipAddress: string): Prom
         ipAddress +
         devices +
         codecs +
+        audio +
+        video +
         canvasData +
         renderer
     )
@@ -72,3 +76,25 @@ async function getCodecs() {
 
   return codecs;
 }
+
+const audioCodecs = () => {
+  const audioElt = document.createElement('audio');
+
+  return {
+    ogg: audioElt.canPlayType('audio/ogg; codecs="vorbis"'),
+    mp3: audioElt.canPlayType('audio/mpeg;'),
+    wav: audioElt.canPlayType('audio/wav; codecs="1"'),
+    m4a: audioElt.canPlayType('audio/x-m4a;'),
+    aac: audioElt.canPlayType('audio/aac;'),
+  };
+};
+
+const videoCodecs = () => {
+  const videoElt = document.createElement('video');
+
+  return {
+    ogg: videoElt.canPlayType('video/ogg; codecs="theora"'),
+    h264: videoElt.canPlayType('video/mp4; codecs="avc1.42E01E"'),
+    webm: videoElt.canPlayType('video/webm; codecs="vp8, vorbis"'),
+  };
+};
