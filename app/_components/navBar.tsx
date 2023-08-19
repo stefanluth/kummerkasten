@@ -37,8 +37,7 @@ export function NavBar() {
             <LockClosedIcon className="w-6 h-6 text-zinc-100" />
             Unlock
           </Link>
-          {/* @ts-expect-error Server Component */}
-          <HiddenRedirect fingerprint={fingerprint} password={password} />
+          <HiddenRedirect fingerprint={fingerprint} password={password} unlock={process.env.UNLOCK_PASSWORD} />
           <Link href="/faq" title="FAQ" className="flex h-6 gap-2 px-2 rounded-md">
             <InformationCircleIcon className="w-6 h-6 text-zinc-100" />
             FAQ
