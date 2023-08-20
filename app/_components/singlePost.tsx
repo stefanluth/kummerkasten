@@ -1,21 +1,19 @@
 import Link from 'next/link';
-import { cookies } from 'next/headers';
 
 import { Post } from '@prisma/client';
-import { prisma } from '@/utils/prisma';
+
 import { reportPost } from '@/app/_actions';
 import { Voting } from '@/app/_components/voting';
+import { prisma } from '@/utils/prisma';
 import DEFAULTS from '@/utils/defaults';
 
 type SinglePostProps = {
-  post: Post;
+  post?: Post | null;
+  fingerprint?: string | null;
 };
 
-export async function SinglePost({ post }: SinglePostProps) {
-  const fingerprint = cookies().get('fingerprint')?.value;
-  if (!fingerprint) {
-    return <p>Etwas ist schiefgelaufen. Bitte lade die Seite neu.</p>;
-  }
+export async function SinglePost({ post, fingerprint }: SinglePostProps): Promise<JSX.Element | null> {
+  if (!post || !fingerprint) return null;
 
   const votedPromise = prisma.vote.findFirst({
     where: {

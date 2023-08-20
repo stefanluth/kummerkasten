@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import { HomeIcon, InformationCircleIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 
 export function NavBar() {
