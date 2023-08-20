@@ -1,7 +1,8 @@
 'use client';
 
-import { createFingerprint } from '@/utils';
 import { useEffect, useState } from 'react';
+
+import { createFingerprint } from '@/utils';
 
 export function Fingerprint({ ipAddress }: { ipAddress: string }) {
   const [fingerprint, setFingerprint] = useState('' as string);

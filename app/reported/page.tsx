@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import Posts from '@/app/_components/posts';
 import DEFAULTS from '@/utils/defaults';
 import { prisma } from '@/utils/prisma';
+
 import Confirmation from './confirmation';
 
 export default async function Reported() {

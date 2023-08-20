@@ -1,6 +1,7 @@
+import { cookies } from 'next/headers';
+
 import { SinglePost } from '@/app/_components/singlePost';
 import { prisma } from '@/utils/prisma';
-import { cookies } from 'next/headers';
 
 type SinglePostPageProps = {
   params: {

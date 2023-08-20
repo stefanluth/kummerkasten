@@ -1,6 +1,7 @@
-import { prisma } from '@/utils/prisma';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
+
+import { prisma } from '@/utils/prisma';
 
 export async function vote(formData: FormData) {
   'use server';

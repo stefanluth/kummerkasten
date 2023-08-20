@@ -1,5 +1,8 @@
 {
   "singleQuote": true,
   "printWidth": 120,
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "importOrder": ["^react$", "^next/(.*)$", "^@[^/](.+)$", "^@/(.+)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

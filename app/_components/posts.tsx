@@ -1,7 +1,10 @@
-import { SinglePost } from '@/app/_components/singlePost';
-import { Post } from '@prisma/client';
-import { cookies } from 'next/headers';
 import React from 'react';
+
+import { cookies } from 'next/headers';
+
+import { Post } from '@prisma/client';
+
+import { SinglePost } from '@/app/_components/singlePost';
 
 export interface PostsProps {
   posts: Post[];

@@ -1,4 +1,5 @@
-import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+
 import { vote } from '@/app/_actions';
 
 type VotingProps = {
