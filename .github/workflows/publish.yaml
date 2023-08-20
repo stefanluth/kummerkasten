@@ -90,6 +90,9 @@ jobs:
       - name: Get Unlock Password
         run: docker cp "kummerkasten:/kummerkasten/unlock-password" "./unlock-password"
 
+      - name: Get Delete Password
+        run: docker cp "kummerkasten:/kummerkasten/delete-password" "./delete-password"
+
       - name: Run Tests
         run: npm run tests
 

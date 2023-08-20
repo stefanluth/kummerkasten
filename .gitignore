@@ -45,3 +45,4 @@ prisma/migrations/
 
 # project
 unlock-password
+delete-password

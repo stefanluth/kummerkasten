@@ -7,6 +7,7 @@ on:
 
 env:
   UNLOCK_PASSWORD: test
+  DELETE_PASSWORD: test
 
 jobs:
   test:
@@ -27,6 +28,9 @@ jobs:
 
       - name: Create Unlock File
         run: echo ${{ env.UNLOCK_PASSWORD }} > unlock-password
+
+      - name: Create Unlock File
+        run: echo ${{ env.DELETE_PASSWORD }} > delete-password
 
       - name: Build Project
         run: npm run build
