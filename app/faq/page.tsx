@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import FaqItem from '@/app/_components/faqItem';
 
 export default function About() {

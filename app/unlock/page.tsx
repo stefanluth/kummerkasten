@@ -1,10 +1,11 @@
 import React from 'react';
 
-import Link from 'next/link';
 import { headers } from 'next/headers';
+import Link from 'next/link';
 
 import { setSiteCookies } from '@/app/_actions';
 import { Fingerprint } from '@/app/_components/fingerprint';
+
 import CodeOfConduct from '../code-of-conduct/page';
 
 export default function Unlock() {

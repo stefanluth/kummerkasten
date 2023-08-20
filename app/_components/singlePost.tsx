@@ -4,8 +4,8 @@ import { Post } from '@prisma/client';
 
 import { reportPost } from '@/app/_actions';
 import { Voting } from '@/app/_components/voting';
-import { prisma } from '@/utils/prisma';
 import DEFAULTS from '@/utils/defaults';
+import { prisma } from '@/utils/prisma';
 
 type SinglePostProps = {
   post?: Post | null;

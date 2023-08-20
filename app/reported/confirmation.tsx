@@ -1,9 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
-import { Modal } from '@/app/_components/modal';
+
 import { useRouter } from 'next/navigation';
+
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+
+import { Modal } from '@/app/_components/modal';
 
 export default function Confirmation() {
   const [show, setShow] = useState(true);

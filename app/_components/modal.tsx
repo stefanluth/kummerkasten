@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+
 import { XCircleIcon } from '@heroicons/react/24/outline';
 
 type ModalProps = {
