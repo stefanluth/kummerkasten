@@ -1,5 +1,8 @@
 import { randomBytes } from 'crypto';
-import { test, expect } from '@playwright/test';
+
+import { expect, test } from '@playwright/test';
+
+const POST_ID_CLASS_NAMES = '.text-sm.pb-1.text-zinc-500';
 
 test('has title', async ({ page }) => {
   await page.goto('/');
@@ -79,4 +82,81 @@ test('submit works', async ({ page }) => {
 
   expect(await title.textContent()).toBe(randomTitle);
   expect(await message.textContent()).toBe(randomMessage);
+});
+
+test('delete works', async ({ page }) => {
+  const password = process.env.UNLOCK_PASSWORD || 'test';
+  const deletePassword = process.env.DELETE_PASSWORD || 'test';
+
+  await page.goto('/unlock');
+  await expect(page).toHaveURL('/unlock');
+  await page.fill('input[name="password"]', password);
+
+  const unlockButton = page.getByRole('button', { name: 'Absenden' });
+  await unlockButton.click();
+
+  await expect(page).toHaveURL('/');
+
+  const titelInput = page.getByRole('textbox', { name: 'Titel' });
+  const nachrichtInput = page.getByRole('textbox', { name: 'Nachricht' });
+  const submitButton = page.getByRole('button', { name: 'Absenden' });
+
+  await expect(titelInput).toBeVisible();
+  await expect(nachrichtInput).toBeVisible();
+  await expect(submitButton).toBeVisible();
+
+  const randomTitle = randomBytes(16).toString('hex');
+  const randomMessage = randomBytes(256).toString('hex');
+  await titelInput.fill(randomTitle);
+  await nachrichtInput.fill(randomMessage);
+
+  const countBeforePost = await page.locator(POST_ID_CLASS_NAMES).count();
+
+  await submitButton.click();
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  await expect(page).toHaveURL('/');
+  await page.reload({ waitUntil: 'networkidle' });
+
+  const countAfterPost = await page.locator(POST_ID_CLASS_NAMES).count();
+
+  const title = page.getByText(randomTitle);
+  const message = page.getByText(randomMessage);
+
+  expect(await title.textContent()).toBe(randomTitle);
+  expect(await message.textContent()).toBe(randomMessage);
+  expect(countAfterPost).toBe(countBeforePost + 1);
+
+  const postId = await page.getAttribute(POST_ID_CLASS_NAMES, 'id');
+
+  const headers = new Headers([
+    ['Content-Type', 'application/json'],
+    ['Cookie', `password=${password}; fingerprint=123`],
+  ]);
+
+  const body = JSON.stringify({
+    password: deletePassword,
+  });
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    redirect: 'follow',
+    headers,
+    body,
+  };
+
+  const response = await fetch(`${page.url()}${postId}/delete`, requestOptions);
+  const status = response.status;
+  const result = await response.json();
+
+  expect(status).toBe(200);
+  expect(result).toEqual({});
+
+  await page.reload({ waitUntil: 'networkidle' });
+
+  const countAfterDelete = await page.locator(POST_ID_CLASS_NAMES).count();
+
+  expect(countAfterDelete).toBe(countAfterPost - 1);
+  expect(countAfterDelete).toBe(countBeforePost);
 });

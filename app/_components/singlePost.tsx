@@ -58,7 +58,7 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
           </div>
           <div className="flex gap-2 items-baseline">
             <h2 className="text-2xl -mt-1 font-bold max-w-7xl truncate">{post.title}</h2>
-            <Link href={`${post.id}`} className="text-sm pb-1 text-zinc-500">
+            <Link id={post.id} href={post.id} className="text-sm pb-1 text-zinc-500">
               #{post.id.toString().slice(0, 8)}
             </Link>
           </div>

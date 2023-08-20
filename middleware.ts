@@ -14,5 +14,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/top/:path*'],
+  matcher: ['/((?!unlock|faq|code-of-conduct|api|_next/static|_next/image|favicon.ico).*)'],
 };
