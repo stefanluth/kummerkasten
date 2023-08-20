@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 
 import { Post } from '@prisma/client';
 
@@ -10,15 +8,12 @@ import { prisma } from '@/utils/prisma';
 import DEFAULTS from '@/utils/defaults';
 
 type SinglePostProps = {
-  post: Post;
+  post?: Post | null;
+  fingerprint?: string | null;
 };
 
-export async function SinglePost({ post }: SinglePostProps) {
-  const fingerprint = cookies().get('fingerprint')?.value;
-  const password = cookies().get('password')?.value;
-  if (!fingerprint || password !== process.env.UNLOCK_PASSWORD) {
-    redirect('/unlock');
-  }
+export async function SinglePost({ post, fingerprint }: SinglePostProps): Promise<JSX.Element | null> {
+  if (!post || !fingerprint) return null;
 
   const votedPromise = prisma.vote.findFirst({
     where: {

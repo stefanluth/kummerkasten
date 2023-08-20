@@ -1,13 +1,8 @@
 import Link from 'next/link';
-import { cookies } from 'next/headers';
 
 import { HomeIcon, InformationCircleIcon, LockClosedIcon } from '@heroicons/react/24/outline';
-import { HiddenRedirect } from './hiddenRedirect';
 
 export function NavBar() {
-  const fingerprint = cookies().get('fingerprint')?.value;
-  const password = cookies().get('password')?.value;
-
   return (
     <div className="flex w-full bg-zinc-800 justify-center">
       <div className="flex w-2/3 h-14 gap-4 justify-between items-center">
@@ -37,7 +32,6 @@ export function NavBar() {
             <LockClosedIcon className="w-6 h-6 text-zinc-100" />
             Unlock
           </Link>
-          <HiddenRedirect fingerprint={fingerprint} password={password} unlock={process.env.UNLOCK_PASSWORD} />
           <Link href="/faq" title="FAQ" className="flex h-6 gap-2 px-2 rounded-md">
             <InformationCircleIcon className="w-6 h-6 text-zinc-100" />
             FAQ
