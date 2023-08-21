@@ -11,6 +11,8 @@ export interface PostsProps {
 }
 
 export default async function Posts({ posts }: PostsProps) {
+  if (posts.length === 0) return <span className="mx-auto py-8">Keine Nachrichten vorhanden.</span>;
+
   const fingerprint = cookies().get('fingerprint')?.value;
 
   return (

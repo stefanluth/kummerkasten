@@ -15,11 +15,8 @@ textarea {
   @apply bg-zinc-700;
 }
 
-a:focus,
-button:focus,
-input:focus,
-select:focus,
-textarea:focus {
+:focus {
+  @apply rounded-md;
   @apply focus:outline-none;
   @apply focus:ring-2;
   @apply focus:ring-zinc-500;

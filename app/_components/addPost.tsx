@@ -38,10 +38,7 @@ export function AddPost(): JSX.Element {
       </div>
       <div className="flex">
         <div className="flex gap-4 ml-auto items-center">
-          <button
-            className="rounded-md w-fit bg-zinc-700 px-2 focus:outline-2 focus:ring-1 focus:ring-zinc-700"
-            type="submit"
-          >
+          <button className="rounded-md w-fit bg-zinc-700 px-2" type="submit">
             Absenden
           </button>
         </div>
