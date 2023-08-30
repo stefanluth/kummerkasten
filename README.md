@@ -21,19 +21,19 @@ npm run prepare:db
 #### App mit Passwort in Development Modus starten
 
 ```shell
-UNLOCK_PASSWORD=password123 npm run dev
+UNLOCK_PASSWORD=test npm run dev
 ```
 
-Auf der `/unlock` Seite dann das gewählte Passwort eingeben.
-
-### Production
+oder
 
 ```shell
 docker-compose up
 ```
 
-oder ohne das Repo zu klonen:
+Auf der `localhost:3000/unlock` Seite dann das gewählte Passwort eingeben.
+
+### Production
 
 ```shell
-docker run -p 3000:3000 ghcr.io/stefanluth/kummerkasten:latest
+docker run -p 3000:3000 -e UNLOCK_PASSWORD=foo -e DELETE_PASSWORD=bar ghcr.io/stefanluth/kummerkasten:latest
 ```
