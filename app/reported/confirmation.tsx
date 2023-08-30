@@ -26,8 +26,8 @@ export default function Confirmation() {
             empfunden werden können.
           </p>
           <p>
-            Durch das Klicken auf \"Weiter\" bestätigst du, dass du dir dieser Tatsache bewusst bist und die Nachrichten
-            lesen möchtest.
+            Durch das Klicken auf <b>Weiter</b> bestätigst du, dass du dir dieser Tatsache bewusst bist und die
+            Nachrichten lesen möchtest.
           </p>
         </div>
         <div className="flex mx-auto gap-2">
