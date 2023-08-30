@@ -124,9 +124,9 @@ export default function About() {
       <FaqItem title="Im Source Code steht etwas über einen 'Fingerprint'. Was ist das?">
         <p>
           Der Fingerprint ist eine Art von ID, der aus deiner Browser- und Gerätekonfiguration generiert wird. Diese
-          Informationen selbst werden nicht gespeichert, nur der daraus generierte Hash. Er ermöglicht es uns,
-          mehrfaches Abstimmen zu verhindern und Spam zu erkennen ohne IP-Adressen oder andere Daten zu speichern, die
-          Rückschlüsse auf deine Identität zulassen.
+          Informationen selbst werden nicht gespeichert, nur der daraus generierte Hash. Er ermöglicht es, mehrfaches
+          Abstimmen zu verhindern und Spam zu erkennen ohne IP-Adressen oder andere Daten zu speichern, die Rückschlüsse
+          auf deine Identität zulassen.
         </p>
       </FaqItem>
       <FaqItem title="Aber im Source Code steht etwas über eine IP-Adresse. Wird meine IP-Adresse doch gespeichert?">
