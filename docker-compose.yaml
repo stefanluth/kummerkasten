@@ -5,3 +5,8 @@ services:
     build: .
     ports:
       - '3000:3000'
+    volumes:
+      - ./app:/kummerkasten/app
+      - ./prisma:/kummerkasten/prisma
+      - ./utils:/kummerkasten/utils
+    command: sh run.sh
