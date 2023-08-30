@@ -8,7 +8,6 @@ COPY package.json .
 COPY postcss.config.js .
 COPY tailwind.config.js .
 COPY tsconfig.json .
-COPY run.sh .
 COPY middleware.ts .
 
 COPY prisma ./prisma
