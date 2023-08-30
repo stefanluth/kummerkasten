@@ -22,6 +22,11 @@ textarea {
   @apply focus:ring-zinc-500;
 }
 
+div:focus {
+  @apply focus:outline-none;
+  @apply focus:ring-0;
+}
+
 .overflow-wrap {
   overflow-wrap: break-word;
 }
