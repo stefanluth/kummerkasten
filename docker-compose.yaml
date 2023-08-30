@@ -9,4 +9,7 @@ services:
       - ./app:/kummerkasten/app
       - ./prisma:/kummerkasten/prisma
       - ./utils:/kummerkasten/utils
-    command: sh run.sh
+    environment:
+      - UNLOCK_PASSWORD=test
+      - DELETE_PASSWORD=test
+    command: npm run dev
