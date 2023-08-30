@@ -35,7 +35,7 @@ jobs:
       - name: Run Server
         run: |
           UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
-          DELETE_PASSWORD=${{ env.DELETE_PASSWORD } \
+          DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
           npm start &
 
       - name: Wait for Server
@@ -44,7 +44,7 @@ jobs:
       - name: Run Tests
         run: |
           UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
-          DELETE_PASSWORD=${{ env.DELETE_PASSWORD } \
+          DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
           npm run tests
 
       - name: Stop Server
