@@ -21,11 +21,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Install Playwright
-        run: |
-          npx playwright install --with-deps
-          npx playwright install-deps
-
       - name: Build Project
         run: npm run build
 
@@ -40,6 +35,11 @@ jobs:
 
       - name: Wait for Server
         run: sleep 10
+
+      - name: Install Playwright
+        run: |
+          npx playwright install --with-deps
+          npx playwright install-deps
 
       - name: Run Tests
         run: |
