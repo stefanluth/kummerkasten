@@ -26,7 +26,7 @@ export default function Confirmation() {
             empfunden werden können.
           </p>
           <p>
-            Durch das Klicken auf "Weiter" bestätigst du, dass du dir dieser Tatsache bewusst bist und die Nachrichten
+            Durch das Klicken auf \"Weiter\" bestätigst du, dass du dir dieser Tatsache bewusst bist und die Nachrichten
             lesen möchtest.
           </p>
         </div>
