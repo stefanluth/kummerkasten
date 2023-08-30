@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
     "lint": "next lint",
-    "start": "UNLOCK_PASSWORD=$(cat ./unlock-password) DELETE_PASSWORD=$(cat ./delete-password) next start",
-    "tests": "UNLOCK_PASSWORD=$(cat ./unlock-password) DELETE_PASSWORD=$(cat ./delete-password) npx playwright test",
+    "dev": "next dev",
+    "start": "next start",
+    "tests": "npx playwright test",
     "prepare:db": "prisma migrate deploy && prisma db push && prisma generate"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
-    "@prisma/client": "^4.14.1",
+    "@prisma/client": "^5.2.0",
     "autoprefixer": "10.4.14",
     "cookie": "^0.5.0",
     "eslint": "8.40.0",
@@ -28,10 +28,10 @@
     "@playwright/test": "^1.34.3",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/cookie": "^0.5.1",
-    "@types/node": "20.1.2",
+    "@types/node": "^20.1.2",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "prettier": "^2.8.8",
-    "prisma": "^4.14.1"
+    "prisma": "^5.2.0"
   }
 }

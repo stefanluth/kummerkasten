@@ -21,17 +21,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Install Playwright
-        run: |
-          npx playwright install --with-deps
-          npx playwright install-deps
-
-      - name: Create Unlock File
-        run: echo ${{ env.UNLOCK_PASSWORD }} > unlock-password
-
-      - name: Create Unlock File
-        run: echo ${{ env.DELETE_PASSWORD }} > delete-password
-
       - name: Build Project
         run: npm run build
 
@@ -39,13 +28,24 @@ jobs:
         run: npm run prepare:db
 
       - name: Run Server
-        run: npm start &
+        run: |
+          UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
+          DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
+          npm start &
 
       - name: Wait for Server
         run: sleep 10
 
+      - name: Install Playwright
+        run: |
+          npx playwright install --with-deps
+          npx playwright install-deps
+
       - name: Run Tests
-        run: npm run tests
+        run: |
+          UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
+          DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
+          npm run tests
 
       - name: Stop Server
         run: kill -9 $(lsof -t -i:3000)

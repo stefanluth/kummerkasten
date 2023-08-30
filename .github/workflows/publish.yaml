@@ -9,6 +9,8 @@ env:
   REGISTRY: ghcr.io
   REPOSITORY: kummerkasten
   IMAGE_NAME: ${{ github.repository }}
+  UNLOCK_PASSWORD: test
+  DELETE_PASSWORD: test
 
 jobs:
   build:
@@ -79,7 +81,15 @@ jobs:
           npx playwright install-deps
 
       - name: Run Container
-        run: docker run -d --name kummerkasten -p 3000:3000 --network "host" ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.arch }}
+        run: |
+          docker run \
+          -d \
+          -p 3000:3000 \
+          -e UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
+          -e DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
+          --name kummerkasten \
+          --network "host" \
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.arch }}
 
       - name: Show Running Containers
         run: docker ps -a
@@ -87,14 +97,11 @@ jobs:
       - name: Wait 10s for Container to Start
         run: sleep 10
 
-      - name: Get Unlock Password
-        run: docker cp "kummerkasten:/kummerkasten/unlock-password" "./unlock-password"
-
-      - name: Get Delete Password
-        run: docker cp "kummerkasten:/kummerkasten/delete-password" "./delete-password"
-
       - name: Run Tests
-        run: npm run tests
+        run: |
+          UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
+          DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
+          npm run tests
 
       - name: Stop Container
         run: docker stop $(docker ps -q)

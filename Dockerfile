@@ -23,4 +23,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=15s --timeout=5s \
     CMD curl -L -f http://localhost:3000/ || exit 1
 
-CMD ["sh", "/kummerkasten/run.sh"]
+CMD ["npm", "run", "start"]

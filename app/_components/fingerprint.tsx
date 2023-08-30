@@ -10,7 +10,7 @@ export function Fingerprint({ ipAddress }: { ipAddress: string }) {
     createFingerprint(window, ipAddress).then((fingerprint) => {
       setFingerprint(fingerprint);
     });
-  }, []);
+  }, [ipAddress]);
 
   return <input type="hidden" name="fingerprint" value={fingerprint} />;
 }
