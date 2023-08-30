@@ -28,7 +28,7 @@ echo $DELETE_PASSWORD
 echo "===================================="
 
 npm run prepare:db
-npm start &
+UNLOCK_PASSWORD=$(cat ./unlock-password) DELETE_PASSWORD=$(cat ./delete-password) npm run dev &
 
 child=$!
 wait "$child"

@@ -5,9 +5,9 @@
   "scripts": {
     "build": "next build",
     "lint": "next lint",
-    "dev": "UNLOCK_PASSWORD=$(cat ./unlock-password) DELETE_PASSWORD=$(cat ./delete-password) next dev",
-    "start": "UNLOCK_PASSWORD=$(cat ./unlock-password) DELETE_PASSWORD=$(cat ./delete-password) next start",
-    "tests": "UNLOCK_PASSWORD=$(cat ./unlock-password) DELETE_PASSWORD=$(cat ./delete-password) npx playwright test",
+    "dev": "next dev",
+    "start": "next start",
+    "tests": "npx playwright test",
     "prepare:db": "prisma migrate deploy && prisma db push && prisma generate"
   },
   "dependencies": {
