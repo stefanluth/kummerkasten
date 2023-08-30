@@ -21,13 +21,13 @@ npm run prepare:db
 #### App mit Passwort in Development Modus starten
 
 ```shell
-UNLOCK_PASSWORD=test npm run dev
+docker-compose up
 ```
 
 oder
 
 ```shell
-docker-compose up
+UNLOCK_PASSWORD=test npm run dev
 ```
 
 Auf der `localhost:3000/unlock` Seite dann das gewählte Passwort eingeben.
