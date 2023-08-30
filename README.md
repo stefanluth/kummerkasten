@@ -12,6 +12,12 @@ in dem Mitarbeiter:innen ihre Gedanken und Meinungen frei teilen können.
 
 ### Development
 
+```shell
+docker-compose up
+```
+
+oder
+
 #### Migrationen erstellen & Prisma Client generieren
 
 ```shell
@@ -21,13 +27,7 @@ npm run prepare:db
 #### App mit Passwort in Development Modus starten
 
 ```shell
-docker-compose up
-```
-
-oder
-
-```shell
-UNLOCK_PASSWORD=test npm run dev
+UNLOCK_PASSWORD=foo DELETE_PASSWORD=bar npm run dev
 ```
 
 Auf der `localhost:3000/unlock` Seite dann das gewählte Passwort eingeben.
