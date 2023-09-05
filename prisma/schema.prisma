@@ -25,6 +25,6 @@ model Vote {
 model Report {
   id          String @id @unique @default(uuid())
   fingerprint String
-  post        Post   @relation(fields: [postId], references: [id])
+  post        Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId      String
 }
