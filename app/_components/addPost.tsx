@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { addPost } from '@/app/_actions';
-import DEFAULTS from '@/utils/defaults';
+import { DEFAULTS } from '@/utils';
 
 export function AddPost(): JSX.Element {
   return (

@@ -1,4 +1,4 @@
-const DEFAULTS = {
+export const DEFAULTS = {
   MAX_CONTENT_LENGTH: 1028,
   MAX_TITLE_LENGTH: 64,
   MIN_CONTENT_LENGTH: 16,
@@ -6,5 +6,3 @@ const DEFAULTS = {
   REPORTS_TO_HIDE_POST: 3,
   DATE_LOCALE: 'de-DE',
 };
-
-export default DEFAULTS;
