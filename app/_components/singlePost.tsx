@@ -4,7 +4,7 @@ import { Post } from '@prisma/client';
 
 import { reportPost } from '@/app/_actions';
 import { Voting } from '@/app/_components/voting';
-import DEFAULTS from '@/utils/defaults';
+import { DEFAULTS } from '@/utils';
 import { prisma } from '@/utils/prisma';
 
 type SinglePostProps = {
@@ -63,7 +63,7 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
             </Link>
           </div>
         </div>
-        <p className="max-w-7xl text-lg overflow-wrap">{post.content}</p>
+        <p className="max-w-7xl text-lg overflow-wrap whitespace-pre-line">{post.content}</p>
       </div>
     </div>
   );

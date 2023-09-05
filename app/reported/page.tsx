@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import Posts from '@/app/_components/posts';
-import DEFAULTS from '@/utils/defaults';
+import { DEFAULTS } from '@/utils';
 import { prisma } from '@/utils/prisma';
 
 import Confirmation from './confirmation';

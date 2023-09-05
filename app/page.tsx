@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 import { AddPost } from '@/app/_components/addPost';
 import Posts from '@/app/_components/posts';
-import DEFAULTS from '@/utils/defaults';
+import { DEFAULTS } from '@/utils';
 import { prisma } from '@/utils/prisma';
 
 export default async function Home() {
