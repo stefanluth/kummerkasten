@@ -12,4 +12,5 @@ services:
     environment:
       - UNLOCK_PASSWORD=test
       - DELETE_PASSWORD=test
+      - REPORTS_TO_HIDE_POST=1
     command: npm run dev
