@@ -1,13 +1,15 @@
 FROM node:20.2.0-alpine
 RUN apk add --no-cache curl python3 py3-pip
+
+ENV NEXT_TELEMETRY_DISABLED 1
 WORKDIR /kummerkasten
 
 COPY .env .
 COPY next.config.js .
-COPY package.json .
 COPY postcss.config.js .
 COPY tailwind.config.js .
 COPY tsconfig.json .
+COPY package.json .
 COPY middleware.ts .
 
 COPY prisma ./prisma
