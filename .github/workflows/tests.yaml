@@ -18,23 +18,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Build Project
-        run: npm run build
+      - name: Build Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          load: true
+          tags: kummerkasten:test
 
-      - name: Prepare Database
-        run: npm run prepare:db
-
-      - name: Run Server
+      - name: Run Container
         run: |
-          UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
-          DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
-          npm start &
+          docker run \
+          -d \
+          -p 3000:3000 \
+          -e UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
+          -e DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
+          --name kummerkasten \
+          --network "host" \
+          kummerkasten:test
 
       - name: Wait for Server
         run: sleep 10
+
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Install Playwright
         run: |
@@ -47,5 +56,5 @@ jobs:
           DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
           npm run tests
 
-      - name: Stop Server
-        run: kill -9 $(lsof -t -i:3000)
+      - name: Stop Container
+        run: docker stop $(docker ps -q)
