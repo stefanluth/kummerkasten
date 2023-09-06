@@ -12,7 +12,7 @@ COPY tsconfig.json .
 COPY package.json .
 COPY middleware.ts .
 
-COPY prisma ./prisma
+COPY prisma/schema.prisma ./prisma/schema.prisma
 COPY utils ./utils
 COPY app ./app
 
