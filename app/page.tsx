@@ -27,7 +27,7 @@ export default async function Home() {
 
   return (
     <div className="overflow-y-auto pb-4">
-      <div className="flex flex-col min-w-[30rem] max-w-6xl mx-auto">
+      <div className="flex flex-col max-w-6xl mx-auto">
         <AddPost />
         <div className="flex flex-col gap-2 divide-y divide-zinc-700">
           {/* @ts-expect-error Server Component */}

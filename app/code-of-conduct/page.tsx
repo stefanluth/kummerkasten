@@ -2,7 +2,7 @@ export default function CodeOfConduct() {
   return (
     <div className="pt-4">
       <h1 className="text-3xl font-bold">Verhaltensregeln für den Kummerkasten</h1>
-      <ol className="flex flex-col gap-2 p-2 list-decimal">
+      <ol className="flex flex-col gap-2 p-2 pl-6 list-decimal">
         <li>
           <b>Sei respektvoll</b>
           <br /> Behandele andere mit Höflichkeit und Respekt, unabhängig von ihrer Meinung.

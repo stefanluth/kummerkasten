@@ -36,9 +36,9 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
   return (
     <div className="flex p-2 gap-4">
       <Voting postId={post.id} upvotes={post.upvotes} disabled={votingDisabled} fingerprint={fingerprint} />
-      <div id={post.id.toString()} className="flex flex-col w-11/12 gap-1 justify-between">
+      <div id={post.id.toString()} className="flex flex-col gap-1 justify-between max-w-[80vw]">
         <div className="flex flex-col">
-          <div className="flex gap-2 items-baseline justify-between">
+          <div className="flex gap-4 items-baseline">
             <a href={`#${post.id}`} className="text-xs text-zinc-500">
               {post.createdAt.toLocaleDateString(process.env.DATE_LOCALE ?? DEFAULTS.DATE_LOCALE, {
                 year: 'numeric',
@@ -46,6 +46,9 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
                 day: 'numeric',
               })}
             </a>
+            <Link id={post.id} href={`/${post.id}`} className="text-xs text-zinc-500">
+              #{post.id.toString().slice(0, 8)}
+            </Link>
             {!reportingDisabled && (
               <form action={reportPost}>
                 <input type="hidden" name="postId" value={post.id} />
@@ -57,13 +60,10 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
             )}
           </div>
           <div className="flex gap-2 items-baseline">
-            <h2 className="text-2xl -mt-1 font-bold max-w-7xl truncate">{post.title}</h2>
-            <Link id={post.id} href={post.id} className="text-sm pb-1 text-zinc-500">
-              #{post.id.toString().slice(0, 8)}
-            </Link>
+            <h2 className="text-2xl -mt-1 font-bold truncate overflow-wrap whitespace-pre-line">{post.title}</h2>
           </div>
         </div>
-        <p className="max-w-7xl text-lg overflow-wrap whitespace-pre-line">{post.content}</p>
+        <p className="text-lg overflow-wrap whitespace-pre-line">{post.content}</p>
       </div>
     </div>
   );

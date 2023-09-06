@@ -19,7 +19,7 @@ export default async function SinglePostPage(props: SinglePostPageProps) {
   });
 
   return (
-    <div className="flex w-2/3 self-center justify-center">
+    <div className="flex justify-center">
       {/* @ts-expect-error Server Component */}
       <SinglePost post={post} fingerprint={fingerprint} />
     </div>
