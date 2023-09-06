@@ -46,7 +46,7 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
                 day: 'numeric',
               })}
             </a>
-            <Link id={post.id} href={`/${post.id}`} className="text-xs text-zinc-500">
+            <Link id={post.id} href={`/${post.id}`} className="text-xs text-zinc-500 post-id">
               #{post.id.toString().slice(0, 8)}
             </Link>
             {!reportingDisabled && (
