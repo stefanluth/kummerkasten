@@ -92,8 +92,8 @@ export default function About() {
       </FaqItem>
       <FaqItem title="Wie kann ich eine Nachricht teilen?">
         <p>
-          Du kannst eine Nachricht teilen, indem du die Nachrichten-ID am Ende der Überschrift anklickst und die URL
-          kopierst.
+          Du kannst eine Nachricht teilen, indem du die Nachrichten-ID beginnend mit '#' über der Überschrift anklickst
+          und die URL kopierst.
         </p>
       </FaqItem>
       <FaqItem title="Wie kann ich eine Nachricht bewerten?">
@@ -105,8 +105,8 @@ export default function About() {
       <FaqItem title="Wie kann ich auf eine Nachricht antworten?">
         <p>
           Dieses Feature ist noch nicht verfügbar. Es wird daran gearbeitet, es so schnell wie möglich zu
-          implementieren. Bis dahin kannst du die Nachrichten-ID am Ende der Überschrift kopieren, um sie in deiner
-          Antwort zu erwähnen.
+          implementieren. Bis dahin kannst du die Nachrichten-ID beginnend mit '#' über der Überschrift kopieren, um sie
+          in deiner Antwort zu erwähnen.
         </p>
       </FaqItem>
       <FaqItem title="Wie kann ich sicher sein, dass meine Nachrichten und Bewertungen anonym sind?">
