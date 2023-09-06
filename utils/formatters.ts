@@ -5,7 +5,15 @@ export const removeEmptyLines = (str: string) =>
     .join('\n');
 
 export const sanitize = (str: string) => {
-  return removeEmptyLines(str.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+  return removeEmptyLines(
+    str
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\{/g, '&lcub;')
+      .replace(/\}/g, '&rcub;')
+      .replace(/\(/g, '&lpar;')
+      .replace(/\)/g, '&rpar;')
+  );
 };
 
 export const bbcodeToHtml = (str: string) => {
