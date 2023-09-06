@@ -34,10 +34,10 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
   const reportingDisabled = !!reported;
 
   return (
-    <div className="flex p-2 gap-4">
+    <div className="flex p-2 gap-4 w-11/12">
       <Voting postId={post.id} upvotes={post.upvotes} disabled={votingDisabled} fingerprint={fingerprint} />
-      <div id={post.id.toString()} className="flex flex-col gap-1 justify-between max-w-[80vw]">
-        <div className="flex flex-col">
+      <div id={post.id.toString()} className="flex flex-col gap-1 justify-between w-full">
+        <div className="flex flex-col w-full">
           <div className="flex gap-4 items-baseline">
             <a href={`#${post.id}`} className="text-xs text-zinc-500">
               {post.createdAt.toLocaleDateString(process.env.DATE_LOCALE ?? DEFAULTS.DATE_LOCALE, {
@@ -64,7 +64,7 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
           </div>
         </div>
         <div
-          className="sm:max-w-[69rem] text-lg overflow-wrap whitespace-pre-line"
+          className="text-lg overflow-wrap whitespace-pre-line w-full"
           dangerouslySetInnerHTML={{ __html: bbcodeToHtml(post.content) }}
         />
       </div>
