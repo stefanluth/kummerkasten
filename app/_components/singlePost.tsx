@@ -63,9 +63,10 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
             <h2 className="text-2xl -mt-1 font-bold truncate overflow-wrap whitespace-pre-line">{post.title}</h2>
           </div>
         </div>
-        <div className="text-lg overflow-wrap whitespace-pre-line">
-          <div dangerouslySetInnerHTML={{ __html: bbcodeToHtml(post.content) }} />
-        </div>
+        <div
+          className="sm:max-w-[69rem] text-lg overflow-wrap whitespace-pre-line"
+          dangerouslySetInnerHTML={{ __html: bbcodeToHtml(post.content) }}
+        />
       </div>
     </div>
   );
