@@ -2,7 +2,7 @@ import { randomBytes } from 'crypto';
 
 import { expect, test } from '@playwright/test';
 
-const POST_ID_CLASS_NAMES = '.text-sm.pb-1.text-zinc-500';
+const POST_ID_CLASS_NAMES = '.post-id';
 
 test('has title', async ({ page }) => {
   await page.goto('/');
