@@ -4,7 +4,7 @@ import { Post } from '@prisma/client';
 
 import { reportPost } from '@/app/_actions';
 import { Voting } from '@/app/_components/voting';
-import { DEFAULTS } from '@/utils';
+import { DEFAULTS, bbcodeToHtml } from '@/utils';
 import { prisma } from '@/utils/prisma';
 
 type SinglePostProps = {
@@ -63,7 +63,9 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
             <h2 className="text-2xl -mt-1 font-bold truncate overflow-wrap whitespace-pre-line">{post.title}</h2>
           </div>
         </div>
-        <p className="text-lg overflow-wrap whitespace-pre-line">{post.content}</p>
+        <div className="text-lg overflow-wrap whitespace-pre-line">
+          <div dangerouslySetInnerHTML={{ __html: bbcodeToHtml(post.content) }} />
+        </div>
       </div>
     </div>
   );

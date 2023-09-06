@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { DEFAULTS, removeEmptyLines } from '@/utils';
+import { DEFAULTS, sanitize } from '@/utils';
 import { prisma } from '@/utils/prisma';
 
 export async function addPost(formData: FormData) {
@@ -12,7 +12,7 @@ export async function addPost(formData: FormData) {
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const title = formData.get('title') as string;
-  const content = removeEmptyLines(formData.get('content') as string);
+  const content = sanitize(formData.get('content') as string);
 
   const titleTooShort = title.length < Number(process.env.MIN_TITLE_LENGTH ?? DEFAULTS.MIN_TITLE_LENGTH);
   const titleTooLong = title.length > Number(process.env.MAX_TITLE_LENGTH ?? DEFAULTS.MAX_TITLE_LENGTH);
