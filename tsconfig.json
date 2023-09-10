@@ -10,7 +10,6 @@
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
