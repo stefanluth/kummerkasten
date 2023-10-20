@@ -22,7 +22,6 @@ export default async function TopYear() {
   );
 
   return (
-    /* @ts-expect-error Server Component */
     <Posts posts={filteredPosts} />
   );
 }

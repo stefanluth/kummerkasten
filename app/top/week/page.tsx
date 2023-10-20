@@ -22,7 +22,6 @@ export default async function TopWeek() {
   );
 
   return (
-    /* @ts-expect-error Server Component */
     <Posts posts={filteredPosts} />
   );
 }

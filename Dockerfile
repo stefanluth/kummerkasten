@@ -1,5 +1,5 @@
-FROM node:20.2.0-alpine
-RUN apk add --no-cache curl python3 py3-pip
+FROM node:21
+RUN apt install curl
 
 ENV NEXT_TELEMETRY_DISABLED 1
 WORKDIR /kummerkasten

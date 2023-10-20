@@ -29,7 +29,6 @@ export default async function Reported() {
   return (
     <>
       <Confirmation />
-      {/* @ts-expect-error Server Component */}
       <Posts posts={filteredPosts} />
     </>
   );

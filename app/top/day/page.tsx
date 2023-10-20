@@ -22,7 +22,6 @@ export default async function TopDay() {
   );
 
   return (
-    /* @ts-expect-error Server Component */
     <Posts posts={filteredPosts} />
   );
 }

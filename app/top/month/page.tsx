@@ -22,7 +22,6 @@ export default async function TopMonth() {
   );
 
   return (
-    /* @ts-expect-error Server Component */
     <Posts posts={filteredPosts} />
   );
 }
