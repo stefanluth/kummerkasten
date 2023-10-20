@@ -109,6 +109,24 @@ export default function About() {
           in deiner Antwort zu erwähnen.
         </p>
       </FaqItem>
+      <FaqItem title="Wie kann ich den Inhalt meiner Nachricht formatieren?">
+        <p>
+          Nachrichten unterstützen{' '}
+          <Link href="https://www.markdownguide.org/basic-syntax/" className="text-slate-300 underline">
+            Markdown
+          </Link>
+          Formatierung. Es werden fast alle Markdown Formatierungen, auch große Teile von{' '}
+          <Link
+            href="https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown"
+            className="text-slate-300 underline"
+          >
+            GitHub-Flavored Markdown
+          </Link>
+          , unterstützt. Nicht unterstützte Elemente sind unter anderem HTML-Tags, Bilder, Fußnoten, Sub- und
+          Superskript, Definitionen und Emoji. Der Grund dafür ist, dass diese Elemente die Anonymität gefährden, zu
+          Missbrauch führen könnten oder einfach nicht sinnvoll sind.
+        </p>
+      </FaqItem>
       <FaqItem title="Wie kann ich sicher sein, dass meine Nachrichten und Bewertungen anonym sind?">
         <p>
           Es werden keine IP-Adressen oder andere Daten gespeichert, die Rückschlüsse auf deine Identität zulassen. Es

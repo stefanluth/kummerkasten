@@ -30,3 +30,92 @@ div:focus {
 .overflow-wrap {
   overflow-wrap: break-word;
 }
+
+.post-content {
+  p {
+    @apply whitespace-pre-line;
+  }
+
+  a {
+    @apply text-zinc-500;
+    @apply hover:text-zinc-400;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+    @apply text-zinc-200;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+
+  h4 {
+    @apply text-lg;
+  }
+
+  h5 {
+    @apply text-base;
+  }
+
+  h6 {
+    @apply text-sm;
+  }
+
+  blockquote {
+    @apply border-l-4;
+    @apply border-zinc-500;
+    @apply pl-4;
+  }
+
+  code {
+    @apply bg-zinc-700;
+    @apply rounded-md;
+    @apply p-1;
+  }
+
+  pre {
+    @apply bg-zinc-700;
+    @apply rounded-md;
+    @apply p-2;
+    @apply overflow-x-auto;
+  }
+
+  ul {
+    @apply list-disc;
+    @apply list-inside;
+  }
+
+  ol {
+    @apply list-decimal;
+    @apply list-inside;
+  }
+
+  li {
+    @apply mb-1;
+  }
+
+  thead {
+    @apply border-b-2;
+    @apply border-zinc-500;
+  }
+
+  td {
+    @apply p-2;
+    @apply border-b-2;
+    @apply border-zinc-600;
+  }
+}

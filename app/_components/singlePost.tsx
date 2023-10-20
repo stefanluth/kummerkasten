@@ -1,11 +1,15 @@
+import { marked } from 'marked';
+
 import Link from 'next/link';
 
 import { Post } from '@prisma/client';
 
 import { reportPost } from '@/app/_actions';
 import { Voting } from '@/app/_components/voting';
-import { DEFAULTS, bbcodeToHtml } from '@/utils';
+import { DEFAULTS, getMarkedOptions } from '@/utils';
 import { prisma } from '@/utils/prisma';
+
+const MARKED_OPTIONS = getMarkedOptions();
 
 type SinglePostProps = {
   post?: Post | null;
@@ -32,6 +36,8 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
   const [voted, reported] = await Promise.all([votedPromise, reportedPromise]);
   const votingDisabled = !!voted;
   const reportingDisabled = !!reported;
+
+  marked.use(MARKED_OPTIONS);
 
   return (
     <div className="flex p-2 gap-4 w-11/12">
@@ -60,12 +66,12 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
             )}
           </div>
           <div className="flex gap-2 items-baseline">
-            <h2 className="text-2xl -mt-1 font-bold truncate overflow-wrap whitespace-pre-line">{post.title}</h2>
+            <h2 className="text-3xl -mt-1 font-bold truncate overflow-wrap whitespace-pre-line">{post.title}</h2>
           </div>
         </div>
         <div
-          className="text-lg overflow-wrap whitespace-pre-line w-full"
-          dangerouslySetInnerHTML={{ __html: bbcodeToHtml(post.content) }}
+          className="text-lg overflow-wrap w-full post-content"
+          dangerouslySetInnerHTML={{ __html: marked(post.content) }}
         />
       </div>
     </div>
