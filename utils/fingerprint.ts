@@ -42,7 +42,7 @@ function getRenderer(): string {
   const gl = document.createElement('canvas').getContext('webgl');
   if (!gl) return 'noWebGL';
 
-  const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+  const debugInfo = gl.getExtension('RENDERER');
   if (!debugInfo) return 'noDebugInfo';
 
   const renderer: string = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
