@@ -16,6 +16,10 @@ export default async function SinglePostPage(props: SinglePostPageProps) {
     where: {
       id: props.params.id,
     },
+    include: {
+      reports: true,
+      votes: true,
+    },
   });
 
   return (

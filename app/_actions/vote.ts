@@ -28,30 +28,31 @@ export async function vote(formData: FormData) {
   });
 
   if (vote) {
-    return;
+    if (vote.upvote === upvote) {
+      await prisma.vote.delete({
+        where: {
+          id: vote.id,
+        },
+      });
+    } else {
+      await prisma.vote.update({
+        where: {
+          id: vote.id,
+        },
+        data: {
+          upvote,
+        },
+      });
+    }
+  } else {
+    await prisma.vote.create({
+      data: {
+        postId,
+        fingerprint,
+        upvote,
+      },
+    });
   }
 
-  await prisma.vote.create({
-    data: {
-      postId,
-      fingerprint,
-    },
-  });
-
-  await prisma.post.update({
-    where: {
-      id: postId,
-    },
-    data: {
-      upvotes: upvote ? post.upvotes + 1 : post.upvotes - 1,
-    },
-  });
-
   revalidatePath('/');
-  revalidatePath(`/${postId}`);
-  revalidatePath('/top/day');
-  revalidatePath('/top/week');
-  revalidatePath('/top/month');
-  revalidatePath('/top/year');
-  revalidatePath('/top/all');
 }

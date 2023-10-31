@@ -37,6 +37,7 @@ next-env.d.ts
 # prisma
 prisma/migrations/
 *.db
+*.sqlite
 
 # playwright
 /test-results/

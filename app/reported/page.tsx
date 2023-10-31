@@ -16,14 +16,12 @@ export default async function Reported() {
   const posts = await prisma.post.findMany({
     include: {
       reports: true,
-    },
-    orderBy: {
-      upvotes: 'desc',
+      votes: true,
     },
   });
 
   const filteredPosts = posts.filter(
-    (post) => post.reports.length >= Number(process.env.REPORTS_TO_HIDE_POST ?? DEFAULTS.REPORTS_TO_HIDE_POST)
+    (post) => post.reports.length >= Number(process.env.REPORTS_TO_HIDE_POST ?? DEFAULTS.REPORTS_TO_HIDE_POST),
   );
 
   return (
