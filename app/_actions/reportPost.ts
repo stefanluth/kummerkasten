@@ -30,5 +30,4 @@ export async function reportPost(formData: FormData) {
   });
 
   revalidatePath('/');
-  redirect('/');
 }

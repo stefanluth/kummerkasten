@@ -11,15 +11,17 @@ model Post {
   id        String   @id @unique @default(uuid())
   title     String
   content   String
-  upvotes   Int      @default(0)
-  reports   Report[]
   createdAt DateTime @default(now())
+  reports   Report[]
+  votes     Vote[]
 }
 
 model Vote {
-  id          String @id @unique @default(uuid())
+  id          String  @id @unique @default(uuid())
   fingerprint String
   postId      String
+  upvote      Boolean
+  Post        Post    @relation(fields: [postId], references: [id])
 }
 
 model Report {
