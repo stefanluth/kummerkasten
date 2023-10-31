@@ -48,9 +48,6 @@ jobs:
           --network "host" \
           kummerkasten:test
 
-      - name: Wait for Server
-        run: sleep 10
-
       - name: Install Playwright
         run: |
           npx playwright install --with-deps
