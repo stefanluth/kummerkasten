@@ -2,6 +2,7 @@
   "singleQuote": true,
   "printWidth": 120,
   "arrowParens": "always",
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrder": ["^react$", "^next/(.*)$", "^@[^/](.+)$", "^@/(.+)$", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true

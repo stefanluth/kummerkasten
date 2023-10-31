@@ -33,7 +33,7 @@ export async function createFingerprint(window: Window, ipAddress: string): Prom
         audio +
         video +
         canvasData +
-        renderer
+        renderer,
     )
     .digest('hex');
 }
