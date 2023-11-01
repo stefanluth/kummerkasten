@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { addPost } from '@/app/_actions';
+import { addPost } from '@/app/_actions/post/add';
 import { DEFAULTS } from '@/utils';
 
-export function AddPost(): JSX.Element {
+export function AddPost() {
   return (
     <form action={addPost} className="flex flex-col gap-2 p-2 w-full">
       <div className="flex flex-col gap-1 justify-between w-full">

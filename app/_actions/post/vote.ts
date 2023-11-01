@@ -1,11 +1,11 @@
+'use server';
+
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { prisma } from '@/utils/prisma';
 
-export async function vote(formData: FormData) {
-  'use server';
-
+export async function votePost(formData: FormData) {
   const postId = formData.get('postId') as string;
   const upvote = formData.get('upvote') === 'true';
   const fingerprint = cookies().get('fingerprint')?.value;

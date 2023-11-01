@@ -3,7 +3,7 @@ import React from 'react';
 import { headers } from 'next/headers';
 import Link from 'next/link';
 
-import { setSiteCookies } from '@/app/_actions';
+import { setSiteCookies } from '@/app/_actions/setSiteCookies';
 import { Fingerprint } from '@/app/_components/fingerprint';
 
 import CodeOfConduct from '../code-of-conduct/page';
