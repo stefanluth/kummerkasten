@@ -2,7 +2,7 @@ import { marked } from 'marked';
 
 import Link from 'next/link';
 
-import { reportPost } from '@/app/_actions';
+import { reportPost } from '@/app/_actions/post/report';
 import { Voting } from '@/app/_components/voting';
 import { DEFAULTS, getMarkedOptions } from '@/utils';
 import { PostWithRelations, prisma } from '@/utils/prisma';

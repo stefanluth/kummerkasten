@@ -25,7 +25,7 @@ export async function addPost(formData: FormData) {
     return;
   }
 
-  const post = await prisma.post.create({
+  await prisma.post.create({
     data: {
       title,
       content,

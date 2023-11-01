@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 
+import React from 'react';
+
 import { Inter } from 'next/font/google';
 
 import { NavBar } from '@/app/_components/navBar';
