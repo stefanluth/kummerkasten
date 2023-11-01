@@ -1,4 +1,4 @@
-FROM node:21 as build
+FROM node:21-alpine as build
 WORKDIR /kummerkasten
 
 COPY .env .
@@ -17,11 +17,11 @@ RUN npm install --omit=dev
 RUN npm run prepare:db
 RUN npm run build
 
-FROM node:21-slim as production
+FROM node:21-alpine as production
 WORKDIR /kummerkasten
 
-RUN apt-get update -y
-RUN apt-get install -y openssl
+RUN apk update
+RUN apk add --no-cache openssl
 
 COPY --from=build /kummerkasten .
 
