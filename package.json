@@ -8,6 +8,7 @@
     "dev": "next dev",
     "start": "next start",
     "tests": "npx playwright test",
+    "postinstall": "prisma generate",
     "prepare:db": "prisma migrate deploy && prisma db push && prisma generate"
   },
   "dependencies": {
