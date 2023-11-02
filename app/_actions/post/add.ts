@@ -33,5 +33,10 @@ export async function addPost(formData: FormData) {
   });
 
   revalidatePath('/');
+  revalidatePath('/top/day');
+  revalidatePath('/top/week');
+  revalidatePath('/top/month');
+  revalidatePath('/top/year');
+  revalidatePath('/top/all');
   redirect('/');
 }
