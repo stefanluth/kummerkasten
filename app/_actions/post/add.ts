@@ -38,5 +38,6 @@ export async function addPost(formData: FormData) {
   revalidatePath('/top/month');
   revalidatePath('/top/year');
   revalidatePath('/top/all');
-  redirect('/');
+  // workaround for the form not being cleared after submission. should instead redirect to /
+  redirect('/home');
 }

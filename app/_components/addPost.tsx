@@ -13,7 +13,6 @@ export function AddPost() {
           id="title"
           name="title"
           type="text"
-          value={''}
           minLength={Number(process.env.MIN_TITLE_LENGTH ?? DEFAULTS.MIN_TITLE_LENGTH)}
           maxLength={Number(process.env.MAX_TITLE_LENGTH ?? DEFAULTS.MAX_TITLE_LENGTH)}
           autoComplete="on"
@@ -28,7 +27,6 @@ export function AddPost() {
           className="resize-none"
           id="content"
           name="content"
-          value={''}
           rows={5}
           minLength={Number(process.env.MIN_CONTENT_LENGTH ?? DEFAULTS.MIN_CONTENT_LENGTH)}
           maxLength={Number(process.env.MAX_CONTENT_LENGTH ?? DEFAULTS.MAX_CONTENT_LENGTH)}
