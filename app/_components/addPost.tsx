@@ -1,11 +1,19 @@
+'use client';
+
 import React from 'react';
 
 import { addPost } from '@/app/_actions/post/add';
 import { DEFAULTS } from '@/utils';
 
 export function AddPost() {
+  const formRef = React.useRef<HTMLFormElement>(null);
+
   return (
-    <form action={addPost} className="flex flex-col gap-2 p-2 w-full">
+    <form
+      action={(formData) => addPost(formData).then(() => formRef.current?.reset())}
+      ref={formRef}
+      className="flex flex-col gap-2 p-2 w-full"
+    >
       <div className="flex flex-col gap-1 justify-between w-full">
         <label htmlFor="title">Titel</label>
         <input
