@@ -1,5 +1,14 @@
+FROM node:21-alpine as dependencies
+WORKDIR /kummerkasten
+
+COPY package.json .
+RUN npm install --omit=dev
+
 FROM node:21-alpine as build
 WORKDIR /kummerkasten
+
+COPY --from=dependencies /kummerkasten/node_modules ./node_modules
+COPY --from=dependencies /kummerkasten/package-lock.json ./package-lock.json
 
 COPY .env .
 COPY next.config.js .
@@ -13,9 +22,8 @@ COPY prisma/schema.prisma ./prisma/schema.prisma
 COPY utils ./utils
 COPY app ./app
 
-RUN npm install --omit=dev
-RUN npm run prepare:db
-RUN npm run build
+RUN npx prisma generate
+RUN npx next build
 
 FROM node:21-alpine as production
 WORKDIR /kummerkasten
