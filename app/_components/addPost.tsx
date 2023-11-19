@@ -10,7 +10,10 @@ export function AddPost() {
 
   return (
     <form
-      action={(formData) => addPost(formData).then(() => formRef.current?.reset())}
+      action={(formData) => {
+        addPost(formData);
+        formRef.current?.reset();
+      }}
       ref={formRef}
       className="flex flex-col gap-2 p-2 w-full"
     >
