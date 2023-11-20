@@ -4,11 +4,12 @@ import { useState } from 'react';
 
 import Link from 'next/link';
 
-import { Bars3Icon, InformationCircleIcon, LockClosedIcon, LockOpenIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, InformationCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
-import { Logo } from './logo';
+import { Logo } from '../logo';
+import { UnlockIcon } from './unlockIcon';
 
-export function MobileNavBar({ isUnlocked }: { isUnlocked: boolean }) {
+export function MobileNavBar(props: { isUnlocked: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -18,13 +19,7 @@ export function MobileNavBar({ isUnlocked }: { isUnlocked: boolean }) {
       </div>
 
       <div className="md:hidden flex gap-4 items-center">
-        <Link href="/unlock" title="Unlock" className="flex h-6 gap-2 px-2 rounded-md" onClick={() => setIsOpen(false)}>
-          {isUnlocked ? (
-            <LockOpenIcon className="w-6 h-6 text-zinc-100" />
-          ) : (
-            <LockClosedIcon className="w-6 h-6 text-zinc-100" />
-          )}
-        </Link>
+        <UnlockIcon isUnlocked={props.isUnlocked} />
         <Link href="/faq" title="FAQ" className="flex h-7 gap-2 px-2 rounded-md" onClick={() => setIsOpen(false)}>
           <InformationCircleIcon className="w-7 h-7 text-zinc-100" />
         </Link>

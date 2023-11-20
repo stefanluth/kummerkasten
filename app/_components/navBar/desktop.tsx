@@ -1,26 +1,11 @@
-import { cookies } from 'next/headers';
 import Link from 'next/link';
 
-import { HomeIcon, InformationCircleIcon, LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 
-import { Logo } from './logo';
-import { MobileNavBar } from './mobileNavBar';
+import { Logo } from '../logo';
+import { UnlockIcon } from './unlockIcon';
 
-export function NavBar() {
-  const password = cookies().get('password')?.value;
-  const isUnlocked = password === process.env.UNLOCK_PASSWORD;
-
-  return (
-    <div className="flex w-full bg-zinc-800 justify-center">
-      <div className="xl:w-2/3 px-6 w-full flex h-14 gap-4 justify-between items-center">
-        <DesktopNavBar isUnlocked={isUnlocked} />
-        <MobileNavBar isUnlocked={isUnlocked} />
-      </div>
-    </div>
-  );
-}
-
-function DesktopNavBar({ isUnlocked }: { isUnlocked: boolean }) {
+export function DesktopNavBar(props: { isUnlocked: boolean }) {
   return (
     <>
       <div className="md:flex gap-2 w-fit hidden">
@@ -47,14 +32,7 @@ function DesktopNavBar({ isUnlocked }: { isUnlocked: boolean }) {
         <Logo />
       </div>
       <div className="md:flex w-fit gap-4 hidden">
-        <Link href="/unlock" title="Unlock" className="flex h-6 gap-2 px-2 rounded-md hover:underline">
-          {isUnlocked ? (
-            <LockOpenIcon className="w-6 h-6 text-zinc-100" />
-          ) : (
-            <LockClosedIcon className="w-6 h-6 text-zinc-100" />
-          )}
-          Unlock
-        </Link>
+        <UnlockIcon isUnlocked={props.isUnlocked}>Unlock</UnlockIcon>
         <Link href="/faq" title="FAQ" className="flex h-6 gap-2 px-2 rounded-md hover:underline">
           <InformationCircleIcon className="w-6 h-6 text-zinc-100" />
           FAQ
