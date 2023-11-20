@@ -47,9 +47,18 @@ export function AddPost() {
       </div>
       <div className="flex flex-col gap-1 justify-between">
         <div className="flex justify-between">
-          <label className="pl-1" htmlFor="content">
-            Nachricht
-          </label>
+          <div className="flex items-baseline gap-2">
+            <label className="pl-1" htmlFor="content">
+              Nachricht
+            </label>
+            <a
+              className="flex w-fit h-fit px-1 border-zinc-600 text-zinc-600 text-xs font-black"
+              href="/faq#markdown"
+              title="Markdown Support"
+            >
+              M&#129035;
+            </a>
+          </div>
           <p className="flex items-end text-xs pr-1 text-zinc-500">
             {contentLength}/{maxContentLength}
           </p>
