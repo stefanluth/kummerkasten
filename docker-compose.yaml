@@ -2,6 +2,10 @@ version: '3.6'
 services:
   app:
     container_name: kummerkasten
+    depends_on:
+      database:
+        condition: service_started
+    restart: always
     build: .
     ports:
       - '3000:3000'
@@ -13,4 +17,16 @@ services:
       - UNLOCK_PASSWORD=test
       - DELETE_PASSWORD=test
       - REPORTS_TO_HIDE_POST=1
-    command: npm run dev
+      - POSTGRES_PRISMA_URL=postgresql://kummerkasten:kummerkasten@kummerkasten-database:5432/kummerkasten?connect_timeout=300
+    command: sh -c 'npx prisma db push && npm run dev'
+
+  database:
+    image: postgres:16
+    container_name: kummerkasten-database
+    restart: always
+    environment:
+      POSTGRES_USER: kummerkasten
+      POSTGRES_PASSWORD: kummerkasten
+      POSTGRES_DB: kummerkasten
+    ports:
+      - '5432:5432'

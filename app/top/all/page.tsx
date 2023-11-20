@@ -1,14 +1,20 @@
 import Posts from '@/app/_components/posts';
 import { DEFAULTS } from '@/utils';
-import { prisma, sortBy } from '@/utils/prisma';
+import { PostWithRelations, prisma, sortBy } from '@/utils/prisma';
 
 export default async function TopDay() {
-  const posts = await prisma.post.findMany({
-    include: {
-      reports: true,
-      votes: true,
-    },
-  });
+  let posts: PostWithRelations[] = [];
+
+  try {
+    posts = await prisma.post.findMany({
+      include: {
+        reports: true,
+        votes: true,
+      },
+    });
+  } catch (error) {
+    return null;
+  }
 
   const filteredPosts = posts.filter(
     (post) => post.reports.length < Number(process.env.REPORTS_TO_HIDE_POST ?? DEFAULTS.REPORTS_TO_HIDE_POST),

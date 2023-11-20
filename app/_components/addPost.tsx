@@ -1,11 +1,22 @@
+'use client';
+
 import React from 'react';
 
 import { addPost } from '@/app/_actions/post/add';
 import { DEFAULTS } from '@/utils';
 
 export function AddPost() {
+  const formRef = React.useRef<HTMLFormElement>(null);
+
   return (
-    <form action={addPost} className="flex flex-col gap-2 p-2 w-full">
+    <form
+      action={(formData) => {
+        addPost(formData);
+        formRef.current?.reset();
+      }}
+      ref={formRef}
+      className="flex flex-col gap-2 p-2 w-full"
+    >
       <div className="flex flex-col gap-1 justify-between w-full">
         <label htmlFor="title">Titel</label>
         <input
@@ -13,7 +24,6 @@ export function AddPost() {
           id="title"
           name="title"
           type="text"
-          value={''}
           minLength={Number(process.env.MIN_TITLE_LENGTH ?? DEFAULTS.MIN_TITLE_LENGTH)}
           maxLength={Number(process.env.MAX_TITLE_LENGTH ?? DEFAULTS.MAX_TITLE_LENGTH)}
           autoComplete="on"
@@ -28,7 +38,6 @@ export function AddPost() {
           className="resize-none"
           id="content"
           name="content"
-          value={''}
           rows={5}
           minLength={Number(process.env.MIN_CONTENT_LENGTH ?? DEFAULTS.MIN_CONTENT_LENGTH)}
           maxLength={Number(process.env.MAX_CONTENT_LENGTH ?? DEFAULTS.MAX_CONTENT_LENGTH)}

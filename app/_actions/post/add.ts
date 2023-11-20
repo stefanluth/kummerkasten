@@ -38,5 +38,4 @@ export async function addPost(formData: FormData) {
   revalidatePath('/top/month');
   revalidatePath('/top/year');
   revalidatePath('/top/all');
-  redirect('/');
 }
