@@ -60,6 +60,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Start Database
+        run: |
+          docker run \
+          -d \
+          -p 5432:5432 \
+          -e POSTGRES_USER=kummerkasten \
+          -e POSTGRES_PASSWORD=kummerkasten \
+          -e POSTGRES_DB=kummerkasten \
+          --name kummerkasten-database \
+          postgres:16
+
       - name: Unstash Build Results
         uses: actions/download-artifact@v3
         with:
@@ -103,7 +114,7 @@ jobs:
           DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
           npm run tests
 
-      - name: Stop Container
+      - name: Stop Containers
         run: docker stop $(docker ps -q)
 
   push:
