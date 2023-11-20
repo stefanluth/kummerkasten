@@ -71,6 +71,9 @@ jobs:
           --name kummerkasten-database \
           postgres:16
 
+      - name: Update Database
+        run: npx prisma db push
+
       - name: Unstash Build Results
         uses: actions/download-artifact@v3
         with:

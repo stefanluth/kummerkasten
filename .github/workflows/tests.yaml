@@ -38,6 +38,9 @@ jobs:
           --name kummerkasten-database \
           postgres:16
 
+      - name: Update Database
+        run: npx prisma db push
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
