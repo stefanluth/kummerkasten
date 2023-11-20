@@ -38,7 +38,7 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
   const downvotes = post.votes?.filter((vote) => vote.upvote === false).length;
 
   return (
-    <div className="flex p-2 gap-4 w-11/12">
+    <div className="flex p-2 gap-4">
       <Voting
         postId={post.id}
         upvotes={upvotes - downvotes}

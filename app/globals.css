@@ -7,6 +7,11 @@
   color: #ececec;
 }
 
+::selection,
+::-moz-selection {
+  @apply bg-zinc-600;
+}
+
 input,
 select,
 textarea {

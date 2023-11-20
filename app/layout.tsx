@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <div className="flex flex-col max-h-screen min-w-[275px]">
           <NavBar />
-          <div className="overflow-y-auto pb-4 px-2" tabIndex={-1}>
+          <div className="overflow-y-auto md:pb-4 md:px-2" tabIndex={-1}>
             <div className="sm:max-w-6xl flex flex-col mx-auto">{children}</div>
           </div>
         </div>

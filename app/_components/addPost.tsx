@@ -20,10 +20,10 @@ export function AddPost() {
     <form
       action={(formData) => addPost(formData).then(() => formRef.current?.reset())}
       ref={formRef}
-      className="flex flex-col gap-2 p-2 w-full"
+      className="flex flex-col gap-2 w-full p-2"
     >
       <div className="flex flex-col gap-1 justify-between w-full">
-        <div className="flex justify-between">
+        <div className="flex justify-between select-none">
           <label className="pl-1" htmlFor="title">
             Titel
           </label>
@@ -47,7 +47,7 @@ export function AddPost() {
       </div>
       <div className="flex flex-col gap-1 justify-between">
         <div className="flex justify-between">
-          <div className="flex items-baseline gap-2">
+          <div className="flex items-baseline gap-2 select-none">
             <label className="pl-1" htmlFor="content">
               Nachricht
             </label>
