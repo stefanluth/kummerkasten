@@ -109,13 +109,13 @@ export default function About() {
           kopieren, um sie in deiner Antwort zu erwähnen.
         </p>
       </FaqItem>
-      <FaqItem title="Wie kann ich den Inhalt meiner Nachricht formatieren?">
+      <FaqItem title="Wie kann ich den Inhalt meiner Nachricht formatieren?" id="markdown">
         <p>
           Nachrichten unterstützen{' '}
           <Link href="https://www.markdownguide.org/basic-syntax/" className="text-slate-300 underline">
-            Markdown
+            Markdown Formatierung
           </Link>
-          Formatierung. Es werden fast alle Markdown Formatierungen, auch große Teile von{' '}
+          . Es werden fast alle Markdown Formatierungen, auch große Teile von{' '}
           <Link
             href="https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown"
             className="text-slate-300 underline"
@@ -139,7 +139,7 @@ export default function About() {
           Tool umgehen. Wenn festgestellt wird, dass das nicht der Fall ist, wird das Tool deaktiviert.
         </p>
       </FaqItem>
-      <FaqItem title="Im Source Code steht etwas über einen 'Fingerprint'. Was ist das?">
+      <FaqItem title="Im Source Code steht etwas über einen 'Fingerprint'. Was ist das?" id="fingerprint">
         <p>
           Der Fingerprint ist eine Art von ID, der aus deiner Browser- und Gerätekonfiguration generiert wird. Diese
           Informationen selbst werden nicht gespeichert, nur der daraus generierte Hash. Er ermöglicht es, mehrfaches

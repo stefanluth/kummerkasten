@@ -2,10 +2,11 @@ import { PropsWithChildren } from 'react';
 
 type FaqItemProps = {
   title: string;
+  id?: string;
 };
 
-export default function FaqItem({ title, children }: PropsWithChildren<FaqItemProps>) {
-  const href = encodeURIComponent(title);
+export default function FaqItem({ title, id, children }: PropsWithChildren<FaqItemProps>) {
+  const href = id ?? encodeURIComponent(title);
 
   return (
     <div className="flex flex-col gap-2">

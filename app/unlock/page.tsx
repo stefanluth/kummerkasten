@@ -19,9 +19,9 @@ export default function Unlock() {
         <p>Mit dem Absenden des Passworts werden zwei Cookies gesetzt, die den Zugriff auf die Seite freischalten.</p>
         <p>
           Einer der Cookies enthält das Passwort, das andere deinen{' '}
-          <Link className="underline" href="/faq">
+          <a className="underline" href="/faq#fingerprint">
             Fingerprint
-          </Link>
+          </a>
           .
         </p>
         <p>Die Cookies laufen nach 24 Stunden ab.</p>
