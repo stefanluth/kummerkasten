@@ -8,6 +8,7 @@ import { DEFAULTS, getMarkedOptions } from '@/utils';
 import { PostWithRelations, prisma } from '@/utils/prisma';
 
 const MARKED_OPTIONS = getMarkedOptions();
+marked.use(MARKED_OPTIONS);
 
 type SinglePostProps = {
   post?: PostWithRelations | null;
@@ -24,26 +25,24 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
     },
   });
 
-  const reportedPromise = prisma.report.findFirst({
+  const reportPromise = prisma.report.findFirst({
     where: {
       fingerprint,
       postId: post.id,
     },
   });
 
-  const [userVote, userReported] = await Promise.all([votePromise, reportedPromise]);
+  const [userVote, userReport] = await Promise.all([votePromise, reportPromise]);
 
   const upvotes = post.votes?.filter((vote) => vote.upvote === true).length;
   const downvotes = post.votes?.filter((vote) => vote.upvote === false).length;
-
-  marked.use(MARKED_OPTIONS);
 
   return (
     <div className="flex p-2 gap-4 w-11/12">
       <Voting
         postId={post.id}
         upvotes={upvotes - downvotes}
-        vote={userVote ? userVote.upvote : null}
+        vote={userVote?.upvote ?? null}
         fingerprint={fingerprint}
       />
       <div id={post.id.toString()} className="flex flex-col gap-1 justify-between w-full">
@@ -59,7 +58,7 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
             <Link id={post.id} href={`/${post.id}`} className="text-xs text-zinc-500 post-id">
               #{post.id.toString().slice(0, 8)}
             </Link>
-            {!userReported && (
+            {!userReport && (
               <form action={reportPost}>
                 <input type="hidden" name="postId" value={post.id} />
                 <input type="hidden" name="fingerprint" value={fingerprint} />
