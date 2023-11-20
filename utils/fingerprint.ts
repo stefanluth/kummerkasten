@@ -4,7 +4,7 @@ export async function createFingerprint(window: Window, ipAddress: string): Prom
   if (window.navigator.webdriver) return 'webdriver';
   if (window.navigator.languages === undefined) return 'noLanguages';
 
-  const devices = (await navigator.mediaDevices.enumerateDevices()).map((device) => `${device.kind} ${device.label}`);
+  const devices = (await navigator.mediaDevices.enumerateDevices()).map((device) => device.deviceId);
   const codecs = await getCodecs();
   const audio = audioCodecs();
   const video = videoCodecs();
