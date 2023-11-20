@@ -6,7 +6,7 @@ export default async function TopDay() {
   let posts: PostWithRelations[] = [];
 
   try {
-    await prisma.post.findMany({
+    posts = await prisma.post.findMany({
       where: {
         createdAt: {
           gte: new Date(new Date().setDate(new Date().getDate() - 1)),
