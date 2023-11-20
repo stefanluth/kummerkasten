@@ -16,7 +16,9 @@ const sortByNewest = (a: Post, b: Post) => {
   return b.createdAt.getTime() - a.createdAt.getTime();
 };
 
-export const sortBy = {
+export const sortBy: {
+  [key: string]: (a: PostWithRelations, b: PostWithRelations) => number;
+} = {
   votes: sortByVotes,
   newest: sortByNewest,
 };
