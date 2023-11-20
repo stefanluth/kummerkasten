@@ -4,11 +4,11 @@ import { useState } from 'react';
 
 import Link from 'next/link';
 
-import { Bars3Icon, InformationCircleIcon, LockClosedIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, InformationCircleIcon, LockClosedIcon, LockOpenIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 import { Logo } from './logo';
 
-export const MobileNavBar = () => {
+export function MobileNavBar({ isUnlocked }: { isUnlocked: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -19,7 +19,11 @@ export const MobileNavBar = () => {
 
       <div className="md:hidden flex gap-4 items-center">
         <Link href="/unlock" title="Unlock" className="flex h-6 gap-2 px-2 rounded-md" onClick={() => setIsOpen(false)}>
-          <LockClosedIcon className="w-6 h-6 text-zinc-100" />
+          {isUnlocked ? (
+            <LockOpenIcon className="w-6 h-6 text-zinc-100" />
+          ) : (
+            <LockClosedIcon className="w-6 h-6 text-zinc-100" />
+          )}
         </Link>
         <Link href="/faq" title="FAQ" className="flex h-7 gap-2 px-2 rounded-md" onClick={() => setIsOpen(false)}>
           <InformationCircleIcon className="w-7 h-7 text-zinc-100" />
@@ -51,7 +55,7 @@ export const MobileNavBar = () => {
       </div>
     </>
   );
-};
+}
 
 const MobileMenuElement = ({ href, title }: { href: string; title: string }) => {
   return (
