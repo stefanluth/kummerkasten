@@ -3,6 +3,8 @@ import { randomBytes } from 'crypto';
 import { expect, test } from '@playwright/test';
 
 const POST_ID_CLASS_NAMES = '.post-id';
+const UNLOCK_PASSWORD = process.env.UNLOCK_PASSWORD || 'test';
+const DELETE_PASSWORD = process.env.DELETE_PASSWORD || 'test';
 
 test('has title', async ({ page }) => {
   await page.goto('/');
@@ -31,10 +33,8 @@ test('redirects to /unlock', async ({ context }) => {
 });
 
 test('unlock works', async ({ page }) => {
-  const password = process.env.UNLOCK_PASSWORD || 'test';
-
   await page.goto('/unlock');
-  await page.fill('input[name="password"]', password);
+  await page.fill('input[name="password"]', UNLOCK_PASSWORD);
 
   const unlockButton = page.getByRole('button', { name: 'Absenden' });
   await unlockButton.click();
@@ -51,10 +51,8 @@ test('unlock works', async ({ page }) => {
 });
 
 test('submit works', async ({ page }) => {
-  const password = process.env.UNLOCK_PASSWORD || 'test';
-
   await page.goto('/unlock');
-  await page.fill('input[name="password"]', password);
+  await page.fill('input[name="password"]', UNLOCK_PASSWORD);
 
   const unlockButton = page.getByRole('button', { name: 'Absenden' });
   await unlockButton.click();
@@ -85,18 +83,17 @@ test('submit works', async ({ page }) => {
 });
 
 test('delete works', async ({ page }) => {
-  const password = process.env.UNLOCK_PASSWORD || 'test';
-  const deletePassword = process.env.DELETE_PASSWORD || 'test';
-
+  // Unlock page
   await page.goto('/unlock');
   await expect(page).toHaveURL('/unlock');
-  await page.fill('input[name="password"]', password);
+  await page.fill('input[name="password"]', UNLOCK_PASSWORD);
 
   const unlockButton = page.getByRole('button', { name: 'Absenden' });
   await unlockButton.click();
 
   await expect(page).toHaveURL('/');
 
+  // Submit post
   const titelInput = page.getByRole('textbox', { name: 'Titel' });
   const nachrichtInput = page.getByRole('textbox', { name: 'Nachricht' });
   const submitButton = page.getByRole('button', { name: 'Absenden' });
@@ -117,10 +114,11 @@ test('delete works', async ({ page }) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   await expect(page).toHaveURL('/');
-  await page.reload({ waitUntil: 'networkidle' });
+  await page.reload();
 
   const countAfterPost = await page.locator(POST_ID_CLASS_NAMES).count();
 
+  // Get post id
   const title = page.getByText(randomTitle);
   const message = page.getByText(randomMessage);
 
@@ -130,13 +128,14 @@ test('delete works', async ({ page }) => {
 
   const postId = await page.getAttribute(POST_ID_CLASS_NAMES, 'id');
 
+  // Delete post
   const headers = new Headers([
     ['Content-Type', 'application/json'],
-    ['Cookie', `password=${password}; fingerprint=123`],
+    ['Cookie', `password=${UNLOCK_PASSWORD}; fingerprint=123`],
   ]);
 
   const body = JSON.stringify({
-    password: deletePassword,
+    password: DELETE_PASSWORD,
   });
 
   const requestOptions: RequestInit = {
@@ -153,7 +152,7 @@ test('delete works', async ({ page }) => {
   expect(status).toBe(200);
   expect(result).toEqual({});
 
-  await page.reload({ waitUntil: 'networkidle' });
+  await page.reload();
 
   const countAfterDelete = await page.locator(POST_ID_CLASS_NAMES).count();
 
