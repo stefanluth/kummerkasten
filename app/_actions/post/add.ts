@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { DEFAULTS, sanitize } from '@/utils';
+import { DEFAULTS } from '@/utils';
 import { prisma } from '@/utils/prisma';
 
 export async function addPost(formData: FormData) {
@@ -38,7 +38,7 @@ export async function addPost(formData: FormData) {
   await prisma.post.create({
     data: {
       title,
-      content: sanitize(content),
+      content,
     },
   });
 
