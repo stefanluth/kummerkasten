@@ -16,6 +16,9 @@ export default async function TopWeek() {
         reports: true,
         votes: true,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   } catch (error) {
     return null;
