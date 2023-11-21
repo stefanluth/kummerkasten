@@ -17,6 +17,7 @@ in dem Mitarbeiter:innen ihre Gedanken und Meinungen frei und anonym äußern k�
 - Auf der Startseite werden die Beiträge nach neuesten sortiert angezeigt
 - Auf den Top-Seiten (/top/day, /top/week, /top/month, /top/year, /top/all) werden die Beiträge innerhalb eines
 Zeitraums (24h, 1 Woche, 1 Monat, 1 Jahr, alle) nach den höchsten Bewertungen sortiert angezeigt
+- Markdown Support in den Beiträgen
 
 ## How to run
 
