@@ -56,7 +56,7 @@ export function AddPost() {
               href="/faq#markdown"
               title="Markdown Support"
             >
-              M&#129035;
+              M&darr;
             </a>
           </div>
           <p className="flex items-end text-xs pr-1 text-zinc-500">
