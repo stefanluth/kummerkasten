@@ -1,27 +1,34 @@
 'use client';
 
-import React from 'react';
-import { useFormStatus } from 'react-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 
-import { addPost } from '@/app/_actions/post/add';
+import { addPostAction } from '@/app/_actions/post/add';
 import { DEFAULTS } from '@/utils';
 
 export function AddPost() {
-  const formRef = React.useRef<HTMLFormElement>(null);
-  const [titleLength, setTitleLength] = React.useState(0);
-  const [contentLength, setContentLength] = React.useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [titleLength, setTitleLength] = useState(0);
+  const [contentLength, setContentLength] = useState(0);
+  const [state, formAction] = useFormState(addPostAction, '');
 
   const minTitleLength = Number(process.env.MIN_TITLE_LENGTH ?? DEFAULTS.MIN_TITLE_LENGTH);
   const maxTitleLength = Number(process.env.MAX_TITLE_LENGTH ?? DEFAULTS.MAX_TITLE_LENGTH);
   const minContentLength = Number(process.env.MIN_CONTENT_LENGTH ?? DEFAULTS.MIN_CONTENT_LENGTH);
   const maxContentLength = Number(process.env.MAX_CONTENT_LENGTH ?? DEFAULTS.MAX_CONTENT_LENGTH);
 
+  useEffect(() => {
+    if (state != null) {
+      return;
+    }
+
+    formRef.current?.reset();
+    setTitleLength(0);
+    setContentLength(0);
+  }, [state]);
+
   return (
-    <form
-      action={(formData) => addPost(formData).then(() => formRef.current?.reset())}
-      ref={formRef}
-      className="flex flex-col gap-2 w-full p-2"
-    >
+    <form action={formAction} ref={formRef} className="flex flex-col gap-2 w-full p-2">
       <div className="flex flex-col gap-1 justify-between w-full">
         <div className="flex justify-between select-none">
           <label className="pl-1" htmlFor="title">
@@ -79,6 +86,7 @@ export function AddPost() {
       </div>
       <div className="flex">
         <div className="flex gap-4 ml-auto items-center">
+          <p className="text-xs text-red-800">{state}</p>
           <SubmitButton />
         </div>
       </div>

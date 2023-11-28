@@ -11,6 +11,9 @@ export default async function TopDay() {
         reports: true,
         votes: true,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   } catch (error) {
     return null;
