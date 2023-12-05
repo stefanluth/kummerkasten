@@ -2,9 +2,8 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
+import { Switch } from '@/app/_components/switch';
 import { DEFAULTS } from '@/utils';
-
-import { Switch } from './switch';
 
 export function SwitchHideUnpopularPosts() {
   const router = useRouter();
