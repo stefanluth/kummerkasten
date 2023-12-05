@@ -17,7 +17,7 @@ export function Switch({
         type="checkbox"
         value=""
         className="sr-only peer"
-        defaultChecked={checked}
+        checked={checked}
         onChange={(event) => {
           onSwitch?.(event.target.checked);
         }}
