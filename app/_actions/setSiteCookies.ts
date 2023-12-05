@@ -21,6 +21,10 @@ const cookieOptions: CookieOptions = {
 
 export async function setSiteCookies(formData: FormData) {
   const password = formData.get('password') as string;
+
+  if (!password) return { error: 'Kein Passwort eingegeben' };
+  if (password !== process.env.UNLOCK_PASSWORD) return { error: 'Falsches Passwort' };
+
   const fingerprint = formData.get('fingerprint') as string;
 
   cookies().set('password', password, cookieOptions);

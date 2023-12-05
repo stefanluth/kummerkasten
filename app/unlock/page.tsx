@@ -1,12 +1,9 @@
 import React from 'react';
 
 import { headers } from 'next/headers';
-import Link from 'next/link';
-
-import { setSiteCookies } from '@/app/_actions/setSiteCookies';
-import { Fingerprint } from '@/app/_components/fingerprint';
 
 import CodeOfConduct from '../code-of-conduct/page';
+import { UnlockForm } from './form';
 
 export default function Unlock() {
   const ipAddress = headers().get('x-real-ip') ?? headers().get('x-forwarded-for');
@@ -26,16 +23,7 @@ export default function Unlock() {
         </p>
         <p>Die Cookies laufen nach 24 Stunden ab.</p>
       </div>
-      <form action={setSiteCookies}>
-        <Fingerprint ipAddress={ipAddress ?? 'unknown'} />
-        <div className="flex flex-col gap-2 mt-4">
-          <h1>Passwort eingeben</h1>
-          <input autoFocus type="password" name="password" id="password" placeholder="Passwort..." />
-          <button type="submit" className="w-fit h-8 px-2 rounded-md bg-zinc-600">
-            Absenden
-          </button>
-        </div>
-      </form>
+      <UnlockForm ipAddress={ipAddress} />
     </div>
   );
 }
