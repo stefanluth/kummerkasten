@@ -11,6 +11,12 @@ test('has title', async ({ page }) => {
   await expect(page).toHaveTitle('Kummerkasten');
 });
 
+test('/faq is reachable', async ({ context }) => {
+  const page = await context.newPage();
+  await page.goto('/faq');
+  await expect(page).toHaveURL('/faq');
+});
+
 test('redirects to /unlock', async ({ context }) => {
   const page = await context.newPage();
   await page.goto('/');
