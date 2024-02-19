@@ -32,6 +32,7 @@ RUN apk update
 RUN apk add --no-cache openssl
 
 COPY --from=build /kummerkasten .
+COPY faq.en.md .
 
 EXPOSE 3000
 HEALTHCHECK --interval=15s --timeout=5s \

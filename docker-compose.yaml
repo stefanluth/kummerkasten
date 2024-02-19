@@ -13,6 +13,7 @@ services:
       - ./app:/kummerkasten/app
       - ./prisma:/kummerkasten/prisma
       - ./utils:/kummerkasten/utils
+      - ./faq.en.md:/kummerkasten/faq.en.md
     environment:
       - UNLOCK_PASSWORD=test
       - DELETE_PASSWORD=test
