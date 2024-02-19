@@ -2,15 +2,19 @@
 
 ## What is the Kummerkasten?
 
-In environments where open communication is valued, there may still be moments when some questions or views may not want to be expressed directly. This could be due to concerns about possible reactions or discomfort with certain topics. In such cases, the Kummerkasten provides a trusted platform where people can share their thoughts in a secure environment.
+In environments where open communication is valued, there may still be moments when some questions or views may not want to be expressed directly. This could be due to concerns about possible reactions or discomfort with certain topics.
+<br/>
+In such cases, the Kummerkasten provides a trusted platform where people can share their thoughts in a secure environment.
 
 ## How does the Kummerkasten work?
 
-The Kummerkasten is an anonymous message board where people can ask questions, express opinions and give feedback without coming out of the closet. The posts are not moderated, but the right is reserved to remove posts that violate [the rules of conduct](/code-of-conduct).
+The Kummerkasten is an anonymous message board where people can ask questions, express opinions and give feedback without coming out of the closet.
+<br/>
+The posts are not moderated, but the right is reserved to remove posts that violate [the rules of conduct](/code-of-conduct).
 
 ## How do I use the Kummerkasten?
 
-You do not need to register or sign up. You can simply write a post on the start page and click on **Submit**.
+You do not need to register or sign up. You can simply write a post on the [Start page](/) and click on **Submit**.
 
 ## I don't see any posts. What do I have to do?
 
@@ -18,11 +22,16 @@ You need to enter the password on the [Unlock page](/unlock) to unlock the posts
 
 ## Where do I get the password?
 
-The password should be communicated to you by a person who has access to the Kummerkasten or published in another communication channel that is accessible to you. This ensures that only authorized persons have access and that anonymity is maintained. It is important not to disclose the password to unauthorized third parties.
+The password should be communicated to you by a person who has access to the Kummerkasten or published in another communication channel that is accessible to you.
+<br/>
+This ensures that only authorized persons have access and that anonymity is maintained.
+It is important not to disclose the password to unauthorized third parties.
 
 ## How can I report a post?
 
-When you want to report a post, you can use the Report link above the post. If a post is reported often, it will be hidden at first and then possibly removed if it violates [the rules of conduct](/code-of-conduct). Until then, reported posts can be viewed on the Reported page.
+When you want to report a post, you can use the Report link above the post. If a post is reported often, it will be hidden at first and then possibly removed if it violates [the rules of conduct](/code-of-conduct).
+<br/>
+Until then, reported posts can be viewed on the [Reported page](/reported).
 
 ## How can I delete my post?
 
@@ -50,7 +59,9 @@ This feature is not yet available. Work is being done to implement it as soon as
 
 ## How can I format the content of my post?
 
-Posts support Markdown formatting. Some Markdown formats and parts of GitHub-Flavored Markdown are supported. Unsupported elements include HTML tags, images, linked texts, footnotes, sub- and superscript, definitions, and emoji. The reason for this is that these elements endanger anonymity, could lead to abuse, or are simply not meaningful.
+Posts support [Markdown formatting](https://www.markdownguide.org/basic-syntax/). Some parts of [GitHub-Flavored Markdown](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown) are also supported.
+<br/>
+Unsupported elements include HTML tags, images, linked texts, footnotes, sub- and superscript, definitions, and emoji. The reason for this is that these elements endanger anonymity, could lead to abuse, or are simply not meaningful.
 
 ## How can I be sure that my posts and ratings are anonymous?
 
@@ -62,7 +73,9 @@ Correct. It is trusted that users will handle this tool responsibly. The Kummerk
 
 ## The source code mentions a 'Fingerprint'. What is that?
 
-The fingerprint is a kind of ID that is generated from your browser and device configuration. This information itself is not stored, only the hash generated from it. It prevents multiple voting and recognizes spam without storing IP addresses or other data that allow conclusions about your identity.
+The fingerprint is a kind of ID that is generated from your browser and device configuration. This information itself is not stored, only the hash generated from it.
+<br/>
+It prevents multiple voting and recognizes spam without storing IP addresses or other data that allow conclusions about your identity.
 
 ## But the source code mentions an IP address. Is my IP address stored after all?
 

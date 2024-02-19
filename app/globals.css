@@ -36,6 +36,29 @@ div:focus {
   overflow-wrap: break-word;
 }
 
+.faq-content {
+  a {
+    @apply underline;
+  }
+  p {
+    @apply leading-6;
+  }
+
+  br {
+    @apply hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply mb-2 !important;
+    @apply mt-6 !important;
+  }
+}
+
 .post-content,
 .faq-content {
   p {
