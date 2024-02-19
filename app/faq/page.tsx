@@ -1,14 +1,13 @@
 import fs from 'fs';
 import { marked } from 'marked';
 
-const renderer = new marked.Renderer();
-
-marked.use({
-  renderer: renderer,
-  gfm: true,
-});
-
 export default function Faq() {
+  const renderer = new marked.Renderer();
+  marked.use({
+    renderer: renderer,
+    gfm: true,
+  });
+
   return (
     <div
       className="faq-content max-w-3xl mx-auto"

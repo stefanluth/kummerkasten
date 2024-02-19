@@ -16,7 +16,7 @@ export default function Unlock() {
         <p>By submitting the password, two cookies will be set to unlock the page.</p>
         <p>
           One of the cookies contains the password, the other your{' '}
-          <a className="underline" href="/faq">
+          <a className="underline" href="/faq#fingerprint">
             fingerprint
           </a>
           .

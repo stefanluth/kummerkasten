@@ -37,9 +37,19 @@ div:focus {
 }
 
 .faq-content {
-  a {
+  p > a {
     @apply underline;
   }
+
+  h2 > a {
+    @apply text-zinc-200;
+    @apply hover:text-zinc-200;
+  }
+
+  h2 > a:target {
+    @apply underline;
+  }
+
   p {
     @apply leading-6;
   }

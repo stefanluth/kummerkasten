@@ -60,7 +60,7 @@ export function AddPost() {
             </label>
             <a
               className="flex w-fit h-fit px-1 border-zinc-600 text-zinc-600 text-xs font-black"
-              href="/faq"
+              href="/faq#markdown"
               title="Markdown Support"
             >
               M&darr;

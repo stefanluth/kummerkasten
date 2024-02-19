@@ -4,11 +4,8 @@ import Link from 'next/link';
 
 import { reportPost } from '@/app/_actions/post/report';
 import { Voting } from '@/app/_components/voting';
-import { DEFAULTS, getMarkedOptions } from '@/utils';
+import { DEFAULTS, MARKED_POST_OPTIONS } from '@/utils';
 import { PostWithRelations, prisma } from '@/utils/prisma';
-
-const MARKED_OPTIONS = getMarkedOptions();
-marked.use(MARKED_OPTIONS);
 
 type PostProps = {
   post?: PostWithRelations | null;
@@ -17,6 +14,8 @@ type PostProps = {
 
 export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Element | null> {
   if (!post || !fingerprint) return null;
+
+  marked.use(MARKED_POST_OPTIONS);
 
   const votePromise = prisma.vote.findFirst({
     where: {
