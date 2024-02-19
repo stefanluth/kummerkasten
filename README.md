@@ -44,7 +44,7 @@ delete posts. The `REPORTS_TO_HIDE_POST` specifies how many reports a post must 
 ```shell
 npm install
 npx prisma generate
-npx prisma migrate dev
+npx prisma db push
 UNLOCK_PASSWORD=test DELETE_PASSWORD=test REPORTS_TO_HIDE_POST=1 npm run dev
 ```
 
