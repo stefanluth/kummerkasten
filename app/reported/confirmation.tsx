@@ -21,13 +21,9 @@ export default function Confirmation() {
       <div className="flex flex-col w-fit h-full justify-center mx-auto gap-4">
         <div className="flex flex-col text-center gap-2">
           <ExclamationTriangleIcon className="w-12 h-12 mx-auto text-yellow-500" />
+          <p>This page contains reported messages that may be perceived as disturbing or inappropriate.</p>
           <p>
-            Auf dieser Seite werden gemeldete Nachrichten angezeigt, die möglicherweise als verstörend oder unangebracht
-            empfunden werden können.
-          </p>
-          <p>
-            Durch das Klicken auf <b>Weiter</b> bestätigst du, dass du dir dieser Tatsache bewusst bist und die
-            Nachrichten lesen möchtest.
+            By clicking <b>Continue</b>, you confirm that you are aware of this fact and want to read the messages.
           </p>
         </div>
         <div className="flex mx-auto gap-2">
@@ -35,14 +31,14 @@ export default function Confirmation() {
             className="w-28 h-8 px-2 rounded-md bg-yellow-500 hover:bg-yellow-600 text-zinc-900 font-bold self-center"
             onClick={onConfirm}
           >
-            Weiter
+            Continue
           </button>
           <button
             className="w-28 h-8 px-2 rounded-md bg-zinc-700 hover:bg-zinc-800 text-white font-bold self-center"
             autoFocus
             onClick={onDeny}
           >
-            Abbrechen
+            Abort
           </button>
         </div>
       </div>

@@ -36,17 +36,17 @@ test('unlock works', async ({ page }) => {
   await page.goto('/unlock');
   await page.fill('input[name="password"]', UNLOCK_PASSWORD);
 
-  const unlockButton = page.getByRole('button', { name: 'Absenden' });
+  const unlockButton = page.getByRole('button', { name: 'Submit' });
   await unlockButton.click();
 
   await expect(page).toHaveURL('/');
 
-  const titelInput = page.getByRole('textbox', { name: 'Titel' });
-  const nachrichtInput = page.getByRole('textbox', { name: 'Nachricht' });
-  const submitButton = page.getByRole('button', { name: 'Absenden' });
+  const titleInput = page.getByRole('textbox', { name: 'Title' });
+  const contentInput = page.getByRole('textbox', { name: 'Content' });
+  const submitButton = page.getByRole('button', { name: 'Submit' });
 
-  await expect(titelInput).toBeVisible();
-  await expect(nachrichtInput).toBeVisible();
+  await expect(titleInput).toBeVisible();
+  await expect(contentInput).toBeVisible();
   await expect(submitButton).toBeVisible();
 });
 
@@ -54,23 +54,23 @@ test('submit works', async ({ page }) => {
   await page.goto('/unlock');
   await page.fill('input[name="password"]', UNLOCK_PASSWORD);
 
-  const unlockButton = page.getByRole('button', { name: 'Absenden' });
+  const unlockButton = page.getByRole('button', { name: 'Submit' });
   await unlockButton.click();
 
   await expect(page).toHaveURL('/');
 
-  const titelInput = page.getByRole('textbox', { name: 'Titel' });
-  const nachrichtInput = page.getByRole('textbox', { name: 'Nachricht' });
-  const submitButton = page.getByRole('button', { name: 'Absenden' });
+  const titleInput = page.getByRole('textbox', { name: 'Title' });
+  const contentInput = page.getByRole('textbox', { name: 'Content' });
+  const submitButton = page.getByRole('button', { name: 'Submit' });
 
-  await expect(titelInput).toBeVisible();
-  await expect(nachrichtInput).toBeVisible();
+  await expect(titleInput).toBeVisible();
+  await expect(contentInput).toBeVisible();
   await expect(submitButton).toBeVisible();
 
   const randomTitle = randomBytes(16).toString('hex');
   const randomMessage = randomBytes(256).toString('hex');
-  await titelInput.fill(randomTitle);
-  await nachrichtInput.fill(randomMessage);
+  await titleInput.fill(randomTitle);
+  await contentInput.fill(randomMessage);
   await submitButton.click();
 
   await expect(page).toHaveURL('/');
@@ -88,24 +88,24 @@ test('delete works', async ({ page }) => {
   await expect(page).toHaveURL('/unlock');
   await page.fill('input[name="password"]', UNLOCK_PASSWORD);
 
-  const unlockButton = page.getByRole('button', { name: 'Absenden' });
+  const unlockButton = page.getByRole('button', { name: 'Submit' });
   await unlockButton.click();
 
   await expect(page).toHaveURL('/');
 
   // Submit post
-  const titelInput = page.getByRole('textbox', { name: 'Titel' });
-  const nachrichtInput = page.getByRole('textbox', { name: 'Nachricht' });
-  const submitButton = page.getByRole('button', { name: 'Absenden' });
+  const titleInput = page.getByRole('textbox', { name: 'Title' });
+  const contentInput = page.getByRole('textbox', { name: 'Content' });
+  const submitButton = page.getByRole('button', { name: 'Submit' });
 
-  await expect(titelInput).toBeVisible();
-  await expect(nachrichtInput).toBeVisible();
+  await expect(titleInput).toBeVisible();
+  await expect(contentInput).toBeVisible();
   await expect(submitButton).toBeVisible();
 
   const randomTitle = randomBytes(16).toString('hex');
   const randomMessage = randomBytes(256).toString('hex');
-  await titelInput.fill(randomTitle);
-  await nachrichtInput.fill(randomMessage);
+  await titleInput.fill(randomTitle);
+  await contentInput.fill(randomMessage);
 
   const countBeforePost = await page.locator(POST_ID_CLASS_NAMES).count();
 

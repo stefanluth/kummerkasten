@@ -63,7 +63,7 @@ export async function SinglePost({ post, fingerprint }: SinglePostProps): Promis
                 <input type="hidden" name="postId" value={post.id} />
                 <input type="hidden" name="fingerprint" value={fingerprint} />
                 <button className="text-xs text-zinc-500 hover:underline" type="submit">
-                  Melden
+                  Report
                 </button>
               </form>
             )}
