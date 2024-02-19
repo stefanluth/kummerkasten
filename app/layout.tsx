@@ -12,8 +12,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Kummerkasten',
-  description:
-    'Anonymes Nachrichten Brett um Fragen zu stellen, Meinungen zu äußern und Feedback zu geben, ohne sich zu outen.',
+  description: 'Anonymous message board to ask questions, express opinions, and give feedback without outing yourself.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

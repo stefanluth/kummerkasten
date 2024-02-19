@@ -15,12 +15,12 @@ export function UnlockForm({ ipAddress }: { ipAddress: string | null }) {
   return (
     <form action={formAction}>
       <Fingerprint ipAddress={ipAddress ?? 'unknown'} />
-      <div className="flex flex-col gap-2 mt-4">
-        <h1>Passwort eingeben</h1>
-        <input autoFocus type="password" name="password" id="password" placeholder="Passwort..." />
+      <div className="flex flex-col gap-2 mt-2">
+        <h1 className="text-2xl font-semibold">Unlock</h1>
+        <input autoFocus type="password" name="password" id="password" placeholder="Password..." />
         <div className="flex flex-row gap-4 items-center">
           <button type="submit" className="w-fit h-8 px-2 rounded-md bg-zinc-600">
-            Absenden
+            Submit
           </button>
           {state.error && <div className="text-red-600">{state.error}</div>}
         </div>

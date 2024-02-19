@@ -11,17 +11,17 @@ export default function Unlock() {
   return (
     <div className="flex flex-col max-w-2xl mx-auto divide-y divide-zinc-700">
       <CodeOfConduct />
-      <div className="flex flex-col py-4 my-4">
-        <h1 className="text-2xl font-semibold">Seite entsperren</h1>
-        <p>Mit dem Absenden des Passworts werden zwei Cookies gesetzt, die den Zugriff auf die Seite freischalten.</p>
+      <div className="flex flex-col py-2 my-2">
+        <h1 className="text-2xl font-semibold">Cookies</h1>
+        <p>By submitting the password, two cookies will be set to unlock the page.</p>
         <p>
-          Einer der Cookies enthält das Passwort, das andere deinen{' '}
+          One of the cookies contains the password, the other your{' '}
           <a className="underline" href="/faq#fingerprint">
-            Fingerprint
+            fingerprint
           </a>
           .
         </p>
-        <p>Die Cookies laufen nach 24 Stunden ab.</p>
+        <p>The cookies expire after 24 hours.</p>
       </div>
       <UnlockForm ipAddress={ipAddress} />
     </div>

@@ -36,14 +36,48 @@ div:focus {
   overflow-wrap: break-word;
 }
 
-.post-content {
+.faq-content {
+  p > a {
+    @apply underline;
+  }
+
+  h2 > a {
+    @apply text-zinc-200;
+    @apply hover:text-zinc-200;
+  }
+
+  h2 > a:target {
+    @apply underline;
+  }
+
+  p {
+    @apply leading-6;
+  }
+
+  br {
+    @apply hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply mb-2 !important;
+    @apply mt-6 !important;
+  }
+}
+
+.post-content,
+.faq-content {
   p {
     @apply whitespace-pre-line;
   }
 
   a {
-    @apply text-zinc-500;
-    @apply hover:text-zinc-400;
+    @apply text-zinc-400;
+    @apply hover:text-zinc-300;
   }
 
   h1,
@@ -54,6 +88,7 @@ div:focus {
   h6 {
     @apply font-bold;
     @apply text-zinc-200;
+    @apply my-2;
   }
 
   h1 {

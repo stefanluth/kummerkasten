@@ -32,7 +32,7 @@ export function AddPost() {
       <div className="flex flex-col gap-1 justify-between w-full">
         <div className="flex justify-between select-none">
           <label className="pl-1" htmlFor="title">
-            Titel
+            Title
           </label>
           <p className="flex items-end text-xs pr-1 text-zinc-500">
             {titleLength}/{maxTitleLength}
@@ -56,7 +56,7 @@ export function AddPost() {
         <div className="flex justify-between">
           <div className="flex items-baseline gap-2 select-none">
             <label className="pl-1" htmlFor="content">
-              Nachricht
+              Content
             </label>
             <a
               className="flex w-fit h-fit px-1 border-zinc-600 text-zinc-600 text-xs font-black"
@@ -103,7 +103,7 @@ function SubmitButton() {
       disabled={pending}
       type="submit"
     >
-      {pending ? '...' : 'Absenden'}
+      {pending ? '...' : 'Submit'}
     </button>
   );
 }
