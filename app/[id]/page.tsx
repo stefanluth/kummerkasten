@@ -1,15 +1,15 @@
 import { cookies } from 'next/headers';
 
-import { SinglePost } from '@/app/_components/singlePost';
+import { Post } from '@/app/_components/post';
 import { prisma } from '@/utils/prisma';
 
-type SinglePostPageProps = {
+type PostPageProps = {
   params: {
     id: string;
   };
 };
 
-export default async function SinglePostPage(props: SinglePostPageProps) {
+export default async function PostPage(props: PostPageProps) {
   const fingerprint = cookies().get('fingerprint')?.value;
 
   const post = await prisma.post.findUnique({
@@ -24,7 +24,7 @@ export default async function SinglePostPage(props: SinglePostPageProps) {
 
   return (
     <div className="flex justify-center">
-      <SinglePost post={post} fingerprint={fingerprint} />
+      <Post post={post} fingerprint={fingerprint} />
     </div>
   );
 }

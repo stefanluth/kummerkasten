@@ -2,7 +2,7 @@ import React from 'react';
 
 import { cookies } from 'next/headers';
 
-import { SinglePost } from '@/app/_components/singlePost';
+import { Post } from '@/app/_components/post';
 import { PostWithRelations, sortBy } from '@/utils/prisma';
 
 export default async function Posts({ posts, sortBy: sortFunction }: { posts: PostWithRelations[]; sortBy?: any }) {
@@ -13,7 +13,7 @@ export default async function Posts({ posts, sortBy: sortFunction }: { posts: Po
   return (
     <div className="flex flex-col gap-2 divide-y divide-zinc-700">
       {posts.sort(sortFunction ?? sortBy.newest).map((post) => (
-        <SinglePost key={post.id} post={post} fingerprint={fingerprint} />
+        <Post key={post.id} post={post} fingerprint={fingerprint} />
       ))}
     </div>
   );

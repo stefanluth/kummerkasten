@@ -10,12 +10,12 @@ import { PostWithRelations, prisma } from '@/utils/prisma';
 const MARKED_OPTIONS = getMarkedOptions();
 marked.use(MARKED_OPTIONS);
 
-type SinglePostProps = {
+type PostProps = {
   post?: PostWithRelations | null;
   fingerprint?: string | null;
 };
 
-export async function SinglePost({ post, fingerprint }: SinglePostProps): Promise<JSX.Element | null> {
+export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Element | null> {
   if (!post || !fingerprint) return null;
 
   const votePromise = prisma.vote.findFirst({
