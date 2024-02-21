@@ -40,12 +40,14 @@ export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Elemen
 
   return (
     <div className="flex p-2 gap-4">
-      <Voting
-        postId={post.id}
-        upvotes={upvotes - downvotes}
-        vote={userVote?.upvote ?? null}
-        fingerprint={fingerprint}
-      />
+      <div className="pt-4">
+        <Voting
+          postId={post.id}
+          upvotes={upvotes - downvotes}
+          vote={userVote?.upvote ?? null}
+          fingerprint={fingerprint}
+        />
+      </div>
       <div id={post.id.toString()} className="flex flex-col gap-1 justify-between w-full">
         <div className="flex flex-col w-full gap-1">
           <div className="flex gap-4 items-baseline">
