@@ -26,13 +26,13 @@ export async function addPost(formData: FormData) {
 
   switch (true) {
     case titleTooShort:
-      return 'Titel zu kurz. Überprüfe auf angehängte Leerzeichen.';
+      return 'Title too short. Check for trailing spaces.';
     case titleTooLong:
-      return 'Titel zu lang. Überprüfe auf angehängte Leerzeichen.';
+      return 'Title too long. Check for trailing spaces.';
     case contentTooShort:
-      return 'Inhalt zu kurz. Überprüfe auf angehängte Leerzeichen oder HTML-Tags.';
+      return 'Content too short. Check for trailing spaces or HTML tags.';
     case contentTooLong:
-      return 'Inhalt zu lang. Überprüfe auf angehängte Leerzeichen.';
+      return 'Content too long. Check for trailing spaces.';
   }
 
   await prisma.post.create({
