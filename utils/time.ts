@@ -1,22 +1,25 @@
 export function getTimeAgo(timeStamp: number): string {
-  const time = new Date().getTime() - timeStamp;
-  const minutes = time / 60000;
-  const hours = minutes / 60;
-  const days = hours / 24;
-  const weeks = days / 7;
-  const months = weeks / 4;
+  const timeDiff = new Date().getTime() - timeStamp;
+  const minute = 60 * 1000;
+  const hour = minute * 60;
+  const day = hour * 24;
+  const week = day * 7;
+  const month = day * 30;
 
-  if (minutes < 1) {
-    return 'just now';
-  } else if (hours < 1) {
-    return `${Math.floor(minutes)} minutes ago`;
-  } else if (days < 1) {
-    return `${Math.floor(hours)} hours ago`;
-  } else if (weeks < 1) {
-    return `${Math.floor(days)} days ago`;
-  } else if (months < 1) {
-    return `${Math.floor(weeks)} weeks ago`;
-  } else {
-    return `${Math.floor(months)} months ago`;
+  const units = [
+    { value: month, singular: 'month', plural: 'months' },
+    { value: week, singular: 'week', plural: 'weeks' },
+    { value: day, singular: 'day', plural: 'days' },
+    { value: hour, singular: 'hour', plural: 'hours' },
+    { value: minute, singular: 'minute', plural: 'minutes' },
+  ];
+
+  for (const unit of units) {
+    const unitDiff = Math.floor(timeDiff / unit.value);
+    if (unitDiff > 0) {
+      return `${unitDiff} ${unitDiff > 1 ? unit.plural : unit.singular} ago`;
+    }
   }
+
+  return 'just now';
 }
