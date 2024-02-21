@@ -47,7 +47,7 @@ Posts cannot be edited for the same reason they cannot be deleted.
 
 ## How can I share a post?
 
-You can share a post by clicking the post ID starting with &apos;#&apos; above the post title and copying the URL.
+You can share a post by clicking the **Copy Link** button below the post. This will copy the link of the post to your clipboard.
 
 ## How can I rate a post?
 

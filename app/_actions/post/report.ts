@@ -31,3 +31,7 @@ export async function reportPost(formData: FormData) {
 
   revalidatePath('/');
 }
+
+export async function reportPostAction(prevState: any, formData: FormData) {
+  return await reportPost(formData);
+}
