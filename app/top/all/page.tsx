@@ -1,4 +1,4 @@
-import Posts from '@/app/_components/posts';
+import { Posts } from '@/app/_components/post';
 import { DEFAULTS } from '@/utils';
 import { PostWithRelations, prisma, sortBy } from '@/utils/prisma';
 

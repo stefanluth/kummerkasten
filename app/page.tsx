@@ -3,8 +3,7 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { AddPost } from '@/app/_components/addPost';
-import Posts from '@/app/_components/posts';
+import { AddPost, Posts } from '@/app/_components/post';
 import { DEFAULTS } from '@/utils';
 import { prisma, sortBy } from '@/utils/prisma';
 
