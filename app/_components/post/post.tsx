@@ -2,6 +2,7 @@ import { marked } from 'marked';
 
 import Link from 'next/link';
 
+import { CopyLink } from '@/app/_components/copyLink';
 import { Voting } from '@/app/_components/voting';
 import { MARKED_POST_OPTIONS, getTimeAgo } from '@/utils';
 import { PostWithRelations, prisma } from '@/utils/prisma';
@@ -64,6 +65,7 @@ export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Elemen
           <Link id={post.id} href={`/${post.id}`} className="post-id hover:underline" title="View Post in New Tab">
             View
           </Link>
+          <CopyLink path={`/${post.id}`} />
           {!userReport && <ReportPost postId={post.id} fingerprint={fingerprint} />}
         </div>
       </div>
