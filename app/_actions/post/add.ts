@@ -35,6 +35,15 @@ export async function addPost(formData: FormData) {
       return 'Content too long. Check for trailing spaces.';
   }
 
+  const post = await prisma.post.findFirst({
+    where: {
+      title,
+      content,
+    },
+  });
+
+  if (post) return 'Post already exists.';
+
   await prisma.post.create({
     data: {
       title,
