@@ -37,6 +37,20 @@ div:focus {
 }
 
 .faq-content {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply pt-2 !important;
+  }
+
+  p {
+    @apply leading-6;
+    @apply mb-4;
+  }
+
   p > a {
     @apply underline;
   }
@@ -48,24 +62,6 @@ div:focus {
 
   h2 > a:target {
     @apply underline;
-  }
-
-  p {
-    @apply leading-6;
-  }
-
-  br {
-    @apply hidden;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply mb-2 !important;
-    @apply mt-6 !important;
   }
 }
 
