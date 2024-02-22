@@ -1,7 +1,7 @@
 # Kummerkasten
 
 Kummerkasten (/ˈkʊmɐkastn̩/) is a German term referring to a "worry box" or "complaint box"
-where individuals can anonymously submit their concerns or complaints for support or guidance.
+where individuals can anonymously submit their concerns or complaints for support, guidance or simply to vent.
 
 This project is a web application that allows users to submit anonymous posts and vote on them.
 
