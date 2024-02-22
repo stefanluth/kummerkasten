@@ -14,7 +14,7 @@ export function SubmitButton() {
       title="Submit"
       disabled={pending}
     >
-      {pending ? '...' : 'Submit'}
+      {pending ? <p className="animate-spin">_</p> : 'Submit'}
     </button>
   );
 }
