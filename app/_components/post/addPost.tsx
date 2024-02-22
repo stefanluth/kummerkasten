@@ -6,6 +6,8 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { addPostAction } from '@/app/_actions/post/add';
 import { DEFAULTS } from '@/utils';
 
+import { SubmitButton } from '../submitButton';
+
 export function AddPost() {
   const formRef = useRef<HTMLFormElement>(null);
   const [titleLength, setTitleLength] = useState(0);
@@ -91,19 +93,5 @@ export function AddPost() {
         </div>
       </div>
     </form>
-  );
-}
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <button
-      className={`rounded-md w-24 bg-zinc-700 px-2 ${pending ? 'cursor-not-allowed' : 'hover:underline'}`}
-      disabled={pending}
-      type="submit"
-    >
-      {pending ? '...' : 'Submit'}
-    </button>
   );
 }

@@ -20,7 +20,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button className="hover:underline" type="submit" title="Report Post">
+    <button className="hover:underline" type="submit" title="Report Post" disabled={pending}>
       {pending ? '...' : 'Report'}
     </button>
   );
