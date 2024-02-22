@@ -8,6 +8,7 @@ export function CopyLink({ url, path }: { url?: string; path?: string }) {
   return (
     <button
       className="w-16 hover:underline"
+      title="Copy Link to Clipboard"
       onClick={() => {
         if (url) {
           navigator.clipboard.writeText(url);
