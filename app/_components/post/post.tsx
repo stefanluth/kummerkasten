@@ -1,4 +1,4 @@
-import { marked } from 'marked';
+import { Marked } from 'marked';
 
 import Link from 'next/link';
 
@@ -16,8 +16,6 @@ type PostProps = {
 
 export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Element | null> {
   if (!post || !fingerprint) return null;
-
-  marked.use(MARKED_POST_OPTIONS);
 
   const votePromise = prisma.vote.findFirst({
     where: {
@@ -37,6 +35,8 @@ export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Elemen
 
   const upvotes = post.votes?.filter((vote) => vote.upvote === true).length;
   const downvotes = post.votes?.filter((vote) => vote.upvote === false).length;
+
+  const marked = new Marked(MARKED_POST_OPTIONS);
 
   return (
     <div className="flex p-2 gap-4 max-w-[100%-10rem]">
@@ -61,7 +61,7 @@ export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Elemen
         </div>
         <div
           className="text-lg overflow-anywhere post-content"
-          dangerouslySetInnerHTML={{ __html: marked(post.content) }}
+          dangerouslySetInnerHTML={{ __html: await marked.parse(post.content) }}
         />
         <div className="flex gap-4 items-baseline text-xs text-zinc-500">
           <Link id={post.id} href={`/${post.id}`} className="post-id hover:underline" title="View Post in New Tab">

@@ -1,18 +1,18 @@
 import fs from 'fs';
-import { marked } from 'marked';
+import { Marked, Renderer } from 'marked';
 
-export default function Faq() {
-  const renderer = new marked.Renderer();
+export default async function Faq() {
+  const marked = new Marked();
+  const renderer = new Renderer();
   marked.use({
     renderer: renderer,
-    gfm: true,
   });
 
   return (
     <div
       className="faq-content max-w-3xl mx-auto"
       dangerouslySetInnerHTML={{
-        __html: marked(fs.readFileSync(process.cwd() + '/faq.en.md', 'utf-8'), { renderer }),
+        __html: await marked.parse(fs.readFileSync(process.cwd() + '/faq.en.md', 'utf-8'), { renderer }),
       }}
     />
   );
