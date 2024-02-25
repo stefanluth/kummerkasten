@@ -28,9 +28,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col mx-auto w-full">
       <AddPost />
-      <div className="flex flex-col gap-2 divide-y divide-zinc-700 w-full">
-        <Posts posts={filteredPosts} sortBy={sortBy.newest} />
-      </div>
+      <Posts posts={filteredPosts} sortBy={sortBy.newest} />
     </div>
   );
 }

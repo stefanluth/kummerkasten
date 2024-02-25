@@ -39,8 +39,8 @@ export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Elemen
   const downvotes = post.votes?.filter((vote) => vote.upvote === false).length;
 
   return (
-    <div className="flex p-2 gap-4">
-      <div className="pt-4">
+    <div className="flex p-2 gap-4 max-w-[100%-10rem]">
+      <div className="pt-4 w-6">
         <Voting
           postId={post.id}
           upvotes={upvotes - downvotes}
@@ -48,19 +48,19 @@ export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Elemen
           fingerprint={fingerprint}
         />
       </div>
-      <div id={post.id.toString()} className="flex flex-col gap-1 justify-between w-full">
-        <div className="flex flex-col w-full gap-1">
+      <div id={post.id.toString()} className="flex flex-col gap-1 justify-between">
+        <div className="flex flex-col gap-1">
           <div className="flex gap-4 items-baseline">
             <a href={`#${post.id}`} className="text-xs text-zinc-500">
               {getTimeAgo(post.createdAt.getTime())}
             </a>
           </div>
           <div className="flex items-baseline">
-            <h2 className="text-3xl -mt-1 font-bold truncate overflow-wrap whitespace-pre-line">{post.title}</h2>
+            <h2 className="text-3xl font-bold overflow-anywhere">{post.title}</h2>
           </div>
         </div>
         <div
-          className="text-lg overflow-wrap w-full post-content"
+          className="text-lg overflow-anywhere post-content"
           dangerouslySetInnerHTML={{ __html: marked(post.content) }}
         />
         <div className="flex gap-4 items-baseline text-xs text-zinc-500">

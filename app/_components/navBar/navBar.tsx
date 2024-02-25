@@ -9,7 +9,7 @@ export function NavBar() {
 
   return (
     <div className="fixed flex w-full bg-zinc-800 justify-center">
-      <div className="xl:w-2/3 px-6 w-full flex h-14 gap-4 justify-between items-center">
+      <div className="xl:w-4/5 px-6 w-full flex h-14 gap-4 justify-between items-center">
         <DesktopNavBar isUnlocked={isUnlocked} />
         <MobileNavBar isUnlocked={isUnlocked} />
       </div>

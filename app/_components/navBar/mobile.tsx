@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Bars3Icon, InformationCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 import { Logo } from '../logo';
+import { NavLink } from './navLink';
 import { UnlockIcon } from './unlockIcon';
 
 export function MobileNavBar(props: { isUnlocked: boolean }) {
@@ -19,7 +20,9 @@ export function MobileNavBar(props: { isUnlocked: boolean }) {
       </div>
 
       <div className="md:hidden flex gap-4 items-center">
-        <UnlockIcon isUnlocked={props.isUnlocked} />
+        <NavLink href="/unlock" className="flex gap-2 px-2">
+          <UnlockIcon isUnlocked={props.isUnlocked} />
+        </NavLink>
         <Link href="/faq" title="FAQ" className="flex h-7 gap-2 px-2 rounded-md" onClick={() => setIsOpen(false)}>
           <InformationCircleIcon className="w-7 h-7 text-zinc-100" />
         </Link>

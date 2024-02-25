@@ -12,6 +12,10 @@
   @apply bg-zinc-600;
 }
 
+* {
+  scroll-margin-top: 4rem;
+}
+
 input,
 select,
 textarea {
@@ -32,8 +36,8 @@ div:focus {
   @apply focus:ring-0;
 }
 
-.overflow-wrap {
-  overflow-wrap: break-word;
+.overflow-anywhere {
+  overflow-wrap: anywhere;
 }
 
 .faq-content {
