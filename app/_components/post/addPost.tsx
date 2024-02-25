@@ -1,9 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
-
-import Link from 'next/link';
+import { useFormState } from 'react-dom';
 
 import { addPostAction } from '@/app/_actions/post/add';
 import { DEFAULTS } from '@/utils';
@@ -62,13 +60,13 @@ export function AddPost() {
             <label className="pl-1" htmlFor="content">
               Content
             </label>
-            <Link
+            <a
               className="flex w-fit h-fit px-1 border-zinc-600 text-zinc-600 text-xs font-black"
               href="/faq#markdown"
               title="Markdown Support"
             >
               M&darr;
-            </Link>
+            </a>
           </div>
           <p className="flex items-end text-xs pr-1 text-zinc-500">
             {contentLength}/{maxContentLength}
