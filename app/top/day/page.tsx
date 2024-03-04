@@ -1,6 +1,6 @@
 import { Posts } from '@/app/_components/Post';
-import { DEFAULTS } from '@/utils';
-import { PostWithRelations, prisma, sortBy } from '@/utils/prisma';
+import { sortBy } from '@/utils';
+import { PostWithRelations, prisma } from '@/utils/prisma';
 
 export default async function TopDay() {
   let posts: PostWithRelations[] = [];
@@ -25,9 +25,5 @@ export default async function TopDay() {
     return null;
   }
 
-  const filteredPosts = posts.filter(
-    (post) => post.reports.length < Number(process.env.REPORTS_TO_HIDE_POST ?? DEFAULTS.REPORTS_TO_HIDE_POST),
-  );
-
-  return <Posts posts={filteredPosts} sortBy={sortBy.votes} />;
+  return <Posts posts={posts} sortBy={sortBy.votes} />;
 }

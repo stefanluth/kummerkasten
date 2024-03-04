@@ -17,28 +17,10 @@ type PostProps = {
 export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Element | null> {
   if (!post || !fingerprint) return null;
 
-  const repliesPromise = prisma.post.findMany({
-    where: {
-      replyTo: post.id,
-    },
-    include: {
-      reports: true,
-      votes: true,
-    },
-    orderBy: {
-      createdAt: 'asc',
-    },
-  });
-
-  const [replies] = await Promise.all([repliesPromise]);
+  const marked = new Marked(MARKED_POST_OPTIONS);
 
   const upvotes = post.votes?.filter((vote) => vote.upvote === true).length;
   const downvotes = post.votes?.filter((vote) => vote.upvote === false).length;
-  const filteredReplies = replies.filter(
-    (reply) => reply.reports.length < Number(process.env.REPORTS_TO_HIDE_POST ?? DEFAULTS.REPORTS_TO_HIDE_POST),
-  );
-
-  const marked = new Marked(MARKED_POST_OPTIONS);
 
   return (
     <div className="flex p-2 gap-4 max-w-[100%-10rem]">

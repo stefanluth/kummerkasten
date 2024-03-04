@@ -4,8 +4,8 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { AddPostForm, Posts } from '@/app/_components/Post';
-import { DEFAULTS } from '@/utils';
-import { prisma, sortBy } from '@/utils/prisma';
+import { sortBy } from '@/utils';
+import { prisma } from '@/utils/prisma';
 
 export default async function Home() {
   const password = cookies().get('password')?.value;
@@ -24,14 +24,10 @@ export default async function Home() {
     },
   });
 
-  const filteredPosts = posts.filter(
-    (post) => post.reports.length < Number(process.env.REPORTS_TO_HIDE_POST ?? DEFAULTS.REPORTS_TO_HIDE_POST),
-  );
-
   return (
     <div className="flex flex-col mx-auto w-full">
       <AddPostForm />
-      <Posts posts={filteredPosts} sortBy={sortBy.newest} />
+      <Posts posts={posts} sortBy={sortBy.newest} />
     </div>
   );
 }

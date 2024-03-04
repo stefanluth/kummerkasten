@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 
 import { addPostAction } from '@/app/_actions/post/add';
@@ -8,16 +8,22 @@ import { DEFAULTS } from '@/utils';
 
 import { SubmitButton } from '../SubmitButton';
 
+const MIN_TITLE_LENGTH = Number(process.env.MIN_TITLE_LENGTH ?? DEFAULTS.MIN_TITLE_LENGTH);
+const MAX_TITLE_LENGTH = Number(process.env.MAX_TITLE_LENGTH ?? DEFAULTS.MAX_TITLE_LENGTH);
+const MIN_CONTENT_LENGTH = Number(process.env.MIN_CONTENT_LENGTH ?? DEFAULTS.MIN_CONTENT_LENGTH);
+const MAX_CONTENT_LENGTH = Number(process.env.MAX_CONTENT_LENGTH ?? DEFAULTS.MAX_CONTENT_LENGTH);
+
+type InputEvent = React.ChangeEvent<HTMLInputElement>;
+type TextAreaEvent = React.ChangeEvent<HTMLTextAreaElement>;
+
 export function AddPostForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [titleLength, setTitleLength] = useState(0);
   const [contentLength, setContentLength] = useState(0);
   const [state, formAction] = useFormState(addPostAction, '');
 
-  const minTitleLength = Number(process.env.MIN_TITLE_LENGTH ?? DEFAULTS.MIN_TITLE_LENGTH);
-  const maxTitleLength = Number(process.env.MAX_TITLE_LENGTH ?? DEFAULTS.MAX_TITLE_LENGTH);
-  const minContentLength = Number(process.env.MIN_CONTENT_LENGTH ?? DEFAULTS.MIN_CONTENT_LENGTH);
-  const maxContentLength = Number(process.env.MAX_CONTENT_LENGTH ?? DEFAULTS.MAX_CONTENT_LENGTH);
+  const handleTitleChange = useCallback((e: InputEvent) => setTitleLength(e.target.value.length), []);
+  const handleContentChange = useCallback((e: TextAreaEvent) => setContentLength(e.target.value.length), []);
 
   useEffect(() => {
     if (state != null) {
@@ -37,7 +43,7 @@ export function AddPostForm() {
             Title
           </label>
           <p className="flex items-end text-xs pr-1 text-zinc-500">
-            {titleLength}/{maxTitleLength}
+            {titleLength}/{MAX_TITLE_LENGTH}
           </p>
         </div>
         <input
@@ -45,9 +51,9 @@ export function AddPostForm() {
           id="title"
           name="title"
           type="text"
-          minLength={minTitleLength}
-          maxLength={maxTitleLength}
-          onChange={(event) => setTitleLength(event.target.value.length)}
+          minLength={MIN_TITLE_LENGTH}
+          maxLength={MAX_TITLE_LENGTH}
+          onChange={handleTitleChange}
           autoComplete="on"
           autoCorrect="on"
           required
@@ -69,7 +75,7 @@ export function AddPostForm() {
             </a>
           </div>
           <p className="flex items-end text-xs pr-1 text-zinc-500">
-            {contentLength}/{maxContentLength}
+            {contentLength}/{MAX_CONTENT_LENGTH}
           </p>
         </div>
         <textarea
@@ -77,9 +83,9 @@ export function AddPostForm() {
           id="content"
           name="content"
           rows={5}
-          minLength={minContentLength}
-          maxLength={maxContentLength}
-          onChange={(event) => setContentLength(event.target.value.length)}
+          minLength={MIN_CONTENT_LENGTH}
+          maxLength={MAX_CONTENT_LENGTH}
+          onChange={handleContentChange}
           autoComplete="on"
           autoCorrect="on"
           required

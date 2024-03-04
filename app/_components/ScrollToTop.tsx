@@ -1,17 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const SCROLL_THRESHOLD = 500;
 
 export function ScrollToTop() {
   const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    function onScroll() {
-      setShow(window.scrollY > SCROLL_THRESHOLD);
-    }
+  const onScroll = useCallback(() => {
+    setShow(window.scrollY > SCROLL_THRESHOLD);
+  }, [window.scrollY]);
 
+  useEffect(() => {
     // Initial check can't run outside of useEffect because window is not defined
     onScroll();
 

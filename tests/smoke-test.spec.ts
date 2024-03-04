@@ -42,7 +42,7 @@ test('unlock works', async ({ page }) => {
   await page.goto('/unlock');
   await page.fill('input[name="password"]', UNLOCK_PASSWORD);
 
-  const unlockButton = page.getByRole('button', { name: 'Submit' });
+  const unlockButton = page.getByRole('button', { name: 'Unlock' });
   await unlockButton.click();
 
   await expect(page).toHaveURL('/');
@@ -60,7 +60,7 @@ test('submit works', async ({ page }) => {
   await page.goto('/unlock');
   await page.fill('input[name="password"]', UNLOCK_PASSWORD);
 
-  const unlockButton = page.getByRole('button', { name: 'Submit' });
+  const unlockButton = page.getByRole('button', { name: 'Unlock' });
   await unlockButton.click();
 
   await expect(page).toHaveURL('/');
@@ -94,7 +94,7 @@ test('delete works', async ({ page }) => {
   await expect(page).toHaveURL('/unlock');
   await page.fill('input[name="password"]', UNLOCK_PASSWORD);
 
-  const unlockButton = page.getByRole('button', { name: 'Submit' });
+  const unlockButton = page.getByRole('button', { name: 'Unlock' });
   await unlockButton.click();
 
   await expect(page).toHaveURL('/');
