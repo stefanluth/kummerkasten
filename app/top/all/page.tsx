@@ -1,4 +1,4 @@
-import { Posts } from '@/app/_components/post';
+import { Posts } from '@/app/_components/Post';
 import { DEFAULTS } from '@/utils';
 import { PostWithRelations, prisma, sortBy } from '@/utils/prisma';
 
@@ -7,6 +7,9 @@ export default async function TopDay() {
 
   try {
     posts = await prisma.post.findMany({
+      where: {
+        replyTo: null,
+      },
       include: {
         reports: true,
         votes: true,

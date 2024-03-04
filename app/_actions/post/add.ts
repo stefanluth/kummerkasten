@@ -13,10 +13,15 @@ export async function addPost(formData: FormData) {
   const password = cookies().get('password')?.value;
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
-  const rawTitle = formData.get('title') as string;
-  const title = rawTitle.trim();
+  const rawTitle = formData.get('title');
+  const rawContent = formData.get('content');
+  const replyTo = formData.get('replyTo');
 
-  const rawContent = formData.get('content') as string;
+  if (!rawTitle || !rawContent || typeof rawTitle !== 'string' || typeof rawContent !== 'string') {
+    return 'Invalid title or content.';
+  }
+
+  const title = rawTitle.trim();
   const content = purify(rawContent.trim());
 
   const titleTooShort = title.length < Number(process.env.MIN_TITLE_LENGTH ?? DEFAULTS.MIN_TITLE_LENGTH);
@@ -48,6 +53,7 @@ export async function addPost(formData: FormData) {
     data: {
       title,
       content,
+      replyTo: typeof replyTo === 'string' ? replyTo : undefined,
     },
   });
 

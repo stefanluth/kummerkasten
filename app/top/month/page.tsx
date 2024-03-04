@@ -1,4 +1,4 @@
-import { Posts } from '@/app/_components/post';
+import { Posts } from '@/app/_components/Post';
 import { DEFAULTS } from '@/utils';
 import { PostWithRelations, prisma, sortBy } from '@/utils/prisma';
 
@@ -11,6 +11,7 @@ export default async function TopMonth() {
         createdAt: {
           gte: new Date(new Date().setDate(new Date().getDate() - 30)),
         },
+        replyTo: null,
       },
       include: {
         reports: true,

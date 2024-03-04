@@ -1,8 +1,8 @@
 import { HomeIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 
-import { Logo } from '../logo';
-import { NavLink } from './navLink';
-import { UnlockIcon } from './unlockIcon';
+import { Logo } from '../Logo';
+import { NavLink } from './NavLink';
+import { UnlockIcon } from './UnlockIcon';
 
 export function DesktopNavBar(props: { isUnlocked: boolean }) {
   return (

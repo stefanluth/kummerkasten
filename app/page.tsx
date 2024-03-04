@@ -3,7 +3,7 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { AddPost, Posts } from '@/app/_components/post';
+import { AddPostForm, Posts } from '@/app/_components/Post';
 import { DEFAULTS } from '@/utils';
 import { prisma, sortBy } from '@/utils/prisma';
 
@@ -12,6 +12,9 @@ export default async function Home() {
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
+    where: {
+      replyTo: null,
+    },
     include: {
       reports: true,
       votes: true,
@@ -27,7 +30,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col mx-auto w-full">
-      <AddPost />
+      <AddPostForm />
       <Posts posts={filteredPosts} sortBy={sortBy.newest} />
     </div>
   );

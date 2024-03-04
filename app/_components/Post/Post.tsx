@@ -2,12 +2,12 @@ import { Marked } from 'marked';
 
 import Link from 'next/link';
 
-import { CopyLink } from '@/app/_components/copyLink';
-import { Voting } from '@/app/_components/voting';
-import { MARKED_POST_OPTIONS, getTimeAgo } from '@/utils';
+import { CopyLinkButton } from '@/app/_components';
+import { DEFAULTS, MARKED_POST_OPTIONS, getTimeAgo } from '@/utils';
 import { PostWithRelations, prisma } from '@/utils/prisma';
 
-import { ReportPost } from './reportPost';
+import { ReportPostButton } from './ReportPost';
+import { Voting } from './Voting';
 
 type PostProps = {
   post?: PostWithRelations | null;
@@ -17,36 +17,33 @@ type PostProps = {
 export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Element | null> {
   if (!post || !fingerprint) return null;
 
-  const votePromise = prisma.vote.findFirst({
+  const repliesPromise = prisma.post.findMany({
     where: {
-      fingerprint,
-      postId: post.id,
+      replyTo: post.id,
+    },
+    include: {
+      reports: true,
+      votes: true,
+    },
+    orderBy: {
+      createdAt: 'asc',
     },
   });
 
-  const reportPromise = prisma.report.findFirst({
-    where: {
-      fingerprint,
-      postId: post.id,
-    },
-  });
-
-  const [userVote, userReport] = await Promise.all([votePromise, reportPromise]);
+  const [replies] = await Promise.all([repliesPromise]);
 
   const upvotes = post.votes?.filter((vote) => vote.upvote === true).length;
   const downvotes = post.votes?.filter((vote) => vote.upvote === false).length;
+  const filteredReplies = replies.filter(
+    (reply) => reply.reports.length < Number(process.env.REPORTS_TO_HIDE_POST ?? DEFAULTS.REPORTS_TO_HIDE_POST),
+  );
 
   const marked = new Marked(MARKED_POST_OPTIONS);
 
   return (
     <div className="flex p-2 gap-4 max-w-[100%-10rem]">
-      <div className="pt-4 w-6">
-        <Voting
-          postId={post.id}
-          upvotes={upvotes - downvotes}
-          vote={userVote?.upvote ?? null}
-          fingerprint={fingerprint}
-        />
+      <div className="pt-4 w-5">
+        <Voting postId={post.id} upvotes={upvotes - downvotes} fingerprint={fingerprint} />
       </div>
       <div id={post.id.toString()} className="flex flex-col gap-1 justify-between">
         <div className="flex flex-col gap-1">
@@ -63,12 +60,12 @@ export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Elemen
           className="text-lg overflow-anywhere post-content"
           dangerouslySetInnerHTML={{ __html: await marked.parse(post.content) }}
         />
-        <div className="flex gap-4 items-baseline text-xs text-zinc-500">
+        <div className="flex gap-2 items-baseline text-xs text-zinc-500">
           <Link id={post.id} href={`/${post.id}`} className="post-id hover:underline" title="View Post in New Tab">
             View
           </Link>
-          <CopyLink path={`/${post.id}`} />
-          {!userReport && <ReportPost postId={post.id} fingerprint={fingerprint} />}
+          <CopyLinkButton path={`/${post.id}`} />
+          <ReportPostButton postId={post.id} fingerprint={fingerprint} />
         </div>
       </div>
     </div>

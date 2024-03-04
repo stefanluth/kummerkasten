@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 
-import { DesktopNavBar } from '@/app/_components/navBar/desktop';
-import { MobileNavBar } from '@/app/_components/navBar/mobile';
+import { DesktopNavBar } from './DesktopNavBar';
+import { MobileNavBar } from './MobileNavBar';
 
 export function NavBar() {
   const password = cookies().get('password')?.value;

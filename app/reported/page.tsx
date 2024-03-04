@@ -3,7 +3,7 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { Posts } from '@/app/_components/post';
+import { Posts } from '@/app/_components/Post';
 import { DEFAULTS } from '@/utils';
 import { prisma } from '@/utils/prisma';
 
@@ -14,6 +14,9 @@ export default async function Reported() {
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
+    where: {
+      replyTo: null,
+    },
     include: {
       reports: true,
       votes: true,

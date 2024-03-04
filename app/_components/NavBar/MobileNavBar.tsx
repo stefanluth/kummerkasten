@@ -6,9 +6,9 @@ import Link from 'next/link';
 
 import { Bars3Icon, InformationCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
-import { Logo } from '../logo';
-import { NavLink } from './navLink';
-import { UnlockIcon } from './unlockIcon';
+import { Logo } from '../Logo';
+import { NavLink } from './NavLink';
+import { UnlockIcon } from './UnlockIcon';
 
 export function MobileNavBar(props: { isUnlocked: boolean }) {
   const [isOpen, setIsOpen] = useState(false);

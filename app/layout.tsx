@@ -4,8 +4,8 @@ import React from 'react';
 
 import { Inter } from 'next/font/google';
 
-import { NavBar } from '@/app/_components/navBar';
-import { ScrollToTop } from '@/app/_components/scrollToTop';
+import { ScrollToTop } from '@/app/_components';
+import { NavBar } from '@/app/_components/NavBar';
 
 import './globals.css';
 

@@ -12,6 +12,7 @@ model Post {
   id        String   @id @unique @default(uuid())
   title     String
   content   String
+  replyTo   String?
   createdAt DateTime @default(now())
   reports   Report[]
   votes     Vote[]

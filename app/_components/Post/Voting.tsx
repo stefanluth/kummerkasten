@@ -1,15 +1,24 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 
 import { votePost } from '@/app/_actions/post/vote';
+import { prisma } from '@/utils/prisma';
 
 type VotingProps = {
   postId: string;
   upvotes: number;
   fingerprint: string;
-  vote: boolean | null;
 };
 
-export function Voting({ postId, upvotes, vote }: VotingProps) {
+export async function Voting({ postId, upvotes, fingerprint }: VotingProps) {
+  const userVote = await prisma.vote.findFirst({
+    where: {
+      fingerprint,
+      postId: postId,
+    },
+  });
+
+  const vote = userVote?.upvote ?? null;
+
   return (
     <div className="flex flex-col justify-center">
       <form>

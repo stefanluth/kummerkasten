@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-import { Post } from '@/app/_components/post';
+import { Post } from '@/app/_components/Post';
 import { prisma } from '@/utils/prisma';
 
 type PostPageProps = {

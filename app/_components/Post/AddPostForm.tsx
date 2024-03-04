@@ -6,9 +6,9 @@ import { useFormState } from 'react-dom';
 import { addPostAction } from '@/app/_actions/post/add';
 import { DEFAULTS } from '@/utils';
 
-import { SubmitButton } from '../submitButton';
+import { SubmitButton } from '../SubmitButton';
 
-export function AddPost() {
+export function AddPostForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [titleLength, setTitleLength] = useState(0);
   const [contentLength, setContentLength] = useState(0);
@@ -89,7 +89,7 @@ export function AddPost() {
       <div className="flex">
         <div className="flex gap-4 ml-auto items-center">
           <p className="text-xs text-red-800">{state}</p>
-          <SubmitButton />
+          <SubmitButton text="Submit" />
         </div>
       </div>
     </form>
