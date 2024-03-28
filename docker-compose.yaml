@@ -18,8 +18,8 @@ services:
       - UNLOCK_PASSWORD=test
       - DELETE_PASSWORD=test
       - REPORTS_TO_HIDE_POST=1
-      - POSTGRES_PRISMA_URL=postgresql://kummerkasten:kummerkasten@kummerkasten-database:5432/kummerkasten?connection_limit=5
-      - POSTGRES_URL_NON_POOLING=postgresql://kummerkasten:kummerkasten@kummerkasten-database:5432/kummerkasten?connection_limit=5
+      - KUMMERKASTEN_POSTGRES_PRISMA_URL=postgresql://kummerkasten:kummerkasten@kummerkasten-database:5432/kummerkasten?connection_limit=5
+      - KUMMERKASTEN_POSTGRES_URL_NON_POOLING=postgresql://kummerkasten:kummerkasten@kummerkasten-database:5432/kummerkasten?connection_limit=5
     command: sh -c 'npx prisma generate && npx prisma db push && npm run dev'
 
   database:
