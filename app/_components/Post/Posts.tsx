@@ -3,6 +3,7 @@ import React from 'react';
 import { cookies } from 'next/headers';
 
 import { FilterFunction, SortFunction, filterBy, sortBy } from '@/utils';
+import { getEnv } from '@/utils/env';
 import { PostWithRelations } from '@/utils/prisma';
 
 import { Post } from './Post';
@@ -17,7 +18,10 @@ export async function Posts({ posts, sortBy: sortFunction, filterBy: filterFunct
   if (posts.length === 0) return <span className="mx-auto py-8">No posts found.</span>;
 
   const fingerprint = (await cookies()).get('fingerprint')?.value;
-  const filteredPosts = filterFunction ? posts.filter(filterFunction) : posts.filter(filterBy.reports);
+  const { reportsToHidePost } = getEnv();
+  const filteredPosts = filterFunction
+    ? posts.filter(filterFunction)
+    : posts.filter((post) => filterBy.reports(post, reportsToHidePost));
 
   return (
     <div className="flex flex-col gap-2 divide-y divide-zinc-700">

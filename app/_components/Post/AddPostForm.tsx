@@ -5,19 +5,24 @@ import React, { useActionState, useCallback, useEffect, useRef, useState } from 
 import Link from 'next/link';
 
 import { addPostAction } from '@/app/_actions/post/add';
-import { DEFAULTS } from '@/utils';
 
 import { SubmitButton } from '../SubmitButton';
-
-const MIN_TITLE_LENGTH = Number(process.env.MIN_TITLE_LENGTH ?? DEFAULTS.MIN_TITLE_LENGTH);
-const MAX_TITLE_LENGTH = Number(process.env.MAX_TITLE_LENGTH ?? DEFAULTS.MAX_TITLE_LENGTH);
-const MIN_CONTENT_LENGTH = Number(process.env.MIN_CONTENT_LENGTH ?? DEFAULTS.MIN_CONTENT_LENGTH);
-const MAX_CONTENT_LENGTH = Number(process.env.MAX_CONTENT_LENGTH ?? DEFAULTS.MAX_CONTENT_LENGTH);
 
 type InputEvent = React.ChangeEvent<HTMLInputElement>;
 type TextAreaEvent = React.ChangeEvent<HTMLTextAreaElement>;
 
-export function AddPostForm() {
+type AddPostFormProps = {
+  limits: {
+    minTitleLength: number;
+    maxTitleLength: number;
+    minContentLength: number;
+    maxContentLength: number;
+  };
+};
+
+export function AddPostForm({ limits }: AddPostFormProps) {
+  const { minTitleLength, maxTitleLength, minContentLength, maxContentLength } = limits;
+
   const formRef = useRef<HTMLFormElement>(null);
   const [titleLength, setTitleLength] = useState(0);
   const [contentLength, setContentLength] = useState(0);
@@ -44,7 +49,7 @@ export function AddPostForm() {
             Title
           </label>
           <p className="flex items-end text-xs pr-1 text-zinc-500">
-            {titleLength}/{MAX_TITLE_LENGTH}
+            {titleLength}/{maxTitleLength}
           </p>
         </div>
         <input
@@ -52,8 +57,8 @@ export function AddPostForm() {
           id="title"
           name="title"
           type="text"
-          minLength={MIN_TITLE_LENGTH}
-          maxLength={MAX_TITLE_LENGTH}
+          minLength={minTitleLength}
+          maxLength={maxTitleLength}
           onChange={handleTitleChange}
           autoComplete="on"
           autoCorrect="on"
@@ -76,7 +81,7 @@ export function AddPostForm() {
             </Link>
           </div>
           <p className="flex items-end text-xs pr-1 text-zinc-500">
-            {contentLength}/{MAX_CONTENT_LENGTH}
+            {contentLength}/{maxContentLength}
           </p>
         </div>
         <textarea
@@ -84,8 +89,8 @@ export function AddPostForm() {
           id="content"
           name="content"
           rows={5}
-          minLength={MIN_CONTENT_LENGTH}
-          maxLength={MAX_CONTENT_LENGTH}
+          minLength={minContentLength}
+          maxLength={maxContentLength}
           onChange={handleContentChange}
           autoComplete="on"
           autoCorrect="on"

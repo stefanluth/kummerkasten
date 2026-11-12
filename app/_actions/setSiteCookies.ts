@@ -3,6 +3,8 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import { getEnv } from '@/utils/env';
+
 type CookieOptions = {
   path: string;
   maxAge: number;
@@ -23,7 +25,7 @@ export async function setSiteCookies(formData: FormData) {
   const password = formData.get('password') as string;
 
   if (!password) return { error: 'No password entered' };
-  if (password !== process.env.UNLOCK_PASSWORD) return { error: 'Incorrect password' };
+  if (password !== getEnv().unlockPassword) return { error: 'Incorrect password' };
 
   const fingerprint = formData.get('fingerprint') as string;
 

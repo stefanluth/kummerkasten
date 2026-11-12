@@ -4,6 +4,7 @@ import { DEFAULTS } from './defaults';
 import type { PostWithRelations } from './prisma';
 
 export type FilterFunction = (a: PostWithRelations) => boolean;
+export type ReportsFilterFunction = (a: PostWithRelations, reports?: number) => boolean;
 export type SortFunction = (a: PostWithRelations, b: PostWithRelations) => number;
 
 const sortByVotes: SortFunction = (a: PostWithRelations, b: PostWithRelations) => {
@@ -29,12 +30,12 @@ export const sortBy: {
   newest: sortByNewest,
 };
 
-const filterByReported: FilterFunction = (post: PostWithRelations, reports?: number) => {
-  return post.reports.length < Number(reports || process.env.REPORTS_TO_HIDE_POST || DEFAULTS.REPORTS_TO_HIDE_POST);
+const filterByReported: ReportsFilterFunction = (post: PostWithRelations, reports = DEFAULTS.REPORTS_TO_HIDE_POST) => {
+  return post.reports.length < reports;
 };
 
 export const filterBy: {
-  [key: string]: FilterFunction;
+  [key: string]: ReportsFilterFunction;
 } = {
   reports: filterByReported,
 };

@@ -6,12 +6,13 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { DEFAULTS } from '@/utils';
+import { getEnv } from '@/utils/env';
 import { prisma } from '@/utils/prisma';
 
 export async function addPost(formData: FormData) {
+  const env = getEnv();
   const password = (await cookies()).get('password')?.value;
-  if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
+  if (password !== env.unlockPassword) return redirect('/unlock');
 
   const rawTitle = formData.get('title');
   const rawContent = formData.get('content');
@@ -24,10 +25,10 @@ export async function addPost(formData: FormData) {
   const title = rawTitle.trim();
   const content = purify(rawContent.trim());
 
-  const titleTooShort = title.length < Number(process.env.MIN_TITLE_LENGTH ?? DEFAULTS.MIN_TITLE_LENGTH);
-  const titleTooLong = title.length > Number(process.env.MAX_TITLE_LENGTH ?? DEFAULTS.MAX_TITLE_LENGTH);
-  const contentTooShort = content.length < Number(process.env.MIN_CONTENT_LENGTH ?? DEFAULTS.MIN_CONTENT_LENGTH);
-  const contentTooLong = content.length > Number(process.env.MAX_CONTENT_LENGTH ?? DEFAULTS.MAX_CONTENT_LENGTH);
+  const titleTooShort = title.length < env.minTitleLength;
+  const titleTooLong = title.length > env.maxTitleLength;
+  const contentTooShort = content.length < env.minContentLength;
+  const contentTooLong = content.length > env.maxContentLength;
 
   switch (true) {
     case titleTooShort:

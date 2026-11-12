@@ -5,11 +5,13 @@ import { redirect } from 'next/navigation';
 
 import { AddPostForm, Posts } from '@/app/_components/Post';
 import { sortBy } from '@/utils';
+import { getEnv } from '@/utils/env';
 import { prisma } from '@/utils/prisma';
 
 export default async function Home() {
+  const env = getEnv();
   const password = (await cookies()).get('password')?.value;
-  if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
+  if (password !== env.unlockPassword) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
     where: {
@@ -26,7 +28,14 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col mx-auto w-full">
-      <AddPostForm />
+      <AddPostForm
+        limits={{
+          minTitleLength: env.minTitleLength,
+          maxTitleLength: env.maxTitleLength,
+          minContentLength: env.minContentLength,
+          maxContentLength: env.maxContentLength,
+        }}
+      />
       <Posts posts={posts} sortBy={sortBy.newest} />
     </div>
   );

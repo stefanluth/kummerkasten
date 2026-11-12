@@ -4,13 +4,14 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import { getEnv } from '@/utils/env';
 import { prisma } from '@/utils/prisma';
 
 export async function reportPost(formData: FormData) {
   const cookieStore = await cookies();
   const fingerprint = cookieStore.get('fingerprint')?.value;
   const password = cookieStore.get('password')?.value;
-  if (!fingerprint || password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
+  if (!fingerprint || password !== getEnv().unlockPassword) return redirect('/unlock');
 
   const postId = formData.get('postId') as string;
 

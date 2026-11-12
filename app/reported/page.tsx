@@ -4,16 +4,16 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { Posts } from '@/app/_components/Post';
-import { DEFAULTS, FilterFunction } from '@/utils';
+import { FilterFunction } from '@/utils';
+import { getEnv } from '@/utils/env';
 import { PostWithRelations, prisma } from '@/utils/prisma';
 
 import Confirmation from './confirmation';
 
-const REPORTS_TO_HIDE_POST = Number(process.env.REPORTS_TO_HIDE_POST ?? DEFAULTS.REPORTS_TO_HIDE_POST);
-
 export default async function Reported() {
+  const env = getEnv();
   const password = (await cookies()).get('password')?.value;
-  if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
+  if (password !== env.unlockPassword) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({
     where: {
@@ -26,7 +26,7 @@ export default async function Reported() {
   });
 
   const filterFunction: FilterFunction = (post: PostWithRelations): boolean =>
-    post.reports.length >= REPORTS_TO_HIDE_POST;
+    post.reports.length >= env.reportsToHidePost;
 
   return (
     <>

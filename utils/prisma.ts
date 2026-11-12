@@ -1,6 +1,7 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 
 import { Prisma, PrismaClient } from '@/generated/prisma/client';
+import { getEnv } from '@/utils/env';
 
 const globalForPrisma = global as unknown as {
   prisma: PrismaClient | undefined;
@@ -10,11 +11,7 @@ export type PostWithRelations = Prisma.PostGetPayload<{
   include: { reports: true; votes: true };
 }>;
 
-const connectionString = process.env.KUMMERKASTEN_POSTGRES_PRISMA_URL;
-
-if (!connectionString) {
-  throw new Error('KUMMERKASTEN_POSTGRES_PRISMA_URL is not set');
-}
+const connectionString = getEnv().databaseUrl;
 
 export const prisma =
   globalForPrisma.prisma ??
