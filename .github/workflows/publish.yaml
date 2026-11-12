@@ -4,180 +4,96 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
-env:
-  REGISTRY: ghcr.io
-  REPOSITORY: kummerkasten
-  IMAGE_NAME: ${{ github.repository }}
-  UNLOCK_PASSWORD: test
-  DELETE_PASSWORD: test
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  build:
-    name: Build Docker Image
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        arch: [amd64, arm64]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build Docker Image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          load: true
-          platforms: linux/${{ matrix.arch }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.arch }}
-
-      - name: Show Docker Image
-        run: docker images
-
-      - name: Save Docker Image to tar File
-        run: docker save ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.arch }} -o ${{ env.REPOSITORY }}-${{ matrix.arch }}.tar
-
-      - name: Stash Build Result
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.REPOSITORY }}-${{ matrix.arch }}-build
-          path: ${{ env.REPOSITORY }}-${{ matrix.arch }}.tar
-          retention-days: 1
-
   test:
-    name: Test Docker Image
-    runs-on: ubuntu-latest
-    needs: build
-    strategy:
-      matrix:
-        arch: [amd64]
+    name: Test
+    uses: ./.github/workflows/ci.yml
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Start Database
-        run: |
-          docker run \
-          -d \
-          -p 5432:5432 \
-          -e POSTGRES_USER=kummerkasten \
-          -e POSTGRES_PASSWORD=kummerkasten \
-          -e POSTGRES_DB=kummerkasten \
-          --name kummerkasten-database \
-          postgres:16
-
-      - name: Update Database
-        run: npx prisma db push
-
-      - name: Unstash Build Results
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.REPOSITORY }}-${{ matrix.arch }}-build
-          path: ./
-
-      - name: Load Docker Image
-        run: docker load < ${{ env.REPOSITORY }}-${{ matrix.arch }}.tar
-
-      - name: Show Docker Image
-        run: docker images
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Install Playwright
-        run: |
-          npx playwright install --with-deps
-          npx playwright install-deps
-
-      - name: Run Container
-        run: |
-          docker run \
-          -d \
-          -p 3000:3000 \
-          -e UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
-          -e DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
-          --name kummerkasten \
-          --network "host" \
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.arch }}
-
-      - name: Show Running Containers
-        run: docker ps -a
-
-      - name: Wait 10s for Container to Start
-        run: sleep 10
-
-      - name: Run Tests
-        run: |
-          UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
-          DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
-          npm run tests
-
-      - name: Stop Containers
-        run: docker stop $(docker ps -q)
-
-  push:
-    name: Push Docker Image
+  image-scan:
+    name: Scan Docker Image
     runs-on: ubuntu-latest
     needs: test
-    strategy:
-      matrix:
-        arch: [amd64, arm64]
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Unstash Build Results
-        uses: actions/download-artifact@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image for scanning
+        uses: docker/build-push-action@v6
         with:
-          name: ${{ env.REPOSITORY }}-${{ matrix.arch }}-build
-          path: ./
+          context: .
+          platforms: linux/amd64
+          load: true
+          tags: kummerkasten:scan
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-      - name: Load Docker Image
-        run: docker load < ${{ env.REPOSITORY }}-${{ matrix.arch }}.tar
-
-      - name: Show Docker Image
-        run: docker images
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@v2
+      - name: Scan image for vulnerabilities
+        uses: aquasecurity/trivy-action@0.36.0
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          image-ref: kummerkasten:scan
+          severity: CRITICAL,HIGH
+          exit-code: '1'
+          ignore-unfixed: true
 
-      - name: Push Docker image
-        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.arch }}
-
-  manifest:
-    name: Create Docker Manifest
+  publish:
+    name: Publish Multi-Arch Image
     runs-on: ubuntu-latest
-    needs: push
+    needs: image-scan
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Docker Manifest
-        run: |
-          docker manifest create \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:amd64 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:arm64
-          docker manifest push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=sha,format=long
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=branch
+
+      - name: Build and push multi-arch image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: true
+          sbom: true

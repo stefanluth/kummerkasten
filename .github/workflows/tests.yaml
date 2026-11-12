@@ -1,82 +1,18 @@
-name: Test
+name: Tests
 
 on:
   pull_request:
     branches:
       - main
 
-env:
-  UNLOCK_PASSWORD: test
-  DELETE_PASSWORD: test
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Run Prettier
-        run: npx prettier --check app tests utils
-
-      - name: Start Database
-        run: |
-          docker run \
-          -d \
-          -p 5432:5432 \
-          -e POSTGRES_USER=kummerkasten \
-          -e POSTGRES_PASSWORD=kummerkasten \
-          -e POSTGRES_DB=kummerkasten \
-          --name kummerkasten-database \
-          postgres:16
-
-      - name: Update Database
-        run: npx prisma db push
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build Docker Image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          load: true
-          tags: kummerkasten:test
-
-      - name: Run Container
-        run: |
-          docker run \
-          -d \
-          -p 3000:3000 \
-          -e UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
-          -e DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
-          --name kummerkasten \
-          --network "host" \
-          kummerkasten:test
-
-      - name: Install Playwright
-        run: |
-          npx playwright install --with-deps
-          npx playwright install-deps
-
-      - name: Run Tests
-        run: |
-          UNLOCK_PASSWORD=${{ env.UNLOCK_PASSWORD }} \
-          DELETE_PASSWORD=${{ env.DELETE_PASSWORD }} \
-          npm run tests
-
-      - name: Stop Containers
-        run: docker stop $(docker ps -q)
+    name: Test
+    uses: ./.github/workflows/ci.yml

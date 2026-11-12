@@ -1,0 +1,59 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      next-react:
+        patterns:
+          - next
+          - eslint-config-next
+          - react
+          - react-dom
+      prisma-pg:
+        patterns:
+          - prisma
+          - '@prisma/*'
+          - pg
+          - '@types/pg'
+      tailwind-postcss:
+        patterns:
+          - tailwindcss
+          - '@tailwindcss/*'
+          - postcss
+      lint-format-typescript:
+        patterns:
+          - eslint
+          - eslint-*
+          - prettier
+          - '@trivago/*'
+          - typescript
+          - '@types/*'
+      test-tooling:
+        patterns:
+          - vitest
+          - '@vitest/*'
+          - '@playwright/test'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      github-actions:
+        patterns:
+          - '*'
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      docker:
+        patterns:
+          - '*'
