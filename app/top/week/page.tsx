@@ -21,7 +21,7 @@ export default async function TopWeek() {
         createdAt: 'desc',
       },
     });
-  } catch (error) {
+  } catch {
     return null;
   }
 

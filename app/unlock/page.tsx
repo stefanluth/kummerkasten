@@ -1,12 +1,14 @@
 import React from 'react';
 
 import { headers } from 'next/headers';
+import Link from 'next/link';
 
 import CodeOfConduct from '../code-of-conduct/page';
 import { UnlockForm } from './form';
 
-export default function Unlock() {
-  const ipAddress = headers().get('x-real-ip') ?? headers().get('x-forwarded-for');
+export default async function Unlock() {
+  const headersList = await headers();
+  const ipAddress = headersList.get('x-real-ip') ?? headersList.get('x-forwarded-for');
 
   return (
     <div className="flex flex-col w-full mx-auto px-2 divide-y divide-zinc-700">
@@ -16,9 +18,9 @@ export default function Unlock() {
         <p>By submitting the password, two cookies will be set to unlock the page.</p>
         <p>
           One of the cookies contains the password, the other your{' '}
-          <a className="underline" href="/faq#fingerprint">
+          <Link className="underline" href="/faq#fingerprint">
             fingerprint
-          </a>
+          </Link>
           .
         </p>
         <p>The cookies expire after 24 hours.</p>

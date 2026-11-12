@@ -8,7 +8,7 @@ import { sortBy } from '@/utils';
 import { prisma } from '@/utils/prisma';
 
 export default async function Home() {
-  const password = cookies().get('password')?.value;
+  const password = (await cookies()).get('password')?.value;
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({

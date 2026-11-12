@@ -1,11 +1,12 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 
 import { reportPostAction } from '@/app/_actions/post/report';
 
 export function ReportPostForm({ postId, fingerprint }: { postId: string; fingerprint: string }) {
-  const [_, formAction] = useFormState(reportPostAction, '');
+  const [, formAction] = useActionState(reportPostAction, '');
 
   return (
     <form action={formAction}>

@@ -21,7 +21,7 @@ export default async function TopYear() {
         createdAt: 'desc',
       },
     });
-  } catch (error) {
+  } catch {
     return null;
   }
 

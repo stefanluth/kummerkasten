@@ -8,7 +8,7 @@ import { prisma } from '@/utils/prisma';
 export async function votePost(formData: FormData) {
   const postId = formData.get('postId') as string;
   const upvote = formData.get('upvote') === 'true';
-  const fingerprint = cookies().get('fingerprint')?.value;
+  const fingerprint = (await cookies()).get('fingerprint')?.value;
 
   const post = await prisma.post.findUnique({
     where: {

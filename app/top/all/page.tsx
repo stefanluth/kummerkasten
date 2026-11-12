@@ -18,7 +18,7 @@ export default async function TopDay() {
         createdAt: 'desc',
       },
     });
-  } catch (error) {
+  } catch {
     return null;
   }
 

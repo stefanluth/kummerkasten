@@ -14,10 +14,7 @@ export default function Confirmation() {
   const onConfirm = () => setShow(false);
 
   return show ? (
-    <div
-      className="absolute top-0 left-0 w-full h-full z-[1337] bg-neutral-900 bg-opacity-60 backdrop-blur"
-      tabIndex={-1}
-    >
+    <div className="absolute top-0 left-0 w-full h-full z-[1337] bg-neutral-900/60 backdrop-blur-sm" tabIndex={-1}>
       <div className="flex flex-col w-fit h-full justify-center mx-auto gap-4">
         <div className="flex flex-col text-center gap-2">
           <ExclamationTriangleIcon className="w-12 h-12 mx-auto text-yellow-500" />

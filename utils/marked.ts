@@ -4,7 +4,7 @@ const renderer = new marked.Renderer();
 // Prevent images from being rendered
 // This is a privacy concern because images can be used to track users
 renderer.image = () => '';
-renderer.link = (href, title, text) => {
+renderer.link = ({ href, title, text }) => {
   // If the link does not start with http or https, it can't be trusted
   if (!href.startsWith('http://') && !href.startsWith('https://')) {
     return text;
@@ -17,7 +17,7 @@ renderer.link = (href, title, text) => {
     return text;
   }
 
-  return `<a href="${href}" title="${title}">${text}</a>`;
+  return `<a href="${href}"${title ? ` title="${title}"` : ''}>${text}</a>`;
 };
 
 export const MARKED_POST_OPTIONS: MarkedExtension = {
@@ -26,7 +26,7 @@ export const MARKED_POST_OPTIONS: MarkedExtension = {
   breaks: false,
   tokenizer: {
     // Prevent HTML from being rendered
-    tag: (src: string) => undefined,
-    html: (src: string) => undefined,
+    tag: () => undefined,
+    html: () => undefined,
   },
 };

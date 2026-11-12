@@ -16,7 +16,7 @@ type PostsProps = {
 export async function Posts({ posts, sortBy: sortFunction, filterBy: filterFunction }: PostsProps) {
   if (posts.length === 0) return <span className="mx-auto py-8">No posts found.</span>;
 
-  const fingerprint = cookies().get('fingerprint')?.value;
+  const fingerprint = (await cookies()).get('fingerprint')?.value;
   const filteredPosts = filterFunction ? posts.filter(filterFunction) : posts.filter(filterBy.reports);
 
   return (

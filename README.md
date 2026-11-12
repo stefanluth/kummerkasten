@@ -41,6 +41,8 @@ delete posts. The `REPORTS_TO_HIDE_POST` specifies how many reports a post must 
 
 #### Local
 
+Node.js 24.15 or newer is required.
+
 ```shell
 npm install
 npx prisma generate

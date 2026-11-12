@@ -35,6 +35,7 @@ yarn-error.log*
 next-env.d.ts
 
 # prisma
+/generated/
 prisma/migrations/
 *.db
 *.sqlite

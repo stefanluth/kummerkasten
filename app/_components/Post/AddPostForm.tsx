@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useFormState } from 'react-dom';
+import React, { useActionState, useCallback, useEffect, useRef, useState } from 'react';
+
+import Link from 'next/link';
 
 import { addPostAction } from '@/app/_actions/post/add';
 import { DEFAULTS } from '@/utils';
@@ -20,7 +21,7 @@ export function AddPostForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [titleLength, setTitleLength] = useState(0);
   const [contentLength, setContentLength] = useState(0);
-  const [state, formAction] = useFormState(addPostAction, '');
+  const [state, formAction] = useActionState(addPostAction, '');
 
   const handleTitleChange = useCallback((e: InputEvent) => setTitleLength(e.target.value.length), []);
   const handleContentChange = useCallback((e: TextAreaEvent) => setContentLength(e.target.value.length), []);
@@ -66,13 +67,13 @@ export function AddPostForm() {
             <label className="pl-1" htmlFor="content">
               Content
             </label>
-            <a
+            <Link
               className="flex w-fit h-fit px-1 border-zinc-600 text-zinc-600 text-xs font-black"
               href="/faq#markdown"
               title="Markdown Support"
             >
               M&darr;
-            </a>
+            </Link>
           </div>
           <p className="flex items-end text-xs pr-1 text-zinc-500">
             {contentLength}/{MAX_CONTENT_LENGTH}

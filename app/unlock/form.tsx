@@ -1,18 +1,22 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 
 import { setSiteCookies } from '@/app/_actions/setSiteCookies';
 import { Fingerprint } from '@/app/_components';
 
 import { SubmitButton } from '../_components/SubmitButton';
 
-async function wrappedSetSiteCookies(_: any, formData: FormData) {
+type UnlockState = {
+  error?: string;
+};
+
+async function wrappedSetSiteCookies(_: UnlockState, formData: FormData) {
   return setSiteCookies(formData);
 }
 
 export function UnlockForm({ ipAddress }: { ipAddress: string | null }) {
-  const [state, formAction] = useFormState(wrappedSetSiteCookies, {});
+  const [state, formAction] = useActionState<UnlockState, FormData>(wrappedSetSiteCookies, {});
 
   return (
     <form action={formAction}>

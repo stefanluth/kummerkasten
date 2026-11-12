@@ -12,7 +12,7 @@ export default async function Faq() {
     <div
       className="faq-content max-w-3xl mx-auto"
       dangerouslySetInnerHTML={{
-        __html: await marked.parse(fs.readFileSync(process.cwd() + '/faq.en.md', 'utf-8'), { renderer }),
+        __html: await marked.parse(fs.readFileSync(process.cwd() + '/faq.en.md', 'utf-8')),
       }}
     />
   );

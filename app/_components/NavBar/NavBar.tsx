@@ -3,8 +3,8 @@ import { cookies } from 'next/headers';
 import { DesktopNavBar } from './DesktopNavBar';
 import { MobileNavBar } from './MobileNavBar';
 
-export function NavBar() {
-  const password = cookies().get('password')?.value;
+export async function NavBar() {
+  const password = (await cookies()).get('password')?.value;
   const isUnlocked = password === process.env.UNLOCK_PASSWORD;
 
   return (

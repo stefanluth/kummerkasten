@@ -15,7 +15,7 @@ export function CopyLinkButton({ url, path }: { url?: string; path?: string }) {
 
     setText('Copied!');
     setTimeout(() => setText('Copy Link'), 2000);
-  }, []);
+  }, [path, url]);
 
   return (
     <button className="w-16 hover:underline" title="Copy Link to Clipboard" onClick={handleClick}>

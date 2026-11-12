@@ -1,11 +1,10 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("KUMMERKASTEN_POSTGRES_PRISMA_URL")
-  directUrl = env("KUMMERKASTEN_POSTGRES_URL_NON_POOLING")
+  provider = "postgresql"
 }
 
 model Post {

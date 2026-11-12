@@ -1,10 +1,12 @@
 import { Marked } from 'marked';
 
+import type { JSX } from 'react';
+
 import Link from 'next/link';
 
 import { CopyLinkButton } from '@/app/_components';
-import { DEFAULTS, MARKED_POST_OPTIONS, getTimeAgo } from '@/utils';
-import { PostWithRelations, prisma } from '@/utils/prisma';
+import { MARKED_POST_OPTIONS, getTimeAgo } from '@/utils';
+import { PostWithRelations } from '@/utils/prisma';
 
 import { ReportPostButton } from './ReportPost';
 import { Voting } from './Voting';

@@ -6,7 +6,9 @@ services:
       database:
         condition: service_started
     restart: always
-    build: .
+    build:
+      context: .
+      target: build
     ports:
       - '3000:3000'
     volumes:

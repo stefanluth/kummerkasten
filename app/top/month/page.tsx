@@ -21,7 +21,7 @@ export default async function TopMonth() {
         createdAt: 'desc',
       },
     });
-  } catch (error) {
+  } catch {
     return null;
   }
 

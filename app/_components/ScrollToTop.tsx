@@ -9,7 +9,7 @@ export function ScrollToTop() {
 
   const onScroll = useCallback(() => {
     setShow(window.scrollY > SCROLL_THRESHOLD);
-  }, [window.scrollY]);
+  }, []);
 
   useEffect(() => {
     // Initial check can't run outside of useEffect because window is not defined
@@ -17,7 +17,7 @@ export function ScrollToTop() {
 
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [onScroll]);
 
   return (
     <button

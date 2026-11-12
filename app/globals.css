@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 :root {
   background-color: #222222;
@@ -26,13 +24,13 @@ textarea {
 
 :focus {
   @apply rounded-md;
-  @apply focus:outline-none;
+  @apply focus:outline-hidden;
   @apply focus:ring-2;
   @apply focus:ring-zinc-500;
 }
 
 div:focus {
-  @apply focus:outline-none;
+  @apply focus:outline-hidden;
   @apply focus:ring-0;
 }
 
@@ -47,7 +45,7 @@ div:focus {
   h4,
   h5,
   h6 {
-    @apply pt-2 !important;
+    @apply pt-2!;
   }
 
   p {

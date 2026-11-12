@@ -10,7 +10,7 @@ import { DEFAULTS } from '@/utils';
 import { prisma } from '@/utils/prisma';
 
 export async function addPost(formData: FormData) {
-  const password = cookies().get('password')?.value;
+  const password = (await cookies()).get('password')?.value;
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const rawTitle = formData.get('title');
@@ -67,6 +67,6 @@ export async function addPost(formData: FormData) {
   return null;
 }
 
-export async function addPostAction(prevState: any, formData: FormData) {
+export async function addPostAction(prevState: unknown, formData: FormData) {
   return await addPost(formData);
 }

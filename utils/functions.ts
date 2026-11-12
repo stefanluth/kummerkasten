@@ -1,7 +1,7 @@
-import { Post } from '@prisma/client';
+import type { Post } from '@/generated/prisma/client';
 
 import { DEFAULTS } from './defaults';
-import { PostWithRelations } from './prisma';
+import type { PostWithRelations } from './prisma';
 
 export type FilterFunction = (a: PostWithRelations) => boolean;
 export type SortFunction = (a: PostWithRelations, b: PostWithRelations) => number;

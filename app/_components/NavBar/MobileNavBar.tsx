@@ -36,7 +36,7 @@ export function MobileNavBar(props: { isUnlocked: boolean }) {
         </button>
       </div>
       <div
-        className={`bg-gradient-to-r from-transparent via-zinc-800 to-zinc-800 backdrop-blur-sm fixed top-0 right-0 h-screen w-screen mt-14 z-50 transform transition-transform duration-300 ${
+        className={`bg-linear-to-r from-transparent via-zinc-800 to-zinc-800 backdrop-blur-xs fixed top-0 right-0 h-screen w-screen mt-14 z-50 transform transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

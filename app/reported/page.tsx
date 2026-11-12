@@ -12,7 +12,7 @@ import Confirmation from './confirmation';
 const REPORTS_TO_HIDE_POST = Number(process.env.REPORTS_TO_HIDE_POST ?? DEFAULTS.REPORTS_TO_HIDE_POST);
 
 export default async function Reported() {
-  const password = cookies().get('password')?.value;
+  const password = (await cookies()).get('password')?.value;
   if (password !== process.env.UNLOCK_PASSWORD) return redirect('/unlock');
 
   const posts = await prisma.post.findMany({

@@ -27,8 +27,9 @@ export async function setSiteCookies(formData: FormData) {
 
   const fingerprint = formData.get('fingerprint') as string;
 
-  cookies().set('password', password, cookieOptions);
-  cookies().set('fingerprint', fingerprint, cookieOptions);
+  const cookieStore = await cookies();
+  cookieStore.set('password', password, cookieOptions);
+  cookieStore.set('fingerprint', fingerprint, cookieOptions);
 
   redirect('/');
 }

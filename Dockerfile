@@ -1,38 +1,30 @@
-FROM node:21-alpine as dependencies
+FROM node:24-alpine AS prod-deps
 WORKDIR /kummerkasten
 
-COPY package.json .
-RUN npm install --omit=dev
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
 
-FROM node:21-alpine as build
+FROM node:24-alpine AS build
 WORKDIR /kummerkasten
 
-COPY --from=dependencies /kummerkasten/node_modules ./node_modules
-COPY --from=dependencies /kummerkasten/package-lock.json ./package-lock.json
+RUN apk add --no-cache openssl libc6-compat
 
-COPY .env .
-COPY next.config.js .
-COPY postcss.config.js .
-COPY tailwind.config.js .
-COPY tsconfig.json .
-COPY package.json .
-COPY middleware.ts .
+COPY package.json package-lock.json ./
+RUN npm ci
 
-COPY prisma/schema.prisma ./prisma/schema.prisma
-COPY utils ./utils
-COPY app ./app
+COPY . .
 
 RUN npx prisma generate
 RUN npx next build
 
-FROM node:21-alpine as production
+FROM node:24-alpine AS production
 WORKDIR /kummerkasten
 
-RUN apk update
-RUN apk add --no-cache openssl
+RUN apk add --no-cache openssl curl libc6-compat
 
-COPY --from=build /kummerkasten .
-COPY faq.en.md .
+COPY --from=prod-deps /kummerkasten/node_modules ./node_modules
+COPY --from=build /kummerkasten/.next ./.next
+COPY package.json next.config.js .env faq.en.md ./
 
 EXPOSE 3000
 HEALTHCHECK --interval=15s --timeout=5s \

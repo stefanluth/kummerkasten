@@ -4,17 +4,18 @@ import { Post } from '@/app/_components/Post';
 import { prisma } from '@/utils/prisma';
 
 type PostPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default async function PostPage(props: PostPageProps) {
-  const fingerprint = cookies().get('fingerprint')?.value;
+  const { id } = await props.params;
+  const fingerprint = (await cookies()).get('fingerprint')?.value;
 
   const post = await prisma.post.findUnique({
     where: {
-      id: props.params.id,
+      id,
     },
     include: {
       reports: true,
