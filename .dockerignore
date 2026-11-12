@@ -5,4 +5,12 @@ node_modules
 generated
 test-results
 playwright-report
+playwright/.cache
+coverage
 *.tsbuildinfo
+
+.env
+.env.*
+!.env.example
+
+.unlazy
