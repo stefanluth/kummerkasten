@@ -24,7 +24,7 @@ model Vote {
   fingerprint String
   postId      String
   upvote      Boolean
-  Post        Post    @relation(fields: [postId], references: [id])
+  Post        Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@unique([postId, fingerprint])
   @@index([postId, upvote])

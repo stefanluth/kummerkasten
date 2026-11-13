@@ -75,6 +75,27 @@ test('votes toggle and reports are submitted for a post', async ({ page }) => {
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
 
+  await page.context().addCookies([
+    {
+      name: 'fingerprint',
+      value: `mutation-test-delete-${randomBytes(12).toString('hex')}`,
+      url: 'http://localhost:3000',
+      httpOnly: true,
+      secure: false,
+      sameSite: 'Lax',
+    },
+  ]);
+  await page.reload();
+  await page.getByRole('button', { name: 'Continue' }).click();
+
+  const reportedPostHeading = page.getByRole('heading', { name: title, exact: true });
+  await expect(reportedPostHeading).toBeVisible();
+  const reportedPostCard = reportedPostHeading.locator('xpath=../../..').locator('xpath=..');
+  const reportedPostScore = reportedPostCard.locator('.post-score');
+  const scoreBeforeDelete = Number(await reportedPostScore.textContent());
+  await reportedPostCard.getByRole('button', { name: 'Upvote post' }).click();
+  await expect(reportedPostScore).toHaveText(String(scoreBeforeDelete + 1));
+
   const deleteResult = await page.evaluate(
     async ({ postId, password }) =>
       fetch(`${window.location.origin}/${postId}/delete`, {
