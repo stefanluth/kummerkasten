@@ -1,63 +1,14 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
-
-import { prisma } from '@/utils/prisma';
+import { getPostMutationContext, togglePostVote } from '@/utils/post-mutations';
 
 export async function votePost(formData: FormData) {
-  const postId = formData.get('postId') as string;
-  const upvote = formData.get('upvote') === 'true';
-  const fingerprint = (await cookies()).get('fingerprint')?.value;
+  const rawPostId = formData.get('postId');
+  const rawUpvote = formData.get('upvote');
+  if (typeof rawPostId !== 'string' || !rawPostId || (rawUpvote !== 'true' && rawUpvote !== 'false')) return;
 
-  const post = await prisma.post.findUnique({
-    where: {
-      id: postId,
-    },
-  });
+  const context = await getPostMutationContext();
+  if (!context?.fingerprint) return;
 
-  if (!post || !fingerprint) {
-    return;
-  }
-
-  const vote = await prisma.vote.findFirst({
-    where: {
-      postId,
-      fingerprint,
-    },
-  });
-
-  if (vote) {
-    if (vote.upvote === upvote) {
-      await prisma.vote.delete({
-        where: {
-          id: vote.id,
-        },
-      });
-    } else {
-      await prisma.vote.update({
-        where: {
-          id: vote.id,
-        },
-        data: {
-          upvote,
-        },
-      });
-    }
-  } else {
-    await prisma.vote.create({
-      data: {
-        postId,
-        fingerprint,
-        upvote,
-      },
-    });
-  }
-
-  revalidatePath('/');
-  revalidatePath('/top/day');
-  revalidatePath('/top/week');
-  revalidatePath('/top/month');
-  revalidatePath('/top/year');
-  revalidatePath('/top/all');
+  await togglePostVote(rawPostId, context.fingerprint, rawUpvote === 'true');
 }

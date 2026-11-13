@@ -1,37 +1,18 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { getEnv } from '@/utils/env';
-import { prisma } from '@/utils/prisma';
+import { createPostReport, getPostMutationContext } from '@/utils/post-mutations';
 
 export async function reportPost(formData: FormData) {
-  const cookieStore = await cookies();
-  const fingerprint = cookieStore.get('fingerprint')?.value;
-  const password = cookieStore.get('password')?.value;
-  if (!fingerprint || password !== getEnv().unlockPassword) return redirect('/unlock');
+  const rawPostId = formData.get('postId');
+  if (typeof rawPostId !== 'string' || !rawPostId) return;
 
-  const postId = formData.get('postId') as string;
+  const context = await getPostMutationContext();
+  if (!context?.fingerprint) return redirect('/unlock');
 
-  const report = await prisma.report.findFirst({
-    where: {
-      postId,
-      fingerprint,
-    },
-  });
-
-  if (report) return redirect('/');
-
-  await prisma.report.create({
-    data: {
-      postId,
-      fingerprint,
-    },
-  });
-
-  revalidatePath('/');
+  const created = await createPostReport(rawPostId, context.fingerprint);
+  if (!created) return redirect('/');
 }
 
 export async function reportPostAction(prevState: unknown, formData: FormData) {
