@@ -1,24 +1,14 @@
 import { Prisma } from '@/generated/prisma/client';
-
 import { getEnv } from '@/utils/env';
 import { prisma } from '@/utils/prisma';
 
-import { getTopPeriodStart, type TopPeriod } from './top-periods';
+import type { PostReadModel } from './post-read-model';
+import { type TopPeriod, getTopPeriodStart } from './top-periods';
 
 export type PostFeedSort = 'newest' | 'votes';
 export type PostFeedVisibility = 'public' | 'reported';
 
-export type PostFeedItem = {
-  id: string;
-  title: string;
-  content: string;
-  replyTo: string | null;
-  createdAt: Date;
-  score: number;
-  reportCount: number;
-  viewerVote: boolean | null;
-  viewerReported: boolean;
-};
+export type PostFeedItem = PostReadModel;
 
 export type PostFeedPage = {
   items: PostFeedItem[];
@@ -54,9 +44,7 @@ export async function getPostFeed({
       : Prisma.sql`AND "reportCount" < ${reportsToHidePost}`;
   const cursorFilter = getCursorFilter(cursor, sort);
   const ordering =
-    sort === 'votes'
-      ? Prisma.sql`"score" DESC, "createdAt" DESC, id ASC`
-      : Prisma.sql`"createdAt" DESC, id ASC`;
+    sort === 'votes' ? Prisma.sql`"score" DESC, "createdAt" DESC, id ASC` : Prisma.sql`"createdAt" DESC, id ASC`;
 
   const rows = await prisma.$queryRaw<FeedRow[]>(Prisma.sql`
     WITH eligible_posts AS (

@@ -1,17 +1,20 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import {
+  POST_FEED_PAGE_SIZE,
+  type PostFeedItem,
+  decodePostFeedCursor,
+  encodePostFeedCursor,
+  getPostFeed,
+} from '@/utils/post-feed';
+import { getPostReadModel } from '@/utils/post-read-model';
+
 const { queryRaw } = vi.hoisted(() => ({ queryRaw: vi.fn() }));
 
 vi.mock('@/utils/prisma', () => ({ prisma: { $queryRaw: queryRaw } }));
 vi.mock('@/utils/env', () => ({ getEnv: () => ({ reportsToHidePost: 3 }) }));
 
-import {
-  decodePostFeedCursor,
-  encodePostFeedCursor,
-  getPostFeed,
-  POST_FEED_PAGE_SIZE,
-  type PostFeedItem,
-} from '@/utils/post-feed';
+beforeEach(() => queryRaw.mockReset());
 
 function makeItem(id: string, score = 0): PostFeedItem {
   return {
@@ -28,8 +31,6 @@ function makeItem(id: string, score = 0): PostFeedItem {
 }
 
 describe('getPostFeed', () => {
-  beforeEach(() => queryRaw.mockReset());
-
   it('returns a bounded page and a score-aware cursor for top feeds', async () => {
     const rows = Array.from({ length: POST_FEED_PAGE_SIZE + 1 }, (_, index) => makeItem(`${index}`, 20 - index));
     queryRaw.mockResolvedValue(rows);
@@ -97,5 +98,32 @@ describe('post feed cursors', () => {
       JSON.stringify({ id: 'post-id', createdAt: '2026-11-13T12:00:00.000Z' }),
     ).toString('base64url');
     expect(decodePostFeedCursor(scorelessCursor, 'votes')).toBeNull();
+  });
+});
+
+describe('getPostReadModel', () => {
+  it('returns the requested post projection from one aggregate query', async () => {
+    const post = {
+      ...makeItem('post-id', 2),
+      reportCount: 3,
+      viewerVote: true,
+      viewerReported: true,
+    };
+    queryRaw.mockResolvedValue([post]);
+
+    await expect(getPostReadModel('post-id', 'viewer')).resolves.toEqual(post);
+
+    const query = queryRaw.mock.calls[0][0] as { sql: string; values: unknown[] };
+    expect(query.sql).toContain('SUM(CASE WHEN v."upvote" THEN 1 ELSE -1 END)::INTEGER AS score');
+    expect(query.sql).toContain('COUNT(*)::INTEGER AS count');
+    expect(query.sql).toContain('WHERE p.id =');
+    expect(query.values).toEqual(expect.arrayContaining(['post-id', 'viewer']));
+  });
+
+  it('returns null when the requested post does not exist', async () => {
+    queryRaw.mockResolvedValue([]);
+
+    await expect(getPostReadModel('missing-post', 'viewer')).resolves.toBeNull();
+    expect(queryRaw).toHaveBeenCalledTimes(1);
   });
 });

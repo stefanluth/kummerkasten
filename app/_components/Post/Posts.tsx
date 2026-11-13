@@ -3,7 +3,7 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 
-import { getPostFeed, type PostFeedSort, type PostFeedVisibility } from '@/utils/post-feed';
+import { type PostFeedSort, type PostFeedVisibility, getPostFeed } from '@/utils/post-feed';
 import type { TopPeriod } from '@/utils/top-periods';
 
 import { Post } from './Post';
