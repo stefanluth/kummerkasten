@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getTopPeriodStart, TOP_PERIOD_DAYS } from '@/utils/top-periods';
+import { TOP_PERIOD_DAYS, getTopPeriodStart } from '@/utils/top-periods';
 
 describe('getTopPeriodStart', () => {
   const now = new Date('2026-11-13T12:00:00.000Z');
