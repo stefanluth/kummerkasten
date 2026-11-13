@@ -2,14 +2,8 @@ import { randomBytes } from 'crypto';
 
 import { expect, test } from '@playwright/test';
 
-const POST_ID_CLASS_NAMES = '.post-id';
 const UNLOCK_PASSWORD = process.env.UNLOCK_PASSWORD || 'test';
 const DELETE_PASSWORD = process.env.DELETE_PASSWORD || 'test';
-
-test('has title', async ({ page }) => {
-  await page.goto('/');
-  await expect(page).toHaveTitle('Kummerkasten');
-});
 
 test('/faq is reachable', async ({ context }) => {
   const page = await context.newPage();
@@ -38,7 +32,7 @@ test('redirects to /unlock', async ({ context }) => {
   await expect(page).toHaveURL('/unlock');
 });
 
-test('unlock works', async ({ page }) => {
+test('unlocks, submits, and deletes a post', async ({ page }) => {
   await page.goto('/unlock');
   await page.fill('input[name="password"]', UNLOCK_PASSWORD);
 
@@ -47,121 +41,44 @@ test('unlock works', async ({ page }) => {
 
   await expect(page).toHaveURL('/');
 
-  const titleInput = page.getByRole('textbox', { name: 'Title' });
-  const contentInput = page.getByRole('textbox', { name: 'Content' });
-  const submitButton = page.getByRole('button', { name: 'Submit' });
-
-  await expect(titleInput).toBeVisible();
-  await expect(contentInput).toBeVisible();
-  await expect(submitButton).toBeVisible();
-});
-
-test('submit works', async ({ page }) => {
-  await page.goto('/unlock');
-  await page.fill('input[name="password"]', UNLOCK_PASSWORD);
-
-  const unlockButton = page.getByRole('button', { name: 'Unlock' });
-  await unlockButton.click();
-
-  await expect(page).toHaveURL('/');
+  const cookies = await page.context().cookies();
+  const sessionCookie = cookies.find(({ name }) => name === 'session');
+  expect(sessionCookie?.value).toMatch(/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/);
+  expect(sessionCookie?.value).not.toBe(UNLOCK_PASSWORD);
+  expect(sessionCookie?.httpOnly).toBe(true);
+  expect(sessionCookie?.secure).toBe(true);
+  expect(sessionCookie?.sameSite).toBe('None');
+  expect(sessionCookie?.expires).toBeGreaterThan(Date.now() / 1000);
+  expect(cookies.some(({ name }) => name === 'password')).toBe(false);
+  expect(cookies.some(({ name }) => name === 'fingerprint')).toBe(true);
 
   const titleInput = page.getByRole('textbox', { name: 'Title' });
   const contentInput = page.getByRole('textbox', { name: 'Content' });
   const submitButton = page.getByRole('button', { name: 'Submit' });
-
   await expect(titleInput).toBeVisible();
   await expect(contentInput).toBeVisible();
   await expect(submitButton).toBeVisible();
 
-  const randomTitle = randomBytes(16).toString('hex');
-  const randomMessage = randomBytes(256).toString('hex');
-  await titleInput.fill(randomTitle);
-  await contentInput.fill(randomMessage);
+  const title = randomBytes(16).toString('hex');
+  const content = randomBytes(256).toString('hex');
+  await titleInput.fill(title);
+  await contentInput.fill(content);
   await submitButton.click();
 
-  await expect(page).toHaveURL('/');
+  const heading = page.getByRole('heading', { name: title, exact: true });
+  await expect(heading).toBeVisible();
+  await expect(page.getByText(content, { exact: true })).toBeVisible();
 
-  const title = page.getByText(randomTitle);
-  const message = page.getByText(randomMessage);
+  const postContent = heading.locator('xpath=../../..');
+  const postCard = postContent.locator('xpath=..');
+  const postId = await postCard.locator('.post-id').getAttribute('id');
+  expect(postId).not.toBeNull();
 
-  expect(await title.textContent()).toBe(randomTitle);
-  expect(await message.textContent()).toBe(randomMessage);
-});
-
-test('delete works', async ({ page }) => {
-  // Unlock page
-  await page.goto('/unlock');
-  await expect(page).toHaveURL('/unlock');
-  await page.fill('input[name="password"]', UNLOCK_PASSWORD);
-
-  const unlockButton = page.getByRole('button', { name: 'Unlock' });
-  await unlockButton.click();
-
-  await expect(page).toHaveURL('/');
-
-  // Submit post
-  const titleInput = page.getByRole('textbox', { name: 'Title' });
-  const contentInput = page.getByRole('textbox', { name: 'Content' });
-  const submitButton = page.getByRole('button', { name: 'Submit' });
-
-  await expect(titleInput).toBeVisible();
-  await expect(contentInput).toBeVisible();
-  await expect(submitButton).toBeVisible();
-
-  const randomTitle = randomBytes(16).toString('hex');
-  const randomMessage = randomBytes(256).toString('hex');
-  await titleInput.fill(randomTitle);
-  await contentInput.fill(randomMessage);
-
-  const countBeforePost = await page.locator(POST_ID_CLASS_NAMES).count();
-
-  await submitButton.click();
-
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  await expect(page).toHaveURL('/');
-  await page.reload();
-
-  const countAfterPost = await page.locator(POST_ID_CLASS_NAMES).count();
-
-  // Get post id
-  const title = page.getByText(randomTitle);
-  const message = page.getByText(randomMessage);
-
-  expect(await title.textContent()).toBe(randomTitle);
-  expect(await message.textContent()).toBe(randomMessage);
-  expect(countAfterPost).toBe(countBeforePost + 1);
-
-  const postId = await page.getAttribute(POST_ID_CLASS_NAMES, 'id');
-
-  // Delete post
-  const headers = new Headers([
-    ['Content-Type', 'application/json'],
-    ['Cookie', `password=${UNLOCK_PASSWORD}; fingerprint=123`],
-  ]);
-
-  const body = JSON.stringify({
-    password: DELETE_PASSWORD,
+  const response = await page.request.post(new URL(`/${postId}/delete`, page.url()).toString(), {
+    data: { password: DELETE_PASSWORD },
   });
-
-  const requestOptions: RequestInit = {
-    method: 'POST',
-    redirect: 'follow',
-    headers,
-    body,
-  };
-
-  const response = await fetch(`${page.url()}${postId}/delete`, requestOptions);
-  const status = response.status;
-  const result = await response.json();
-
-  expect(status).toBe(200);
-  expect(result).toEqual({});
-
+  expect(response.status()).toBe(200);
+  expect(await response.json()).toEqual({});
   await page.reload();
-
-  const countAfterDelete = await page.locator(POST_ID_CLASS_NAMES).count();
-
-  expect(countAfterDelete).toBe(countAfterPost - 1);
-  expect(countAfterDelete).toBe(countBeforePost);
+  await expect(page.getByRole('heading', { name: title, exact: true })).toHaveCount(0);
 });

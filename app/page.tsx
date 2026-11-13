@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { AddPostForm, Posts } from '@/app/_components/Post';
+import { SESSION_COOKIE_NAME, verifyUnlockSessionToken } from '@/utils/auth-session';
 import { getEnv } from '@/utils/env';
 
 type HomeProps = {
@@ -12,8 +13,8 @@ type HomeProps = {
 
 export default async function Home({ searchParams }: HomeProps) {
   const env = getEnv();
-  const password = (await cookies()).get('password')?.value;
-  if (password !== env.unlockPassword) return redirect('/unlock');
+  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
+  if (!(await verifyUnlockSessionToken(session, env.sessionSecret))) return redirect('/unlock');
 
   const { cursor } = await searchParams;
 

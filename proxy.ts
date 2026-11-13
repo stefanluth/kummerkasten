@@ -1,15 +1,19 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function proxy(request: NextRequest) {
+import { SESSION_COOKIE_NAME, verifyUnlockSessionToken } from '@/utils/auth-session';
+
+export async function proxy(request: NextRequest) {
   const fingerprint = request.cookies.get('fingerprint')?.value;
-  const password = request.cookies.get('password')?.value;
+  const session = request.cookies.get(SESSION_COOKIE_NAME)?.value;
 
-  const noFingerprint = fingerprint == null || fingerprint === '';
-  const wrongPassword = password !== process.env.UNLOCK_PASSWORD;
+  const noFingerprint = !fingerprint;
+  const invalidSession = !(await verifyUnlockSessionToken(session, process.env.SESSION_SECRET));
 
-  if (noFingerprint || wrongPassword) {
-    return NextResponse.redirect(new URL('/unlock', request.url));
+  if (noFingerprint || invalidSession) {
+    const response = NextResponse.redirect(new URL('/unlock', request.url));
+    response.cookies.delete('password');
+    return response;
   }
 }
 

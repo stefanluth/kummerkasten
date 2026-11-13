@@ -5,6 +5,7 @@ import { DEFAULTS } from './defaults';
 export type Env = {
   unlockPassword: string;
   deletePassword: string;
+  sessionSecret: string;
   databaseUrl: string;
   databaseUrlNonPooling: string;
   minTitleLength: number;
@@ -48,6 +49,7 @@ export function getEnv(): Env {
   cachedEnv = {
     unlockPassword: required('UNLOCK_PASSWORD'),
     deletePassword: required('DELETE_PASSWORD'),
+    sessionSecret: required('SESSION_SECRET'),
     databaseUrl,
     databaseUrlNonPooling: process.env.KUMMERKASTEN_POSTGRES_URL_NON_POOLING?.trim() || databaseUrl,
     minTitleLength: integer('MIN_TITLE_LENGTH', DEFAULTS.MIN_TITLE_LENGTH),

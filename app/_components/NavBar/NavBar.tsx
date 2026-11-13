@@ -1,13 +1,14 @@
 import { cookies } from 'next/headers';
 
+import { SESSION_COOKIE_NAME, verifyUnlockSessionToken } from '@/utils/auth-session';
 import { getEnv } from '@/utils/env';
 
 import { DesktopNavBar } from './DesktopNavBar';
 import { MobileNavBar } from './MobileNavBar';
 
 export async function NavBar() {
-  const password = (await cookies()).get('password')?.value;
-  const isUnlocked = password === getEnv().unlockPassword;
+  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
+  const isUnlocked = await verifyUnlockSessionToken(session, getEnv().sessionSecret);
 
   return (
     <div className="fixed flex w-full bg-zinc-800 justify-center">

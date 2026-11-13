@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { Prisma } from '@/generated/prisma/client';
+import { SESSION_COOKIE_NAME, verifyUnlockSessionToken } from '@/utils/auth-session';
 import { getEnv } from '@/utils/env';
 import { prisma } from '@/utils/prisma';
 
@@ -20,7 +21,7 @@ export async function getPostMutationContext(requireFingerprint = true): Promise
   const cookieStore = await cookies();
   const env = getEnv();
 
-  if (cookieStore.get('password')?.value !== env.unlockPassword) return null;
+  if (!(await verifyUnlockSessionToken(cookieStore.get(SESSION_COOKIE_NAME)?.value, env.sessionSecret))) return null;
 
   const fingerprint = cookieStore.get('fingerprint')?.value ?? null;
   if (requireFingerprint && !fingerprint) return null;
@@ -102,8 +103,5 @@ export function revalidatePostViews(postId?: string): void {
 }
 
 function isTransactionConflict(error: unknown): boolean {
-  return (
-    error instanceof Prisma.PrismaClientKnownRequestError &&
-    (error.code === 'P2034' || error.code === 'P2002')
-  );
+  return error instanceof Prisma.PrismaClientKnownRequestError && (error.code === 'P2034' || error.code === 'P2002');
 }

@@ -13,6 +13,7 @@ concurrency:
 env:
   UNLOCK_PASSWORD: test
   DELETE_PASSWORD: test
+  SESSION_SECRET: test-session-secret-for-ci-only
   KUMMERKASTEN_POSTGRES_PRISMA_URL: postgresql://kummerkasten:kummerkasten@localhost:5432/kummerkasten
   KUMMERKASTEN_POSTGRES_URL_NON_POOLING: postgresql://kummerkasten:kummerkasten@localhost:5432/kummerkasten
   NEXT_TELEMETRY_DISABLED: '1'

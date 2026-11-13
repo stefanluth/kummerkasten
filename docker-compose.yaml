@@ -18,6 +18,7 @@ services:
     environment:
       - UNLOCK_PASSWORD=test
       - DELETE_PASSWORD=test
+      - SESSION_SECRET=local-development-session-secret
       - REPORTS_TO_HIDE_POST=1
       - KUMMERKASTEN_POSTGRES_PRISMA_URL=postgresql://kummerkasten:kummerkasten@kummerkasten-database:5432/kummerkasten?connection_limit=5
       - KUMMERKASTEN_POSTGRES_URL_NON_POOLING=postgresql://kummerkasten:kummerkasten@kummerkasten-database:5432/kummerkasten?connection_limit=5

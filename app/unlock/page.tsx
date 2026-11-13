@@ -17,13 +17,13 @@ export default async function Unlock() {
         <h1 className="text-2xl font-semibold">Cookies</h1>
         <p>By submitting the password, two cookies will be set to unlock the page.</p>
         <p>
-          One of the cookies contains the password, the other your{' '}
+          One cookie is a signed session token; the other contains your{' '}
           <Link className="underline" href="/faq#fingerprint">
             fingerprint
           </Link>
           .
         </p>
-        <p>The cookies expire after 24 hours.</p>
+        <p>The session and fingerprint cookies expire after 24 hours.</p>
       </div>
       <UnlockForm ipAddress={ipAddress} />
     </div>
