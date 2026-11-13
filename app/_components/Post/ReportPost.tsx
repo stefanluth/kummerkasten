@@ -1,16 +1,7 @@
-import { prisma } from '@/utils/prisma';
-
 import { ReportPostForm } from './ReportPostForm';
 
-export async function ReportPostButton({ postId, fingerprint }: { postId: string; fingerprint: string }) {
-  const report = await prisma.report.findFirst({
-    where: {
-      fingerprint,
-      postId: postId,
-    },
-  });
+export function ReportPostButton({ postId, hasReported }: { postId: string; hasReported: boolean }) {
+  if (hasReported) return null;
 
-  if (report) return null;
-
-  return <ReportPostForm postId={postId} fingerprint={fingerprint} />;
+  return <ReportPostForm postId={postId} />;
 }

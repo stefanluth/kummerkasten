@@ -1,29 +1,6 @@
-import { Posts } from '@/app/_components/Post';
-import { sortBy } from '@/utils';
-import { PostWithRelations, prisma } from '@/utils/prisma';
+import { TopPosts } from '@/app/top/TopPosts';
+import type { TopPostsPageProps } from '@/app/top/TopPosts';
 
-export default async function TopMonth() {
-  let posts: PostWithRelations[] = [];
-
-  try {
-    posts = await prisma.post.findMany({
-      where: {
-        createdAt: {
-          gte: new Date(new Date().setDate(new Date().getDate() - 30)),
-        },
-        replyTo: null,
-      },
-      include: {
-        reports: true,
-        votes: true,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-  } catch {
-    return null;
-  }
-
-  return <Posts posts={posts} sortBy={sortBy.votes} />;
+export default function TopMonth(props: TopPostsPageProps) {
+  return <TopPosts {...props} period="month" />;
 }

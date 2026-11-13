@@ -6,28 +6,24 @@ import Link from 'next/link';
 
 import { CopyLinkButton } from '@/app/_components';
 import { MARKED_POST_OPTIONS, getTimeAgo } from '@/utils';
-import { PostWithRelations } from '@/utils/prisma';
+import type { PostFeedItem } from '@/utils/post-feed';
 
 import { ReportPostButton } from './ReportPost';
 import { Voting } from './Voting';
 
 type PostProps = {
-  post?: PostWithRelations | null;
-  fingerprint?: string | null;
+  post?: PostFeedItem | null;
 };
 
-export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Element | null> {
-  if (!post || !fingerprint) return null;
+export async function Post({ post }: PostProps): Promise<JSX.Element | null> {
+  if (!post) return null;
 
   const marked = new Marked(MARKED_POST_OPTIONS);
-
-  const upvotes = post.votes?.filter((vote) => vote.upvote === true).length;
-  const downvotes = post.votes?.filter((vote) => vote.upvote === false).length;
 
   return (
     <div className="flex p-2 gap-4 max-w-[100%-10rem]">
       <div className="pt-4 w-5">
-        <Voting postId={post.id} upvotes={upvotes - downvotes} fingerprint={fingerprint} />
+        <Voting postId={post.id} score={post.score} viewerVote={post.viewerVote} />
       </div>
       <div id={post.id.toString()} className="flex flex-col gap-1 justify-between">
         <div className="flex flex-col gap-1">
@@ -49,7 +45,7 @@ export async function Post({ post, fingerprint }: PostProps): Promise<JSX.Elemen
             View
           </Link>
           <CopyLinkButton path={`/${post.id}`} />
-          <ReportPostButton postId={post.id} fingerprint={fingerprint} />
+          <ReportPostButton postId={post.id} hasReported={post.viewerReported} />
         </div>
       </div>
     </div>

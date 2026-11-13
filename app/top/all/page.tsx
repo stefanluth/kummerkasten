@@ -1,26 +1,6 @@
-import { Posts } from '@/app/_components/Post';
-import { sortBy } from '@/utils';
-import { PostWithRelations, prisma } from '@/utils/prisma';
+import { TopPosts } from '@/app/top/TopPosts';
+import type { TopPostsPageProps } from '@/app/top/TopPosts';
 
-export default async function TopDay() {
-  let posts: PostWithRelations[] = [];
-
-  try {
-    posts = await prisma.post.findMany({
-      where: {
-        replyTo: null,
-      },
-      include: {
-        reports: true,
-        votes: true,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-  } catch {
-    return null;
-  }
-
-  return <Posts posts={posts} sortBy={sortBy.votes} />;
+export default function TopAll(props: TopPostsPageProps) {
+  return <TopPosts {...props} period="all" />;
 }

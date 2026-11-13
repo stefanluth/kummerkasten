@@ -4,34 +4,25 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { Posts } from '@/app/_components/Post';
-import { FilterFunction } from '@/utils';
 import { getEnv } from '@/utils/env';
-import { PostWithRelations, prisma } from '@/utils/prisma';
 
 import Confirmation from './confirmation';
 
-export default async function Reported() {
-  const env = getEnv();
+type ReportedProps = {
+  searchParams: Promise<{ cursor?: string | string[] }>;
+};
+
+export default async function Reported({ searchParams }: ReportedProps) {
+  const { unlockPassword } = getEnv();
   const password = (await cookies()).get('password')?.value;
-  if (password !== env.unlockPassword) return redirect('/unlock');
+  if (password !== unlockPassword) return redirect('/unlock');
 
-  const posts = await prisma.post.findMany({
-    where: {
-      replyTo: null,
-    },
-    include: {
-      reports: true,
-      votes: true,
-    },
-  });
-
-  const filterFunction: FilterFunction = (post: PostWithRelations): boolean =>
-    post.reports.length >= env.reportsToHidePost;
+  const { cursor } = await searchParams;
 
   return (
     <>
       <Confirmation />
-      <Posts posts={posts} filterBy={filterFunction} />
+      <Posts href="/reported" cursor={typeof cursor === 'string' ? cursor : undefined} visibility="reported" />
     </>
   );
 }

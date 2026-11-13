@@ -5,13 +5,12 @@ import { useFormStatus } from 'react-dom';
 
 import { reportPostAction } from '@/app/_actions/post/report';
 
-export function ReportPostForm({ postId, fingerprint }: { postId: string; fingerprint: string }) {
+export function ReportPostForm({ postId }: { postId: string }) {
   const [, formAction] = useActionState(reportPostAction, '');
 
   return (
     <form action={formAction}>
       <input type="hidden" name="postId" value={postId} />
-      <input type="hidden" name="fingerprint" value={fingerprint} />
       <SubmitButton text="Report" />
     </form>
   );
