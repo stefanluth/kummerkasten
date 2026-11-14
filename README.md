@@ -19,37 +19,22 @@ This project is a web application that allows users to submit anonymous posts an
 
 ## How to run
 
-### Requirements
-
-- Node.js 24.15 or newer
-- npm 11
-- PostgreSQL
+Requires Node.js 24.15+, npm 11, and PostgreSQL.
 
 ### Environment
 
-Copy the example file and adjust it:
+Copy `.env.example` to `.env` and set fill in the passwords and secret.
 
 ```shell
 cp .env.example .env
 ```
 
-Set `UNLOCK_PASSWORD` and `DELETE_PASSWORD`. The unlock password protects the site, while the delete password is
-required to delete posts. Set `SESSION_SECRET` to a stable, randomly generated secret (for example,
-`openssl rand -hex 32`). Keep the same secret across application restarts and instances; changing it invalidates active
-unlock sessions. Set both PostgreSQL URLs:
-
-- `KUMMERKASTEN_POSTGRES_PRISMA_URL` is used by the application at runtime.
-- `KUMMERKASTEN_POSTGRES_URL_NON_POOLING` is used for migrations and other non-pooled connections.
-
-The optional `MIN_TITLE_LENGTH`, `MAX_TITLE_LENGTH`, `MIN_CONTENT_LENGTH`, `MAX_CONTENT_LENGTH` and
-`REPORTS_TO_HIDE_POST` settings control post limits and how many reports are needed to hide a post. `.env` is untracked;
-never commit it.
-
-After deploying signed sessions, visitors with an existing raw-password cookie must unlock once again.
+Generate the secret with `openssl rand -hex 32`.
+Optional settings control post length limits and report thresholds.
 
 ### Database
 
-Start PostgreSQL, then install dependencies and prepare the database:
+Start PostgreSQL, install dependencies, and apply migrations:
 
 ```shell
 npm install
@@ -57,15 +42,7 @@ npx prisma generate
 npx prisma migrate deploy
 ```
 
-`npm run db:deploy` runs the same migration deployment. While developing a schema change, use `npm run db:migrate` to
-create and apply a new migration, and commit the generated files. Do not use `prisma db push`.
-
-The repository includes the initial migration `20261112000000_init`. A database that already has the schema from
-before migrations were introduced must mark it as applied once:
-
-```shell
-npx prisma migrate resolve --applied 20261112000000_init
-```
+Use `npm run db:migrate` to create a migration during development; commit the generated files.
 
 ### Local development
 
@@ -73,55 +50,36 @@ npx prisma migrate resolve --applied 20261112000000_init
 npm run dev
 ```
 
-The application is available at `localhost:3000`. You can start a matching PostgreSQL container with:
+The app runs at `http://localhost:3000`. To start a local PostgreSQL container:
 
 ```shell
 docker run -p 5432:5432 -e POSTGRES_PASSWORD=kummerkasten -e POSTGRES_USER=kummerkasten -e POSTGRES_DB=kummerkasten -d postgres
 ```
 
-### Scripts
-
-- `npm run dev` starts the development server
-- `npm run build` creates the production build
-- `npm run start` starts the production server
-- `npm run lint` runs ESLint
-- `npm run format:check` checks formatting with Prettier
-- `npm run typecheck` runs the TypeScript compiler
-- `npm run test:unit` runs the Vitest unit tests
-- `npm run test:e2e` runs the Playwright end-to-end tests
-- `npm run check` runs format checking, linting, typechecking and unit tests
-- `npm run db:deploy` applies committed migrations
-- `npm run db:migrate` creates and applies a new migration during development
-
 ### Tests
 
-Unit tests use Vitest. Playwright only connects to `PLAYWRIGHT_BASE_URL` (default `http://localhost:3000`) and does not
-start or stop the app. To test the production Docker image locally, start the E2E Compose stack, run Playwright, then
-tear the stack down:
+Run unit tests with Vitest and end-to-end tests with Playwright. Playwright targets `PLAYWRIGHT_BASE_URL` (default
+`http://localhost:3000`) and does not start the app.
 
 ```shell
-docker compose -f docker-compose.e2e.yaml up --build --force-recreate --detach --wait
+npm run test:unit
 npm run test:e2e
-docker compose -f docker-compose.e2e.yaml down --volumes --remove-orphans
 ```
 
-The stack includes an isolated PostgreSQL database and applies migrations before the app starts. CI runs the same stack
-around the Playwright suite.
+For E2E testing, start the Compose stack with
+`docker compose -f docker-compose.e2e.yaml up --build --force-recreate --detach --wait`, run the tests, then clean up with
+`docker compose -f docker-compose.e2e.yaml down --volumes --remove-orphans`.
 
 ### Docker
 
-For development, start the application and PostgreSQL with:
+For development, Docker Compose starts the app and PostgreSQL:
 
 ```shell
 docker compose up --build
 ```
 
-The development stack applies migrations and runs the app in development mode at `localhost:3000`, using `test` as the
-unlock and delete passwords and a local-only session secret. Set your own `SESSION_SECRET` for deployments.
-
-The production image uses Next.js standalone output, runs as the non-root `nextjs` user and exposes `/api/health` for
-health checks. Images are published to `ghcr.io/stefanluth/kummerkasten` with `sha-*` and `latest` tags. Pass the
-environment at runtime; the image does not contain a `.env` file:
+The production image is published as `ghcr.io/stefanluth/kummerkasten`. Supply the required environment variables at
+runtime and apply migrations before starting it:
 
 ```shell
 docker run --rm -p 3000:3000 \
@@ -132,7 +90,3 @@ docker run --rm -p 3000:3000 \
   -e KUMMERKASTEN_POSTGRES_URL_NON_POOLING=postgresql://kummerkasten:secret@database:5432/kummerkasten \
   ghcr.io/stefanluth/kummerkasten:latest
 ```
-
-Replace the example database URLs with addresses reachable from the container. Apply migrations to the database before
-starting the container. Generate `SESSION_SECRET` once with `openssl rand -hex 32`, store it in your deployment secret
-manager, and reuse it across restarts and all application instances.
