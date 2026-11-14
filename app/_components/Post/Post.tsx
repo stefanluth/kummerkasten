@@ -27,11 +27,11 @@ export async function Post({ post, thread, replyPage }: PostProps): Promise<JSX.
   const marked = new Marked(MARKED_POST_OPTIONS);
 
   return (
-    <article data-post-id={post.id} className="post-card flex p-2 gap-4 max-w-[100%-10rem]">
-      <div className="pt-4 w-5">
+    <article data-post-id={post.id} className="post-card flex w-full min-w-0 gap-2 p-2 sm:gap-4">
+      <div className="pt-4 w-5 shrink-0">
         <Voting postId={post.id} score={post.score} viewerVote={post.viewerVote} />
       </div>
-      <div className="flex min-w-0 flex-col gap-1 justify-between">
+      <div className="flex min-w-0 flex-1 flex-col gap-1 justify-between">
         <div className="flex flex-col gap-1">
           <div className="flex gap-4 items-baseline">
             <Link href={`/${post.id}`} className="overflow-anywhere text-xs text-zinc-500 hover:underline">
@@ -39,11 +39,11 @@ export async function Post({ post, thread, replyPage }: PostProps): Promise<JSX.
             </Link>
           </div>
           <div className="flex items-baseline">
-            <h2 className="text-3xl font-bold overflow-anywhere">{post.title}</h2>
+            <h2 className="text-xl font-bold overflow-anywhere sm:text-3xl">{post.title}</h2>
           </div>
         </div>
         <div
-          className="text-lg overflow-anywhere post-content"
+          className="text-base overflow-anywhere post-content sm:text-lg"
           dangerouslySetInnerHTML={{ __html: await marked.parse(post.content) }}
         />
         <div className="post-action-row flex gap-2 items-baseline text-xs text-zinc-500">

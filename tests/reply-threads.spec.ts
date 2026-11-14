@@ -92,8 +92,8 @@ test('created-at link opens the post page directly', async ({ page }) => {
   await expect(page).toHaveURL(`/${postId}`);
 });
 
-test('renders replies to replies as flat siblings tagged with their target ID', async ({ page }) => {
-  const { root, postId: rootPostId } = await createRootPost(page);
+test('renders replies to replies as flat siblings and handles same-page references', async ({ page }) => {
+  const { root } = await createRootPost(page);
   const { thread, form } = await openRootReplyForm(root);
   const firstReplyContent = `First reply ${randomBytes(12).toString('hex')}`;
 
@@ -118,12 +118,20 @@ test('renders replies to replies as flat siblings tagged with their target ID', 
   const nestedReply = replies.filter({ hasText: nestedContent });
   const targetLink = nestedReply.locator('.post-content p a');
   await expect(targetLink).toHaveText(`@${firstReplyId!.slice(0, 6)}`);
-  await expect(targetLink).toHaveAttribute('href', `/${rootPostId}#${firstReplyId}`);
+  await expect(targetLink).toHaveAttribute('href', `#${firstReplyId}`);
   await expect(thread.locator('.post-reply > .post-reply')).toHaveCount(0);
 
+  const currentPath = new URL(page.url()).pathname + new URL(page.url()).search;
   await targetLink.click();
-  await expect(page).toHaveURL(`/${rootPostId}#${firstReplyId}`);
+  await expect(page).toHaveURL(`${currentPath}#${firstReplyId}`);
   const targetReply = page.locator(`.post-reply[data-post-id="${firstReplyId}"]`);
-  await expect(targetReply).toHaveCSS('background-color', 'rgb(39, 39, 42)');
-  await expect(targetReply).toHaveCSS('box-shadow', /rgb\(14, 165, 233/);
+  await expect(page.locator(':target')).toHaveAttribute('data-post-id', firstReplyId!);
+  await expect(targetReply).not.toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+  await expect(targetReply).toHaveCSS('box-shadow', /0px 0px 0px 2px/);
+
+  await targetReply.evaluate((element) => element.remove());
+  await page.evaluate(() => window.history.replaceState(null, '', window.location.pathname + window.location.search));
+  const urlBeforeMissingTargetClick = page.url();
+  await targetLink.click();
+  await expect(page).toHaveURL(urlBeforeMissingTargetClick);
 });

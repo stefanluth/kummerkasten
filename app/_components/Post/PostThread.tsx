@@ -25,11 +25,11 @@ export function PostThread({ rootPostId, thread, page }: PostThreadProps) {
   const replyLabel = totalReplies === 1 ? '1 Reply' : `${totalReplies} Replies`;
 
   return (
-    <details id={`replies-${rootPostId}`} open={page !== undefined} className="post-thread mt-2">
-      <summary className="w-fit cursor-pointer select-none text-sm font-semibold text-sky-500 hover:underline">
+    <details id={`replies-${rootPostId}`} open={page !== undefined} className="post-thread mt-2 w-full">
+      <summary className="w-fit cursor-pointer select-none text-sm font-semibold text-zinc-400 hover:underline">
         {replyLabel}
       </summary>
-      <div className="post-replies mt-2 flex flex-col divide-y divide-zinc-800">
+      <div className="post-replies mt-2 flex w-full min-w-0 flex-col divide-y divide-zinc-800">
         {replies.map((reply) => (
           <PostReply key={reply.id} reply={reply} limits={limits} />
         ))}

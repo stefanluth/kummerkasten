@@ -89,7 +89,7 @@ test('reported post is hidden from the feed and shown after confirmation', async
       },
     ]);
     await page.reload();
-    const card = page.locator(`[id="${postId}"]`).locator('xpath=..');
+    const card = page.locator(`.post-card[data-post-id="${postId}"]`);
     await card.getByRole('button', { name: 'Report' }).click();
   }
 
@@ -152,8 +152,7 @@ test('saves posts in this browser, keeps them after reload, and supports removin
 
   await page.reload();
   const savedButton = page
-    .locator(`[id="${postId}"]`)
-    .locator('xpath=..')
+    .locator(`.post-card[data-post-id="${postId}"]`)
     .getByRole('button', { name: 'Saved', exact: true });
   await expect(savedButton).toBeVisible();
 
@@ -174,7 +173,7 @@ test('saves posts in this browser, keeps them after reload, and supports removin
 
   await page.goto('/');
   await expect(
-    page.locator(`[id="${postId}"]`).locator('xpath=..').getByRole('button', { name: 'Save', exact: true }),
+    page.locator(`.post-card[data-post-id="${postId}"]`).getByRole('button', { name: 'Save', exact: true }),
   ).toBeVisible();
 
   const isolatedContext = await browser.newContext();

@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.className} flex flex-col min-h-screen`}>
         <NavBar />
-        <div className="flex flex-col flex-1 w-full max-w-3xl lg:max-w-5xl mx-auto pt-14 pb-10 md:pb-4 md:px-2">
+        <div className="flex flex-col flex-1 w-full max-w-5xl xl:max-w-7xl mx-auto pt-14 pb-10 px-2 md:pb-4">
           {children}
         </div>
         <ScrollToTop />

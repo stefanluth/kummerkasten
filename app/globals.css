@@ -115,11 +115,15 @@ div:focus {
 }
 
 :root[data-theme='light'] .post-reply:target {
-  @apply bg-sky-100;
+  @apply bg-sky-900/10 ring-sky-700/40;
 }
 
 .post-content .reply-reference-link {
-  @apply text-sky-500;
+  @apply text-zinc-500;
+}
+
+:root[data-theme='light'] .post-content .reply-reference-link {
+  @apply text-zinc-500;
 }
 
 .post-action-row button {
