@@ -95,9 +95,18 @@ docker run -p 5432:5432 -e POSTGRES_PASSWORD=kummerkasten -e POSTGRES_USER=kumme
 
 ### Tests
 
-Unit tests use Vitest. Run `npm run build` before `npm run test:e2e`; Playwright starts the built application through
-its `webServer` configuration with `npm run start`. CI runs against a PostgreSQL service, applies the migrations and
-executes the unit and end-to-end suites.
+Unit tests use Vitest. Playwright only connects to `PLAYWRIGHT_BASE_URL` (default `http://localhost:3000`) and does not
+start or stop the app. To test the production Docker image locally, start the E2E Compose stack, run Playwright, then
+tear the stack down:
+
+```shell
+docker compose -f docker-compose.e2e.yaml up --build --force-recreate --detach --wait
+npm run test:e2e
+docker compose -f docker-compose.e2e.yaml down --volumes --remove-orphans
+```
+
+The stack includes an isolated PostgreSQL database and applies migrations before the app starts. CI runs the same stack
+around the Playwright suite.
 
 ### Docker
 

@@ -25,21 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: kummerkasten
-          POSTGRES_PASSWORD: kummerkasten
-          POSTGRES_DB: kummerkasten
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U kummerkasten -d kummerkasten"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,9 +41,6 @@ jobs:
       - name: Generate Prisma client
         run: npx prisma generate
 
-      - name: Apply database migrations
-        run: npx prisma migrate deploy
-
       - name: Lint
         run: npm run lint
 
@@ -74,14 +56,27 @@ jobs:
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
 
-      - name: Build
-        run: npm run build
-
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Start production Docker image
+        run: |
+          docker compose -f docker-compose.e2e.yaml up --build --force-recreate --detach
+          for attempt in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:3000/api/health; then
+              exit 0
+            fi
+            sleep 5
+          done
+          docker compose -f docker-compose.e2e.yaml logs
+          exit 1
+
       - name: Run end-to-end tests
         run: npm run test:e2e
+
+      - name: Stop production Docker image
+        if: always()
+        run: docker compose -f docker-compose.e2e.yaml down --volumes --remove-orphans
 
       - name: Upload Playwright report and traces
         if: failure()

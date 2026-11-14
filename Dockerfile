@@ -10,6 +10,7 @@ COPY . .
 
 ENV UNLOCK_PASSWORD=build \
     DELETE_PASSWORD=build \
+    SESSION_SECRET=build-only-session-secret-not-for-runtime \
     KUMMERKASTEN_POSTGRES_PRISMA_URL=postgresql://build:build@localhost:5432/build \
     KUMMERKASTEN_POSTGRES_URL_NON_POOLING=postgresql://build:build@localhost:5432/build
 

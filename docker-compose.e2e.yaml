@@ -1,0 +1,42 @@
+services:
+  database:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: kummerkasten
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: kummerkasten_test
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U kummerkasten -d kummerkasten_test']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrate:
+    build:
+      context: .
+      target: build
+    command: npx prisma migrate deploy
+    environment:
+      KUMMERKASTEN_POSTGRES_PRISMA_URL: postgresql://kummerkasten:test@database:5432/kummerkasten_test
+      KUMMERKASTEN_POSTGRES_URL_NON_POOLING: postgresql://kummerkasten:test@database:5432/kummerkasten_test
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: 'no'
+
+  app:
+    build:
+      context: .
+      target: production
+    environment:
+      UNLOCK_PASSWORD: test
+      DELETE_PASSWORD: test
+      SESSION_SECRET: e2e-only-session-secret-not-for-deployment
+      KUMMERKASTEN_POSTGRES_PRISMA_URL: postgresql://kummerkasten:test@database:5432/kummerkasten_test
+      KUMMERKASTEN_POSTGRES_URL_NON_POOLING: postgresql://kummerkasten:test@database:5432/kummerkasten_test
+      REPORTS_TO_HIDE_POST: 3
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    ports:
+      - '3000:3000'
