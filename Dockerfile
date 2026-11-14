@@ -8,14 +8,14 @@ RUN npm ci
 
 COPY . .
 
-ENV UNLOCK_PASSWORD=build \
+RUN KUMMERKASTEN_POSTGRES_URL_NON_POOLING=postgresql://build:build@localhost:5432/build \
+    npx prisma generate
+RUN UNLOCK_PASSWORD=build \
     DELETE_PASSWORD=build \
     SESSION_SECRET=build-only-session-secret-not-for-runtime \
     KUMMERKASTEN_POSTGRES_PRISMA_URL=postgresql://build:build@localhost:5432/build \
-    KUMMERKASTEN_POSTGRES_URL_NON_POOLING=postgresql://build:build@localhost:5432/build
-
-RUN npx prisma generate
-RUN npx next build
+    KUMMERKASTEN_POSTGRES_URL_NON_POOLING=postgresql://build:build@localhost:5432/build \
+    npx next build
 
 FROM node:24-alpine AS production
 WORKDIR /kummerkasten
