@@ -22,9 +22,11 @@ export function DesktopNavBar(props: { isUnlocked: boolean }) {
         <Logo />
       </div>
       <div className="md:flex w-fit gap-4 hidden">
-        <NavLink href="/unlock" className="flex gap-2 px-2">
-          <UnlockIcon isUnlocked={props.isUnlocked} />
-        </NavLink>
+        {!props.isUnlocked && (
+          <NavLink href="/unlock" className="flex gap-2 px-2">
+            <UnlockIcon />
+          </NavLink>
+        )}
         <NavLink href="/faq" className="flex gap-2 px-2">
           <InformationCircleIcon className="w-6 h-6 text-zinc-100" />
           FAQ

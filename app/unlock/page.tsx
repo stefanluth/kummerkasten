@@ -11,7 +11,7 @@ export default async function Unlock() {
   const ipAddress = headersList.get('x-real-ip') ?? headersList.get('x-forwarded-for');
 
   return (
-    <div className="flex flex-col w-full mx-auto px-2 divide-y divide-zinc-700">
+    <div className="flex flex-col w-full max-w-3xl mx-auto px-2 divide-y divide-zinc-700">
       <CodeOfConduct />
       <div className="flex flex-col py-2 my-2">
         <h1 className="text-2xl font-semibold">Cookies</h1>
