@@ -3,6 +3,74 @@
 :root {
   background-color: #222222;
   color: #ececec;
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  background-color: #f4f4f5;
+  color: #27272a;
+  color-scheme: light;
+}
+
+:root[data-theme='light'] .bg-zinc-800,
+:root[data-theme='light'] .bg-zinc-700 {
+  background-color: #e4e4e7;
+}
+
+:root[data-theme='light'] .bg-zinc-900 {
+  background-color: #fafafa;
+}
+
+:root[data-theme='light'] .theme-toggle-button:hover {
+  background-color: #d4d4d8;
+}
+
+:root[data-theme='light'] .text-zinc-100,
+:root[data-theme='light'] .text-zinc-200 {
+  color: #27272a;
+}
+
+:root[data-theme='light'] .text-zinc-300,
+:root[data-theme='light'] .text-zinc-400 {
+  color: #52525b;
+}
+
+:root[data-theme='light'] .border-zinc-700,
+:root[data-theme='light'] .border-zinc-600,
+:root[data-theme='light'] .border-zinc-500 {
+  border-color: #d4d4d8;
+}
+
+:root[data-theme='light'] input,
+:root[data-theme='light'] select,
+:root[data-theme='light'] textarea {
+  background-color: #e4e4e7;
+  color: #27272a;
+}
+
+:root[data-theme='light'] ::selection,
+:root[data-theme='light'] ::-moz-selection {
+  background-color: #d4d4d8;
+}
+
+:root[data-theme='light'] .post-content a,
+:root[data-theme='light'] .faq-content a {
+  color: #52525b;
+}
+
+:root[data-theme='light'] .post-content h1,
+:root[data-theme='light'] .post-content h2,
+:root[data-theme='light'] .post-content h3,
+:root[data-theme='light'] .post-content h4,
+:root[data-theme='light'] .post-content h5,
+:root[data-theme='light'] .post-content h6,
+:root[data-theme='light'] .faq-content h1,
+:root[data-theme='light'] .faq-content h2,
+:root[data-theme='light'] .faq-content h3,
+:root[data-theme='light'] .faq-content h4,
+:root[data-theme='light'] .faq-content h5,
+:root[data-theme='light'] .faq-content h6 {
+  color: #27272a;
 }
 
 ::selection,

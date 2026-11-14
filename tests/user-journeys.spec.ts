@@ -122,6 +122,25 @@ test('mobile navigation opens each top-period route and closes after navigation'
   }
 });
 
+test('switches between light and dark mode and remembers the selection after reload', async ({ page }) => {
+  await page.goto('/unlock');
+
+  const lightModeButton = page.getByRole('button', { name: 'Switch to light mode' });
+  await expect(lightModeButton).toBeVisible();
+  await lightModeButton.click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page.getByRole('button', { name: 'Switch to dark mode' })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('theme'))).toBe('light');
+
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page.getByRole('button', { name: 'Switch to dark mode' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Switch to dark mode' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('theme'))).toBe('dark');
+});
+
 test('saves posts in this browser, keeps them after reload, and supports removing them', async ({ page, browser }) => {
   await unlock(page);
 

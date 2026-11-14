@@ -20,7 +20,14 @@ const EMOJIS = ['❤️', '💜', '🫶', '🚀', '👽', '🤖'];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try { const theme = localStorage.getItem('theme'); if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme; } catch {}`,
+          }}
+        />
+      </head>
       <body className={`${inter.className} flex flex-col min-h-screen`}>
         <NavBar />
         <div className="flex flex-col flex-1 w-full max-w-3xl lg:max-w-5xl mx-auto pt-14 pb-10 md:pb-4 md:px-2">
