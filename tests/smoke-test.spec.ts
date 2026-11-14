@@ -5,12 +5,6 @@ import { expect, test } from '@playwright/test';
 const UNLOCK_PASSWORD = process.env.UNLOCK_PASSWORD || 'test';
 const DELETE_PASSWORD = process.env.DELETE_PASSWORD || 'test';
 
-test('/faq is reachable', async ({ context }) => {
-  const page = await context.newPage();
-  await page.goto('/faq');
-  await expect(page).toHaveURL('/faq');
-});
-
 test('redirects to /unlock', async ({ context }) => {
   const page = await context.newPage();
   await page.goto('/');

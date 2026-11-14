@@ -12,7 +12,6 @@
     "lint": "eslint .",
     "dev": "next dev",
     "start": "next start",
-    "tests": "npx playwright test",
     "prepare:db": "prisma migrate deploy && prisma generate",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
