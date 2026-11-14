@@ -25,6 +25,10 @@
   background-color: #d4d4d8;
 }
 
+:root[data-theme='light'] .site-logo {
+  filter: brightness(0);
+}
+
 :root[data-theme='light'] .text-zinc-100,
 :root[data-theme='light'] .text-zinc-200 {
   color: #27272a;
