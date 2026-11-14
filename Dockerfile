@@ -1,4 +1,4 @@
-FROM node:24-alpine AS build
+FROM node:25-alpine AS build
 WORKDIR /kummerkasten
 
 RUN apk add --no-cache libc6-compat openssl
@@ -17,7 +17,7 @@ RUN UNLOCK_PASSWORD=build \
     KUMMERKASTEN_POSTGRES_URL_NON_POOLING=postgresql://build:build@localhost:5432/build \
     npx next build
 
-FROM node:24-alpine AS production
+FROM node:25-alpine AS production
 WORKDIR /kummerkasten
 
 ENV NODE_ENV=production \
