@@ -8,6 +8,7 @@ import { CopyLinkButton } from '@/app/_components';
 import { MARKED_POST_OPTIONS, getTimeAgo } from '@/utils';
 import type { PostFeedItem } from '@/utils/post-feed';
 
+import { BookmarkButton } from './BookmarkButton';
 import { ReportPostButton } from './ReportPost';
 import { Voting } from './Voting';
 
@@ -45,6 +46,7 @@ export async function Post({ post }: PostProps): Promise<JSX.Element | null> {
             View
           </Link>
           <CopyLinkButton path={`/${post.id}`} />
+          <BookmarkButton postId={post.id} />
           <ReportPostButton postId={post.id} hasReported={post.viewerReported} />
         </div>
       </div>

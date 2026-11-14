@@ -121,3 +121,50 @@ test('mobile navigation opens each top-period route and closes after navigation'
     await expect(page).toHaveURL(path);
   }
 });
+
+test('saves posts in this browser, keeps them after reload, and supports removing them', async ({ page, browser }) => {
+  await unlock(page);
+
+  const title = `Bookmark ${randomBytes(8).toString('hex')}`;
+  const { card, postId } = await createPost(page, title, `Bookmark content ${randomBytes(16).toString('hex')}`);
+  const bookmarkButton = card.getByRole('button', { name: 'Save', exact: true });
+  await bookmarkButton.click();
+  await expect(card.getByRole('button', { name: 'Saved', exact: true })).toBeVisible();
+
+  await page.reload();
+  const savedButton = page
+    .locator(`[id="${postId}"]`)
+    .locator('xpath=..')
+    .getByRole('button', { name: 'Saved', exact: true });
+  await expect(savedButton).toBeVisible();
+
+  if ((page.viewportSize()?.width ?? 0) < 768) {
+    await page.locator('button.relative').click();
+  }
+  await page.getByRole('link', { name: 'Saved', exact: true }).first().click();
+  await expect(page).toHaveURL('/saved');
+  const savedPostLink = page.getByRole('link', { name: `Post ${postId}`, exact: true });
+  await expect(savedPostLink).toBeVisible();
+  await savedPostLink.click();
+  await expect(page).toHaveURL(`/${postId}`);
+  await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
+
+  await page.goto('/saved');
+  await page.getByRole('button', { name: 'Remove', exact: true }).click();
+  await expect(page.getByRole('link', { name: `Post ${postId}`, exact: true })).toHaveCount(0);
+
+  await page.goto('/');
+  await expect(
+    page.locator(`[id="${postId}"]`).locator('xpath=..').getByRole('button', { name: 'Save', exact: true }),
+  ).toBeVisible();
+
+  const isolatedContext = await browser.newContext();
+  try {
+    const isolatedPage = await isolatedContext.newPage();
+    await unlock(isolatedPage);
+    await isolatedPage.goto('/saved');
+    await expect(isolatedPage.getByText('No saved posts yet.')).toBeVisible();
+  } finally {
+    await isolatedContext.close();
+  }
+});

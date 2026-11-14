@@ -49,6 +49,7 @@ export function MobileNavBar(props: { isUnlocked: boolean }) {
           <MobileMenuElement href="/top/month" title="30d" />
           <MobileMenuElement href="/top/year" title="1y" />
           <MobileMenuElement href="/top/all" title="All" />
+          <MobileMenuElement href="/saved" title="Saved" />
         </div>
       </div>
     </>

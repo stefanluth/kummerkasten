@@ -16,6 +16,7 @@ export function DesktopNavBar(props: { isUnlocked: boolean }) {
         <NavLink href="/top/month" title="30d" />
         <NavLink href="/top/year" title="1y" />
         <NavLink href="/top/all" title="All" />
+        <NavLink href="/saved" title="Saved" />
       </div>
       <div className="md:flex hidden">
         <Logo />
