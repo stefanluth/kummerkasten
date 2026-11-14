@@ -18,7 +18,7 @@ export function CopyLinkButton({ url, path }: { url?: string; path?: string }) {
   }, [path, url]);
 
   return (
-    <button className="w-16 hover:underline" title="Copy Link to Clipboard" onClick={handleClick}>
+    <button className="w-18 hover:underline" title="Copy Link to Clipboard" onClick={handleClick}>
       {text}
     </button>
   );

@@ -20,12 +20,23 @@ function makeFormData(title: string, content: string, replyTo?: string): FormDat
 describe('parsePostInput', () => {
   it('trims, sanitizes, and preserves the optional reply target', () => {
     const result = parsePostInput(
-      makeFormData('  Title  ', '  Content <script>body</script>  ', 'parent-id'),
+      makeFormData('  Title  ', '  Content <script>body</script>  ', '  parent-id  '),
       limits,
       (content) => content.replace('<script>', '').replace('</script>', ''),
     );
 
-    expect(result).toEqual({ title: 'Title', content: 'Content body', replyTo: 'parent-id' });
+    expect(result).toEqual({ content: 'Content body', replyTo: 'parent-id' });
+  });
+
+  it('accepts titleless replies while still requiring a title for top-level posts', () => {
+    const reply = new FormData();
+    reply.set('content', 'A reply without a title');
+    reply.set('replyTo', 'parent-id');
+
+    expect(parsePostInput(reply, limits)).toEqual({ content: 'A reply without a title', replyTo: 'parent-id' });
+    expect(parsePostInput(makeFormData('', 'A root post without a title'), limits)).toEqual({
+      error: 'Invalid title or content.',
+    });
   });
 
   it('keeps the existing invalid-field and length messages', () => {

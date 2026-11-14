@@ -6,15 +6,16 @@ type VotingProps = {
   postId: string;
   score: number;
   viewerVote: boolean | null;
+  targetType?: 'post' | 'reply';
 };
 
-export function Voting({ postId, score, viewerVote }: VotingProps) {
+export function Voting({ postId, score, viewerVote, targetType = 'post' }: VotingProps) {
   return (
     <div className="flex flex-col justify-center">
       <form>
         <input type="hidden" name="postId" value={postId} />
         <input type="hidden" name="upvote" value="true" />
-        <button aria-label="Upvote post" className="flex flex-col items-center gap-1" formAction={votePost}>
+        <button aria-label={`Upvote ${targetType}`} className="flex flex-col items-center gap-1" formAction={votePost}>
           <ChevronUpIcon className={`w-5 ${viewerVote === true ? 'text-zinc-600' : null}`} />
         </button>
       </form>
@@ -22,7 +23,11 @@ export function Voting({ postId, score, viewerVote }: VotingProps) {
       <form>
         <input type="hidden" name="postId" value={postId} />
         <input type="hidden" name="upvote" value="false" />
-        <button aria-label="Downvote post" className="flex flex-col items-center gap-1" formAction={votePost}>
+        <button
+          aria-label={`Downvote ${targetType}`}
+          className="flex flex-col items-center gap-1"
+          formAction={votePost}
+        >
           <ChevronDownIcon className={`w-5 ${viewerVote === false ? 'text-zinc-600' : null}`} />
         </button>
       </form>

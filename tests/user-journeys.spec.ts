@@ -21,7 +21,7 @@ async function createPost(page: import('@playwright/test').Page, title: string, 
   const heading = page.getByRole('heading', { name: title, exact: true });
   await expect(heading).toBeVisible();
   const card = heading.locator('xpath=../../..').locator('xpath=..');
-  const postId = await card.locator('.post-id').getAttribute('id');
+  const postId = await card.getAttribute('data-post-id');
   expect(postId).not.toBeNull();
   return { card, heading, postId: postId! };
 }

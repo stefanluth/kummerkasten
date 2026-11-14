@@ -106,6 +106,22 @@ div:focus {
   overflow-wrap: anywhere;
 }
 
+.post-reply:target {
+  @apply bg-zinc-800 ring-2 ring-sky-500;
+}
+
+:root[data-theme='light'] .post-reply:target {
+  @apply bg-sky-100;
+}
+
+.post-content .reply-reference-link {
+  @apply text-sky-500;
+}
+
+.post-action-row button {
+  @apply px-1;
+}
+
 .faq-content {
   h1,
   h2,

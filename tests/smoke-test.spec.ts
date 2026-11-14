@@ -64,7 +64,7 @@ test('unlocks, submits, and deletes a post', async ({ page }) => {
 
   const postContent = heading.locator('xpath=../../..');
   const postCard = postContent.locator('xpath=..');
-  const postId = await postCard.locator('.post-id').getAttribute('id');
+  const postId = await postCard.getAttribute('data-post-id');
   expect(postId).not.toBeNull();
 
   const response = await page.request.post(new URL(`/${postId}/delete`, page.url()).toString(), {

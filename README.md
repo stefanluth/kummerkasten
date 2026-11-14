@@ -9,6 +9,7 @@ This project is a web application that allows users to submit anonymous posts an
 
 - Password-based access
 - Anonymous contributions
+- One-level reply threads; replies to replies stay flat and identify the post they answer
 - Posts can be anonymously rated (+1, -1)
 - Posts can be anonymously reported
 - Posts can be deleted via an API route with a password

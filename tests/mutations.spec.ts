@@ -33,7 +33,7 @@ test('votes toggle and reports are submitted for a post', async ({ page }) => {
   await expect(heading).toBeVisible();
   const postContent = heading.locator('xpath=../../..');
   const postCard = postContent.locator('xpath=..');
-  const postId = await postCard.locator('.post-id').getAttribute('id');
+  const postId = await postCard.getAttribute('data-post-id');
   const score = postCard.locator('.post-score');
 
   expect(postId).not.toBeNull();

@@ -16,8 +16,9 @@ export async function addPost(formData: FormData) {
   const result = parsePostInput(formData, env, (content) => purify(content));
   if ('error' in result) return result.error;
 
-  const created = await createPostRecord(result);
-  if (!created) return 'Post already exists.';
+  const creationResult = await createPostRecord(result);
+  if (creationResult === 'duplicate') return 'Post already exists.';
+  if (creationResult === 'target-not-found') return 'Reply target no longer exists.';
 
   return null;
 }

@@ -8,6 +8,7 @@ import { SESSION_COOKIE_NAME, verifyUnlockSessionToken } from '@/utils/auth-sess
 import { getEnv } from '@/utils/env';
 import { prisma } from '@/utils/prisma';
 
+import { getPostThreadRootId } from './post-thread';
 import type { ValidPostInput } from './post-validation';
 
 const TOP_PATHS = ['/top/day', '/top/week', '/top/month', '/top/year', '/top/all'];
@@ -29,24 +30,38 @@ export async function getPostMutationContext(requireFingerprint = true): Promise
   return { fingerprint };
 }
 
-export async function createPostRecord(input: ValidPostInput): Promise<boolean> {
+type CreatePostResult = 'duplicate' | 'target-not-found' | null;
+
+export async function createPostRecord(input: ValidPostInput): Promise<CreatePostResult> {
+  const replyTo = input.replyTo ?? null;
+  const threadRootId = replyTo ? await getPostThreadRootId(replyTo) : null;
+  if (replyTo && !threadRootId) return 'target-not-found';
+
+  const threadRoot = threadRootId
+    ? await prisma.post.findUnique({ where: { id: threadRootId }, select: { title: true } })
+    : null;
+  if (threadRootId && !threadRoot) return 'target-not-found';
+
+  const title = input.title ?? threadRoot?.title;
+  if (!title) return 'target-not-found';
+
   const existingPost = await prisma.post.findFirst({
-    where: { title: input.title, content: input.content },
+    where: { title, content: input.content, replyTo },
     select: { id: true },
   });
 
-  if (existingPost) return false;
+  if (existingPost) return 'duplicate';
 
-  await prisma.post.create({
-    data: {
-      title: input.title,
-      content: input.content,
-      replyTo: input.replyTo,
-    },
-  });
+  try {
+    await prisma.post.create({ data: { title, content: input.content, replyTo } });
+  } catch (error) {
+    if (replyTo && isMissingReplyTarget(error)) return 'target-not-found';
+    throw error;
+  }
 
-  revalidatePostViews();
-  return true;
+  revalidatePostViews(threadRootId ?? undefined);
+  if (replyTo && replyTo !== threadRootId) revalidatePath(`/${replyTo}`);
+  return null;
 }
 
 export async function togglePostVote(postId: string, fingerprint: string, upvote: boolean): Promise<void> {
@@ -75,7 +90,7 @@ export async function togglePostVote(postId: string, fingerprint: string, upvote
         { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
       );
 
-      if (updated) revalidatePostViews(postId);
+      if (updated) await revalidatePostThreadViews(postId);
       return;
     } catch (error) {
       if (!isTransactionConflict(error) || attempt === SERIALIZATION_RETRIES - 1) throw error;
@@ -91,7 +106,7 @@ export async function createPostReport(postId: string, fingerprint: string): Pro
 
   if (result.count === 0) return false;
 
-  revalidatePostViews(postId);
+  await revalidatePostThreadViews(postId);
   return true;
 }
 
@@ -102,6 +117,16 @@ export function revalidatePostViews(postId?: string): void {
   if (postId) revalidatePath(`/${postId}`);
 }
 
+async function revalidatePostThreadViews(postId: string): Promise<void> {
+  const rootPostId = await getPostThreadRootId(postId);
+  revalidatePostViews(rootPostId ?? postId);
+  if (rootPostId && rootPostId !== postId) revalidatePath(`/${postId}`);
+}
+
 function isTransactionConflict(error: unknown): boolean {
   return error instanceof Prisma.PrismaClientKnownRequestError && (error.code === 'P2034' || error.code === 'P2002');
+}
+
+function isMissingReplyTarget(error: unknown): boolean {
+  return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003';
 }

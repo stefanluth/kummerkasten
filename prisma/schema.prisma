@@ -13,6 +13,8 @@ model Post {
   content   String
   replyTo   String?
   createdAt DateTime @default(now())
+  parent    Post?    @relation("PostReplies", fields: [replyTo], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  replies   Post[]   @relation("PostReplies")
   reports   Report[]
   votes     Vote[]
 

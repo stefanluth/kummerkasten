@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import Link from 'next/link';
 
 import { type PostFeedSort, type PostFeedVisibility, getPostFeed } from '@/utils/post-feed';
+import { getPostThreadReplies } from '@/utils/post-thread';
 import type { TopPeriod } from '@/utils/top-periods';
 
 import { Post } from './Post';
@@ -19,6 +20,11 @@ type PostsProps = {
 export async function Posts({ href, cursor, period, sort, visibility }: PostsProps) {
   const fingerprint = (await cookies()).get('fingerprint')?.value;
   const page = await getPostFeed({ period, sort, visibility, cursor, fingerprint });
+  const repliesByRoot = await getPostThreadReplies(
+    page.items.map((post) => post.id),
+    fingerprint,
+    visibility,
+  );
 
   return (
     <>
@@ -27,7 +33,7 @@ export async function Posts({ href, cursor, period, sort, visibility }: PostsPro
       ) : (
         <div className="flex flex-col gap-2 divide-y divide-zinc-700">
           {page.items.map((post) => (
-            <Post key={post.id} post={post} />
+            <Post key={post.id} post={post} thread={repliesByRoot.get(post.id)} />
           ))}
         </div>
       )}
