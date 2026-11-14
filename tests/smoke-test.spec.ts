@@ -5,25 +5,24 @@ import { expect, test } from '@playwright/test';
 const UNLOCK_PASSWORD = process.env.UNLOCK_PASSWORD || 'test';
 const DELETE_PASSWORD = process.env.DELETE_PASSWORD || 'test';
 
-test('redirects to /unlock', async ({ context }) => {
+test('redirects protected pages to /unlock when locked', async ({ context }) => {
   const page = await context.newPage();
-  await page.goto('/');
-  await expect(page).toHaveURL('/unlock');
 
-  await page.goto('/top/day');
-  await expect(page).toHaveURL('/unlock');
+  for (const path of ['/', '/reported', '/top/day', '/top/week', '/top/month', '/top/year', '/top/all']) {
+    await page.goto(path);
+    await expect(page).toHaveURL('/unlock');
+  }
+});
 
-  await page.goto('/top/week');
-  await expect(page).toHaveURL('/unlock');
+test('rejects an incorrect unlock password without granting access', async ({ page }) => {
+  await page.goto('/unlock');
+  await page.fill('input[name="password"]', `${UNLOCK_PASSWORD}-incorrect`);
+  await page.getByRole('button', { name: 'Unlock' }).click();
 
-  await page.goto('/top/month');
+  await expect(page.getByText('Incorrect password')).toBeVisible();
   await expect(page).toHaveURL('/unlock');
-
-  await page.goto('/top/year');
-  await expect(page).toHaveURL('/unlock');
-
-  await page.goto('/top/all');
-  await expect(page).toHaveURL('/unlock');
+  const cookies = await page.context().cookies();
+  expect(cookies.some(({ name }) => name === 'session')).toBe(false);
 });
 
 test('unlocks, submits, and deletes a post', async ({ page }) => {
