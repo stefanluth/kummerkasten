@@ -1,6 +1,6 @@
 export default function CodeOfConduct() {
   return (
-    <div className="flex flex-col max-w-3xl mx-auto gap-4 pt-4 divide-y divide-zinc-700">
+    <div className="flex flex-col max-w-3xl mx-auto gap-4 pt-4 divide-y divide-zinc-500 dark:divide-zinc-700">
       <h1 className="text-3xl font-bold">Code of Conduct</h1>
       <ol className="flex flex-col pl-6 pt-4 list-decimal">
         <li>

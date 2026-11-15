@@ -28,7 +28,7 @@ export async function PostReply({ reply, limits }: PostReplyProps): Promise<JSX.
     <article
       id={reply.id}
       data-post-id={reply.id}
-      className="post-reply flex w-full min-w-0 gap-2 border-l border-zinc-700 py-2 pl-2 sm:gap-3 sm:pl-3"
+      className="post-reply flex w-full min-w-0 gap-2 border-l border-zinc-500 dark:border-zinc-700 py-2 pl-2 sm:gap-3 sm:pl-3"
     >
       <div className="pt-2 w-5 shrink-0">
         <Voting postId={reply.id} score={reply.score} viewerVote={reply.viewerVote} targetType="reply" />
@@ -36,19 +36,19 @@ export async function PostReply({ reply, limits }: PostReplyProps): Promise<JSX.
       <div className="flex min-w-0 flex-1 flex-col gap-2">
         <Link
           href={`/${reply.rootPostId}${replyPageQuery}#${reply.id}`}
-          className="w-fit overflow-anywhere text-xs text-zinc-500 hover:underline"
+          className="w-fit overflow-anywhere text-xs text-zinc-600 dark:text-zinc-500 hover:underline"
         >
           #{reply.id.slice(0, 6)} · {getTimeAgo(reply.createdAt.getTime())}
         </Link>
         <div className="post-content overflow-anywhere">
           {repliedToLabel && (
-            <p className="mb-1 text-sm text-zinc-500" title={`Reply to ${reply.replyTo}`}>
+            <p className="mb-1 text-sm text-zinc-600 dark:text-zinc-500" title={`Reply to ${reply.replyTo}`}>
               <ReplyReferenceLink replyId={reply.replyTo}>{repliedToLabel}</ReplyReferenceLink>
             </p>
           )}
           <div dangerouslySetInnerHTML={{ __html: await marked.parse(reply.content) }} />
         </div>
-        <div className="flex items-baseline gap-3 text-xs text-zinc-500">
+        <div className="flex items-baseline gap-3 text-xs text-zinc-600 dark:text-zinc-500">
           <ReportPostButton postId={reply.id} hasReported={reply.viewerReported} />
           <details>
             <summary className="cursor-pointer hover:underline">Reply</summary>

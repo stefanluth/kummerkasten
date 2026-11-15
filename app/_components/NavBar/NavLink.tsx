@@ -12,7 +12,7 @@ export function NavLink(props: PropsWithChildren<{ href: string; title?: string;
     <Link
       href={props.href}
       title={props.title}
-      className={`${isActivePath && 'underline'} ${props.className} h-6 px-2 rounded-md text-zinc-100 hover:underline`}
+      className={`${isActivePath && 'underline'} ${props.className} h-6 px-2 rounded-md text-zinc-800 dark:text-zinc-100 hover:underline`}
       onClick={(e) => e.currentTarget.blur()}
     >
       {props.children ?? props.title}

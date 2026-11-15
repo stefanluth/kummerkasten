@@ -53,7 +53,7 @@ export function AddPostForm({ limits, replyTo }: AddPostFormProps) {
             <label className="pl-1" htmlFor={`${formId}-title`}>
               Title
             </label>
-            <p className="flex items-end text-xs pr-1 text-zinc-500">
+            <p className="flex items-end text-xs pr-1 text-zinc-600 dark:text-zinc-500">
               {titleLength}/{maxTitleLength}
             </p>
           </div>
@@ -86,7 +86,7 @@ export function AddPostForm({ limits, replyTo }: AddPostFormProps) {
               M&darr;
             </Link>
           </div>
-          <p className="flex items-end text-xs pr-1 text-zinc-500">
+          <p className="flex items-end text-xs pr-1 text-zinc-600 dark:text-zinc-500">
             {contentLength}/{maxContentLength}
           </p>
         </div>

@@ -26,10 +26,10 @@ export function PostThread({ rootPostId, thread, page }: PostThreadProps) {
 
   return (
     <details id={`replies-${rootPostId}`} open={page !== undefined} className="post-thread mt-2 w-full">
-      <summary className="w-fit cursor-pointer select-none text-sm font-semibold text-zinc-400 hover:underline">
+      <summary className="w-fit cursor-pointer select-none text-sm font-semibold text-zinc-600 dark:text-zinc-400 hover:underline">
         {replyLabel}
       </summary>
-      <div className="post-replies mt-2 flex w-full min-w-0 flex-col divide-y divide-zinc-800">
+      <div className="post-replies mt-2 flex w-full min-w-0 flex-col divide-y divide-zinc-500 dark:divide-zinc-800">
         {replies.map((reply) => (
           <PostReply key={reply.id} reply={reply} limits={limits} />
         ))}
@@ -63,7 +63,9 @@ export function PostThread({ rootPostId, thread, page }: PostThreadProps) {
         </nav>
       )}
       <details id={`reply-form-disclosure-${rootPostId}`} className="mt-2">
-        <summary className="w-fit cursor-pointer text-sm text-zinc-400 hover:underline">Reply to post</summary>
+        <summary className="w-fit cursor-pointer text-sm text-zinc-600 dark:text-zinc-400 hover:underline">
+          Reply to post
+        </summary>
         <AddPostForm limits={limits} replyTo={rootPostId} />
       </details>
     </details>

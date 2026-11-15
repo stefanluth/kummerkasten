@@ -21,7 +21,7 @@ export function ScrollToTop() {
 
   return (
     <button
-      className={`fixed bottom-12 right-4 h-12 w-12 bg-zinc-700 text-zinc-100 rounded-full focus:rounded-full hover:bg-zinc-600 hover:text-zinc-200 ${
+      className={`fixed bottom-12 right-4 h-12 w-12 bg-zinc-300 dark:bg-zinc-700 text-zinc-800 dark:text-zinc-100 rounded-full border border-zinc-500 dark:border-0 focus:rounded-full hover:bg-zinc-400 dark:hover:bg-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-200 ${
         show ? 'opacity-100' : 'opacity-0 -z-10'
       } transition-all duration-300 ease-in-out`}
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

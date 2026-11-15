@@ -1,85 +1,17 @@
 @import 'tailwindcss';
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root {
-  background-color: #222222;
-  color: #ececec;
-  color-scheme: dark;
-}
-
-:root[data-theme='light'] {
-  background-color: #f4f4f5;
-  color: #27272a;
   color-scheme: light;
 }
 
-:root[data-theme='light'] .bg-zinc-800,
-:root[data-theme='light'] .bg-zinc-700 {
-  background-color: #e4e4e7;
-}
-
-:root[data-theme='light'] .bg-zinc-900 {
-  background-color: #fafafa;
-}
-
-:root[data-theme='light'] .theme-toggle-button:hover {
-  background-color: #d4d4d8;
-}
-
-:root[data-theme='light'] .site-logo {
-  filter: brightness(0);
-}
-
-:root[data-theme='light'] .text-zinc-100,
-:root[data-theme='light'] .text-zinc-200 {
-  color: #27272a;
-}
-
-:root[data-theme='light'] .text-zinc-300,
-:root[data-theme='light'] .text-zinc-400 {
-  color: #52525b;
-}
-
-:root[data-theme='light'] .border-zinc-700,
-:root[data-theme='light'] .border-zinc-600,
-:root[data-theme='light'] .border-zinc-500 {
-  border-color: #d4d4d8;
-}
-
-:root[data-theme='light'] input,
-:root[data-theme='light'] select,
-:root[data-theme='light'] textarea {
-  background-color: #e4e4e7;
-  color: #27272a;
-}
-
-:root[data-theme='light'] ::selection,
-:root[data-theme='light'] ::-moz-selection {
-  background-color: #d4d4d8;
-}
-
-:root[data-theme='light'] .post-content a,
-:root[data-theme='light'] .faq-content a {
-  color: #52525b;
-}
-
-:root[data-theme='light'] .post-content h1,
-:root[data-theme='light'] .post-content h2,
-:root[data-theme='light'] .post-content h3,
-:root[data-theme='light'] .post-content h4,
-:root[data-theme='light'] .post-content h5,
-:root[data-theme='light'] .post-content h6,
-:root[data-theme='light'] .faq-content h1,
-:root[data-theme='light'] .faq-content h2,
-:root[data-theme='light'] .faq-content h3,
-:root[data-theme='light'] .faq-content h4,
-:root[data-theme='light'] .faq-content h5,
-:root[data-theme='light'] .faq-content h6 {
-  color: #27272a;
+:root[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 ::selection,
 ::-moz-selection {
-  @apply bg-zinc-600;
+  @apply bg-zinc-300 dark:bg-zinc-600;
 }
 
 * {
@@ -89,9 +21,7 @@
 input,
 select,
 textarea {
-  @apply rounded-md;
-  @apply p-2;
-  @apply bg-zinc-700;
+  @apply rounded-md p-2 bg-white text-zinc-800 border border-zinc-500 dark:bg-zinc-700 dark:text-[#ececec] dark:border-0;
 }
 
 :focus {
@@ -111,19 +41,11 @@ div:focus {
 }
 
 .post-reply:target {
-  @apply bg-zinc-800 ring-2 ring-sky-500;
-}
-
-:root[data-theme='light'] .post-reply:target {
-  @apply bg-sky-900/10 ring-sky-700/40;
+  @apply bg-sky-50 ring-2 ring-sky-700/40 dark:bg-zinc-800 dark:ring-sky-500;
 }
 
 .post-content .reply-reference-link {
-  @apply text-zinc-500;
-}
-
-:root[data-theme='light'] .post-content .reply-reference-link {
-  @apply text-zinc-500;
+  @apply text-zinc-600 dark:text-zinc-500;
 }
 
 .post-action-row button {
@@ -150,8 +72,7 @@ div:focus {
   }
 
   h2 > a {
-    @apply text-zinc-200;
-    @apply hover:text-zinc-200;
+    @apply text-zinc-800 hover:text-zinc-800 dark:text-zinc-200 dark:hover:text-zinc-200;
   }
 
   h2 > a:target {
@@ -166,8 +87,7 @@ div:focus {
   }
 
   a {
-    @apply text-zinc-400;
-    @apply hover:text-zinc-300;
+    @apply text-zinc-600 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300;
   }
 
   h1,
@@ -177,7 +97,7 @@ div:focus {
   h5,
   h6 {
     @apply font-bold;
-    @apply text-zinc-200;
+    @apply text-zinc-800 dark:text-zinc-200;
     @apply my-2;
   }
 
@@ -206,19 +126,17 @@ div:focus {
   }
 
   blockquote {
-    @apply border-l-4;
-    @apply border-zinc-500;
-    @apply pl-4;
+    @apply border-l-4 border-zinc-700 pl-4 dark:border-zinc-500;
   }
 
   code {
-    @apply bg-zinc-700;
+    @apply bg-zinc-300 dark:bg-zinc-700;
     @apply rounded-md;
     @apply p-1;
   }
 
   pre {
-    @apply bg-zinc-700;
+    @apply bg-zinc-300 dark:bg-zinc-700;
     @apply rounded-md;
     @apply p-2;
     @apply overflow-x-auto;
@@ -239,8 +157,7 @@ div:focus {
   }
 
   thead {
-    @apply border-b-2;
-    @apply border-zinc-500;
+    @apply border-b-2 border-zinc-700 dark:border-zinc-500;
   }
 
   td {

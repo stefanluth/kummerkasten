@@ -26,7 +26,7 @@ export function MobileNavBar(props: { isUnlocked: boolean }) {
           </NavLink>
         )}
         <Link href="/faq" title="FAQ" className="flex h-7 gap-2 px-2 rounded-md" onClick={() => setIsOpen(false)}>
-          <InformationCircleIcon className="w-7 h-7 text-zinc-100" />
+          <InformationCircleIcon className="w-7 h-7 text-zinc-800 dark:text-zinc-100" />
         </Link>
         <button className="relative h-8 w-8" onClick={() => setIsOpen(!isOpen)}>
           <Bars3Icon
@@ -38,12 +38,12 @@ export function MobileNavBar(props: { isUnlocked: boolean }) {
         </button>
       </div>
       <div
-        className={`bg-linear-to-r from-transparent via-zinc-800 to-zinc-800 backdrop-blur-xs fixed top-0 right-0 h-screen w-screen mt-14 z-50 transform transition-transform duration-300 ${
+        className={`bg-linear-to-r from-transparent via-zinc-200 to-zinc-200 dark:via-zinc-800 dark:to-zinc-800 backdrop-blur-xs fixed top-0 right-0 h-screen w-screen mt-14 z-50 transform transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div
-          className="flex flex-col gap-2 border-t-[1px] pt-2 border-zinc-500 border-collapse"
+          className="flex flex-col gap-2 border-t-[1px] pt-2 border-zinc-700 dark:border-zinc-500 border-collapse"
           onClick={() => setIsOpen(false)}
         >
           <MobileMenuElement href="/top/day" title="24h" />
@@ -61,7 +61,7 @@ export function MobileNavBar(props: { isUnlocked: boolean }) {
 const MobileMenuElement = ({ href, title }: { href: string; title: string }) => {
   return (
     <Link href={href} title={title} className="flex w-fit ml-auto h-10 px-2 mr-2 text-3xl">
-      <p className="text-zinc-100">{title}</p>
+      <p className="text-zinc-800 dark:text-zinc-100">{title}</p>
     </Link>
   );
 };

@@ -26,6 +26,13 @@ async function createPost(page: import('@playwright/test').Page, title: string, 
   return { card, heading, postId: postId! };
 }
 
+async function getComputedColor(
+  locator: import('@playwright/test').Locator,
+  property: 'backgroundColor' | 'borderBottomColor' | 'borderTopColor' | 'color',
+) {
+  return locator.evaluate((element, styleProperty) => getComputedStyle(element)[styleProperty], property);
+}
+
 test('enforces post title and content length constraints in the form', async ({ page }) => {
   await unlock(page);
 
@@ -125,19 +132,46 @@ test('mobile navigation opens each top-period route and closes after navigation'
 test('switches between light and dark mode and remembers the selection after reload', async ({ page }) => {
   await page.goto('/unlock');
 
+  const passwordInput = page.locator('#password');
+  const submitButton = page.getByRole('button', { name: 'Unlock' });
+  const footer = page.locator('footer');
+
   const lightModeButton = page.getByRole('button', { name: 'Switch to light mode' });
   await expect(lightModeButton).toBeVisible();
   await lightModeButton.click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await expect(page.getByRole('button', { name: 'Switch to dark mode' })).toBeVisible();
+  await expect(passwordInput).toHaveCSS('border-top-width', '1px');
+  await expect(passwordInput).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  await expect(submitButton).toHaveCSS('border-top-width', '1px');
+  const separator = page.locator('.divide-zinc-500 > :not(:last-child)').first();
+  const lightInputBorderColor = await getComputedColor(passwordInput, 'borderTopColor');
+  const lightFooterTextColor = await getComputedColor(footer, 'color');
+  const lightSubmitBackgroundColor = await getComputedColor(submitButton, 'backgroundColor');
+  const lightSubmitTextColor = await getComputedColor(submitButton, 'color');
+  await expect(footer).toHaveCSS('border-top-color', lightInputBorderColor);
+  await expect(separator).toHaveCSS('border-bottom-color', lightInputBorderColor);
+  expect(lightSubmitTextColor).toBe(await getComputedColor(page.locator('html'), 'color'));
   await expect.poll(() => page.evaluate(() => window.localStorage.getItem('theme'))).toBe('light');
 
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await expect(page.getByRole('button', { name: 'Switch to dark mode' })).toBeVisible();
+  await expect(passwordInput).toHaveCSS('border-top-width', '1px');
 
   await page.getByRole('button', { name: 'Switch to dark mode' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(passwordInput).toHaveCSS('border-top-width', '0px');
+  const darkFooterBorderColor = await getComputedColor(footer, 'borderTopColor');
+  const darkFooterTextColor = await getComputedColor(footer, 'color');
+  const darkSubmitBackgroundColor = await getComputedColor(submitButton, 'backgroundColor');
+  const darkSubmitTextColor = await getComputedColor(submitButton, 'color');
+  await expect(passwordInput).toHaveCSS('background-color', darkSubmitBackgroundColor);
+  await expect(separator).toHaveCSS('border-bottom-color', darkFooterBorderColor);
+  expect(darkFooterBorderColor).not.toBe(lightInputBorderColor);
+  expect(darkFooterTextColor).not.toBe(lightFooterTextColor);
+  expect(darkSubmitBackgroundColor).not.toBe(lightSubmitBackgroundColor);
+  expect(darkSubmitTextColor).not.toBe(lightSubmitTextColor);
   await expect.poll(() => page.evaluate(() => window.localStorage.getItem('theme'))).toBe('dark');
 });
 

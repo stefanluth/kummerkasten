@@ -12,7 +12,7 @@ export async function NavBar() {
   const isUnlocked = await verifyUnlockSessionToken(session, getEnv().sessionSecret);
 
   return (
-    <div className="fixed flex w-full bg-zinc-800 justify-center">
+    <div className="fixed flex w-full bg-zinc-200 dark:bg-zinc-800 justify-center">
       <div className="xl:w-4/5 px-6 w-full flex h-14 gap-4 justify-between items-center">
         <DesktopNavBar isUnlocked={isUnlocked} />
         <MobileNavBar isUnlocked={isUnlocked} />

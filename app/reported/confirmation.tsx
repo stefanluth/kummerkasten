@@ -31,7 +31,7 @@ export default function Confirmation() {
             Continue
           </button>
           <button
-            className="w-28 h-8 px-2 rounded-md bg-zinc-700 hover:bg-zinc-800 text-white font-bold self-center"
+            className="w-28 h-8 px-2 rounded-md bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-100 border border-zinc-500 dark:border-0 font-bold self-center"
             autoFocus
             onClick={onDeny}
           >

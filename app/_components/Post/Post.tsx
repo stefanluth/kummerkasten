@@ -34,7 +34,10 @@ export async function Post({ post, thread, replyPage }: PostProps): Promise<JSX.
       <div className="flex min-w-0 flex-1 flex-col gap-1 justify-between">
         <div className="flex flex-col gap-1">
           <div className="flex gap-4 items-baseline">
-            <Link href={`/${post.id}`} className="overflow-anywhere text-xs text-zinc-500 hover:underline">
+            <Link
+              href={`/${post.id}`}
+              className="overflow-anywhere text-xs text-zinc-600 dark:text-zinc-500 hover:underline"
+            >
               #{post.id.slice(0, 6)} · {getTimeAgo(post.createdAt.getTime())}
             </Link>
           </div>
@@ -46,7 +49,7 @@ export async function Post({ post, thread, replyPage }: PostProps): Promise<JSX.
           className="text-base overflow-anywhere post-content sm:text-lg"
           dangerouslySetInnerHTML={{ __html: await marked.parse(post.content) }}
         />
-        <div className="post-action-row flex gap-2 items-baseline text-xs text-zinc-500">
+        <div className="post-action-row flex gap-2 items-baseline text-xs text-zinc-600 dark:text-zinc-500">
           <ReplyButton postId={post.id} />
           <CopyLinkButton path={`/${post.id}`} />
           <BookmarkButton postId={post.id} />

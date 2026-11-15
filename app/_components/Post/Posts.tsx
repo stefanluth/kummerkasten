@@ -31,7 +31,7 @@ export async function Posts({ href, cursor, period, sort, visibility }: PostsPro
       {page.items.length === 0 ? (
         <span className="mx-auto py-8">No posts found.</span>
       ) : (
-        <div className="flex flex-col gap-2 divide-y divide-zinc-700">
+        <div className="flex flex-col gap-2 divide-y divide-zinc-500 dark:divide-zinc-700">
           {page.items.map((post) => (
             <Post key={post.id} post={post} thread={repliesByRoot.get(post.id)} />
           ))}
@@ -39,7 +39,7 @@ export async function Posts({ href, cursor, period, sort, visibility }: PostsPro
       )}
       {page.nextCursor && (
         <Link
-          className="mx-auto my-4 rounded-md border border-zinc-700 px-4 py-2 hover:bg-zinc-800"
+          className="mx-auto my-4 rounded-md border border-zinc-500 dark:border-zinc-700 px-4 py-2 hover:bg-zinc-200 dark:hover:bg-zinc-800"
           href={`${href}?cursor=${encodeURIComponent(page.nextCursor)}`}
           rel="next"
         >

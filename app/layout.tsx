@@ -20,7 +20,12 @@ const EMOJIS = ['❤️', '💜', '🫶', '🚀', '👽', '🤖'];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-theme="dark"
+      className="bg-zinc-100 text-zinc-800 dark:bg-[#222222] dark:text-[#ececec]"
+      suppressHydrationWarning
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -34,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </div>
         <ScrollToTop />
-        <footer className="flex justify-end h-10 pb-3 pt-2 pr-4 w-full tracking-wide text-sm text-zinc-400 border-zinc-700 border-t">
+        <footer className="flex justify-end h-10 pb-3 pt-2 pr-4 w-full tracking-wide text-sm text-zinc-600 dark:text-zinc-400 border-zinc-500 dark:border-zinc-700 border-t">
           <a href="https://github.com/stefanluth/kummerkasten">
             Made with {EMOJIS[Math.floor(Math.random() * EMOJIS.length)]}
           </a>

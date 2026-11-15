@@ -28,14 +28,21 @@ export function SavedPosts() {
     <section className="flex flex-col gap-3 p-2">
       <h1 className="text-2xl font-bold">Saved posts</h1>
       {postIds.length === 0 ? (
-        <p className="py-4 text-zinc-400">No saved posts yet.</p>
+        <p className="py-4 text-zinc-600 dark:text-zinc-400">No saved posts yet.</p>
       ) : (
         postIds.map((id) => (
-          <div key={id} className="flex items-center justify-between border-b border-zinc-700 py-3">
+          <div
+            key={id}
+            className="flex items-center justify-between border-b border-zinc-500 dark:border-zinc-700 py-3"
+          >
             <Link className="hover:underline" href={`/${encodeURIComponent(id)}`}>
               Post {id}
             </Link>
-            <button className="text-zinc-400 hover:underline" type="button" onClick={() => removePost(id)}>
+            <button
+              className="text-zinc-600 dark:text-zinc-400 hover:underline"
+              type="button"
+              onClick={() => removePost(id)}
+            >
               Remove
             </button>
           </div>

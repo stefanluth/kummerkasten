@@ -9,7 +9,7 @@ export function DesktopNavBar(props: { isUnlocked: boolean }) {
     <>
       <div className="md:flex gap-2 w-fit hidden">
         <NavLink href="/" title="Home" className="mr-4">
-          <HomeIcon className="w-6 h-6 text-zinc-100" />
+          <HomeIcon className="w-6 h-6 text-zinc-800 dark:text-zinc-100" />
         </NavLink>
         <NavLink href="/top/day" title="24h" />
         <NavLink href="/top/week" title="7d" />
@@ -28,7 +28,7 @@ export function DesktopNavBar(props: { isUnlocked: boolean }) {
           </NavLink>
         )}
         <NavLink href="/faq" className="flex gap-2 px-2">
-          <InformationCircleIcon className="w-6 h-6 text-zinc-100" />
+          <InformationCircleIcon className="w-6 h-6 text-zinc-800 dark:text-zinc-100" />
           FAQ
         </NavLink>
       </div>
