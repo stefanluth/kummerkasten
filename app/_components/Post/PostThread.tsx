@@ -1,7 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 
-import { getEnv } from '@/utils/env';
 import type { PostThreadPage } from '@/utils/post-thread';
+import type { PostInputLimits } from '@/utils/post-validation';
 
 import { AddPostForm } from './AddPostForm';
 import { PostReply } from './PostReply';
@@ -10,16 +12,11 @@ type PostThreadProps = {
   rootPostId: string;
   thread?: PostThreadPage;
   page?: number;
+  limits: PostInputLimits;
+  referenceTime: number;
 };
 
-export function PostThread({ rootPostId, thread, page }: PostThreadProps) {
-  const env = getEnv();
-  const limits = {
-    minTitleLength: env.minTitleLength,
-    maxTitleLength: env.maxTitleLength,
-    minContentLength: env.minContentLength,
-    maxContentLength: env.maxContentLength,
-  };
+export function PostThread({ rootPostId, thread, page, limits, referenceTime }: PostThreadProps) {
   const replies = thread?.replies ?? [];
   const totalReplies = thread?.totalReplies ?? 0;
   const replyLabel = totalReplies === 1 ? '1 Reply' : `${totalReplies} Replies`;
@@ -31,7 +28,7 @@ export function PostThread({ rootPostId, thread, page }: PostThreadProps) {
       </summary>
       <div className="post-replies mt-2 flex w-full min-w-0 flex-col divide-y divide-zinc-500 dark:divide-zinc-800">
         {replies.map((reply) => (
-          <PostReply key={reply.id} reply={reply} limits={limits} />
+          <PostReply key={reply.id} reply={reply} limits={limits} referenceTime={referenceTime} />
         ))}
       </div>
       {page === undefined && thread?.hasMore && (

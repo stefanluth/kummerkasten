@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 
 import { Post } from '@/app/_components/Post';
+import { getEnv } from '@/utils/env';
 import { getPostReadModel } from '@/utils/post-read-model';
 import { getPostThreadReplies, getPostThreadRootId } from '@/utils/post-thread';
 
@@ -17,6 +18,8 @@ export default async function PostPage(props: PostPageProps) {
   const [{ id }, { replyPage: rawReplyPage }] = await Promise.all([props.params, props.searchParams]);
   const requestedPage = Number(typeof rawReplyPage === 'string' ? rawReplyPage : undefined);
   const replyPage = Number.isSafeInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
+  const referenceTime = Date.now();
+  const env = getEnv();
   const fingerprint = (await cookies()).get('fingerprint')?.value;
   const requestedPost = fingerprint ? await getPostReadModel(id, fingerprint) : null;
   const rootPostId = requestedPost?.replyTo ? await getPostThreadRootId(id) : requestedPost?.id;
@@ -27,7 +30,18 @@ export default async function PostPage(props: PostPageProps) {
 
   return (
     <div className="flex justify-center">
-      <Post post={postItem} thread={thread} replyPage={replyPage} />
+      <Post
+        post={postItem}
+        thread={thread}
+        replyPage={replyPage}
+        referenceTime={referenceTime}
+        limits={{
+          minTitleLength: env.minTitleLength,
+          maxTitleLength: env.maxTitleLength,
+          minContentLength: env.minContentLength,
+          maxContentLength: env.maxContentLength,
+        }}
+      />
     </div>
   );
 }

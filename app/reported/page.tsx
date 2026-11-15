@@ -9,21 +9,15 @@ import { getEnv } from '@/utils/env';
 
 import Confirmation from './confirmation';
 
-type ReportedProps = {
-  searchParams: Promise<{ cursor?: string | string[] }>;
-};
-
-export default async function Reported({ searchParams }: ReportedProps) {
+export default async function Reported() {
   const { sessionSecret } = getEnv();
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
   if (!(await verifyUnlockSessionToken(session, sessionSecret))) return redirect('/unlock');
 
-  const { cursor } = await searchParams;
-
   return (
     <>
       <Confirmation />
-      <Posts href="/reported" cursor={typeof cursor === 'string' ? cursor : undefined} visibility="reported" />
+      <Posts visibility="reported" />
     </>
   );
 }

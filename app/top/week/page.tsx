@@ -1,6 +1,5 @@
 import { TopPosts } from '@/app/top/TopPosts';
-import type { TopPostsPageProps } from '@/app/top/TopPosts';
 
-export default function TopWeek(props: TopPostsPageProps) {
-  return <TopPosts {...props} period="week" />;
+export default function TopWeek() {
+  return <TopPosts period="week" />;
 }

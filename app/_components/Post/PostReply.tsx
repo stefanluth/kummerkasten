@@ -1,25 +1,28 @@
-import { Marked } from 'marked';
+'use client';
 
-import type { JSX } from 'react';
+import { Marked } from 'marked';
 
 import Link from 'next/link';
 
-import { MARKED_POST_OPTIONS, getTimeAgo } from '@/utils';
+import { MARKED_POST_OPTIONS } from '@/utils/marked';
 import type { PostThreadReply } from '@/utils/post-thread';
 import type { PostInputLimits } from '@/utils/post-validation';
+import { getTimeAgo } from '@/utils/time';
 
 import { AddPostForm } from './AddPostForm';
 import { ReplyReferenceLink } from './ReplyReferenceLink';
 import { ReportPostButton } from './ReportPost';
 import { Voting } from './Voting';
 
+const marked = new Marked(MARKED_POST_OPTIONS);
+
 type PostReplyProps = {
   reply: PostThreadReply;
   limits: PostInputLimits;
+  referenceTime: number;
 };
 
-export async function PostReply({ reply, limits }: PostReplyProps): Promise<JSX.Element> {
-  const marked = new Marked(MARKED_POST_OPTIONS);
+export function PostReply({ reply, limits, referenceTime }: PostReplyProps) {
   const repliedToReply = reply.replyTo !== reply.rootPostId;
   const repliedToLabel = repliedToReply ? `@${reply.replyTo.slice(0, 6)}` : null;
   const replyPageQuery = reply.replyPage > 1 ? `?replyPage=${reply.replyPage}` : '';
@@ -38,7 +41,7 @@ export async function PostReply({ reply, limits }: PostReplyProps): Promise<JSX.
           href={`/${reply.rootPostId}${replyPageQuery}#${reply.id}`}
           className="w-fit overflow-anywhere text-xs text-zinc-600 dark:text-zinc-500 hover:underline"
         >
-          #{reply.id.slice(0, 6)} · {getTimeAgo(reply.createdAt.getTime())}
+          #{reply.id.slice(0, 6)} · {getTimeAgo(reply.createdAt.getTime(), referenceTime)}
         </Link>
         <div className="post-content overflow-anywhere">
           {repliedToLabel && (
@@ -46,7 +49,7 @@ export async function PostReply({ reply, limits }: PostReplyProps): Promise<JSX.
               <ReplyReferenceLink replyId={reply.replyTo}>{repliedToLabel}</ReplyReferenceLink>
             </p>
           )}
-          <div dangerouslySetInnerHTML={{ __html: await marked.parse(reply.content) }} />
+          <div dangerouslySetInnerHTML={{ __html: marked.parse(reply.content, { async: false }) }} />
         </div>
         <div className="flex items-baseline gap-3 text-xs text-zinc-600 dark:text-zinc-500">
           <ReportPostButton postId={reply.id} hasReported={reply.viewerReported} />

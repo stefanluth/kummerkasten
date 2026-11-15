@@ -1,51 +1,46 @@
 import React from 'react';
 
 import { cookies } from 'next/headers';
-import Link from 'next/link';
 
+import { getEnv } from '@/utils/env';
 import { type PostFeedSort, type PostFeedVisibility, getPostFeed } from '@/utils/post-feed';
 import { getPostThreadReplies } from '@/utils/post-thread';
 import type { TopPeriod } from '@/utils/top-periods';
 
-import { Post } from './Post';
+import { PostFeed } from './PostFeed';
 
 type PostsProps = {
-  href: string;
-  cursor?: string;
   period?: TopPeriod;
   sort?: PostFeedSort;
   visibility?: PostFeedVisibility;
 };
 
-export async function Posts({ href, cursor, period, sort, visibility }: PostsProps) {
+export async function Posts({ period, sort, visibility }: PostsProps) {
+  const referenceTime = Date.now();
   const fingerprint = (await cookies()).get('fingerprint')?.value;
-  const page = await getPostFeed({ period, sort, visibility, cursor, fingerprint });
+  const page = await getPostFeed({ period, sort, visibility, fingerprint });
   const repliesByRoot = await getPostThreadReplies(
     page.items.map((post) => post.id),
     fingerprint,
     visibility,
   );
+  const env = getEnv();
 
   return (
-    <>
-      {page.items.length === 0 ? (
-        <span className="mx-auto py-8">No posts found.</span>
-      ) : (
-        <div className="flex flex-col gap-2 divide-y divide-zinc-500 dark:divide-zinc-700">
-          {page.items.map((post) => (
-            <Post key={post.id} post={post} thread={repliesByRoot.get(post.id)} />
-          ))}
-        </div>
-      )}
-      {page.nextCursor && (
-        <Link
-          className="mx-auto my-4 rounded-md border border-zinc-500 dark:border-zinc-700 px-4 py-2 hover:bg-zinc-200 dark:hover:bg-zinc-800"
-          href={`${href}?cursor=${encodeURIComponent(page.nextCursor)}`}
-          rel="next"
-        >
-          Next page
-        </Link>
-      )}
-    </>
+    <PostFeed
+      initialItems={page.items}
+      initialThreads={Object.fromEntries(repliesByRoot)}
+      initialNextCursor={page.nextCursor}
+      initialReferenceTime={referenceTime}
+      limits={{
+        minTitleLength: env.minTitleLength,
+        maxTitleLength: env.maxTitleLength,
+        minContentLength: env.minContentLength,
+        maxContentLength: env.maxContentLength,
+      }}
+      period={period ?? 'all'}
+      sort={sort ?? 'newest'}
+      visibility={visibility ?? 'public'}
+    />
   );
 }
