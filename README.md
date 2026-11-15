@@ -1,20 +1,18 @@
 # Kummerkasten
 
-Kummerkasten (/ˈkʊmɐkastn̩/) is a German term referring to a "worry box" or "complaint box"
+Kummerkasten `(/ˈkʊmɐkastn̩/)` is a German term referring to a "worry box" or "complaint box"
 where individuals can anonymously submit their concerns or complaints for support, guidance or simply to vent.
 
-This project is a web application that allows users to submit anonymous posts and vote on them.
+This project is a digital version of that, allowing users to anonymously engage in discussions.
 
 ## Features
 
-- Password-based access
-- Anonymous contributions
-- One-level reply threads; replies to replies stay flat and identify the post they answer
-- Posts can be anonymously rated (+1, -1)
-- Posts can be anonymously reported
-- Posts can be deleted via an API route with a password
-- "Top" pages (/top/day, /top/week, /top/month, /top/year, /top/all), where posts are displayed sorted by highest
-  ratings within the given timeframe (24 hours, 1 week, 1 month, 1 year, all)
+- Password-based access, no accounts, no user data
+- Anonymous posts, replies, votes (+1, -1) and reports
+- Browser/device fingerprinting
+- Infinite scroll
+- Bookmarking/saving posts
+- Light and dark themes
 - Markdown support
 - FAQ and code of conduct pages at /faq and /code-of-conduct
 
